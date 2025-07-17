@@ -1,0 +1,73 @@
+project: 
+  name: ttpanel
+  type: Modüler dijital yönetim sistemi – e-ticaret + içerik + otomasyon + CRM + entegrasyon
+  description: >
+    TT Panel, Tasarım Teknesi’nin dijital dönüşümünü sağlayacak modüler bir yönetim sistemidir.
+    E-ticaret, içerik, otomasyon, finans ve CRM süreçlerini API-first bir yapıyla tek panelde birleştirir.
+    Sistem, iç kullanım için geliştirilmekte olup, ilerleyen fazlarda SaaS modeline dönüştürülecektir.
+
+notes:
+  - Bu dosya yalnızca GPT üretim iznini ve zaman çizelgesini yönetir.
+  - Üretim yalnızca `working_state`, `timeline` ve `milestones` alanlarına göre yürütülür.
+  - Davranış kuralları `gpt-identity.yaml` dosyasında tanımlıdır.
+  - Diğer bağlamsal bilgiler `memory-system.yaml`, ortam bilgileri `memory-workspace.yaml` içinde yer alır.
+
+milestones:
+  - id: setup
+    title: Planlama ve Başlangıç Kurulumu
+    status: completed
+    started_at: 2025-07-02
+    completed_at: 2025-07-13
+    notes:
+      - TT Panel projesi için hedefler, modül yapısı, teknoloji yığını ve yol haritası tanımlandı.
+      - GPT üretim sistemi kuruldu; `gpt-identity.yaml`, `memory.yaml` ve `roadmap.md` senkronize edildi.
+      - Klasör yapısı, docker ortamı, git versiyonlama ve sprint takvimi oluşturuldu.
+
+  - id: faz1
+    title: MVP – E-Ticaret + Sistem + İçerik
+    status: active
+    started_at: 2025-07-14
+    notes:
+      - TT Panel’in ilk çalışan sürümünü oluşturacak MVP fazı başladı.
+      - Bu fazda `commerce`, `system`, `content` gruplarına ait tüm modüller uçtan uca geliştirilecektir.
+      - 7 sprint’e bölünmüş üretim planı; ürün, sipariş, müşteri, içerik ve dönüşüm sistemlerini kapsar.
+      - Amaç; staging ortamda test edilebilir, entegre çalışır bir e-ticaret platformu oluşturmaktır.
+
+working_state:
+  phrase: faz1
+  sprint: sprint_1
+  active_task_index: 0
+  updated_at: 2025-07-15
+  tasks:
+    - "05-roadmap.md dosyasını güncelle ve buraya görev ekle"
+
+timeline:
+  - session: 2025-07-02
+    title: Sistem Kurulumu, Planlama ve Teknik Zemin (2025-07-02 / 13)
+    logs:
+      - Başlangıç sistem dosyaları oluşturuldu: `memory.yaml`, `gpt-identity.yaml`, `00–05.md`, `gpt-file-format.md`, ...
+      - Modül yapısı, teknoloji yığını ve faz planı tanımlandı
+      - GPT üretim sistemi senkronize edildi ve proje üretime hazırlandı
+
+  - session: 2025-07-14
+    title: Sprint 1 Teknik Kurulum Tamamlandı
+    logs:
+      - `docker-compose.yml`, `Makefile`, `.env.*` dosyaları hazırlandı
+      - Subdomain yönlendirmeleri yapıldı, Traefik ve servisler ayağa kaldırıldı
+      - Git deposu başlatıldı ve versiyonlama sistemi kuruldu
+
+  - session: 2025-07-15
+    title: GPT Hafıza Senkronizasyonu ve Versiyon Başlangıcı
+    logs:
+      - Hafıza yapısı ve session sistemi senkronize edildi
+      - Session ve notes klasörlerine rehber dosyalar eklendi
+      - Ortam ve Altyapı Yapılandırma Dosyası (`06-workspace.yaml`) oluşturuldu
+      - Git yapısı kuruldu, ilk commit ve v0.0.0 etiketi oluşturuldu
+
+  - session: 2025-07-16
+    title: VSCode, Terminal ve NestJS Öğrenimi
+    logs:
+      - VSCode uzantıları yüklendi: `ESLint`, `Prettier`, `NestJS Snippets`
+      - Terminal yapılandırmaları yapıldı: `zsh`, `oh-my-zsh`, `powerlevel10k`
+      - NestJS dokümantasyonu incelendi, temel kavramlar öğrenildi
+      - Örnek bir NestJS uygulaması oluşturuldu ve çalıştırıldı

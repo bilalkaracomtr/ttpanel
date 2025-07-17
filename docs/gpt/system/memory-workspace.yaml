@@ -1,0 +1,491 @@
+title: "Yerel geliştirme ortamı dizini. Tüm proje dosyaları ve konfigürasyonlar bu dizin altında tutulur."
+
+path: /Volumes/Workspace/devroot/
+
+sub-paths:
+  projects:
+    description: "Geliştirdiğimiz projelerin ana dizini."
+    sub-paths:
+      ttpanel: "TT Panel uygulaması"
+  sandbox:
+    description: "Geliştirme ve test amaçlı sandbox ortamı."
+    sub-paths:
+      vendure: "NestJS + GraphQL + plugin sistemi"
+      sylius: "Symfony bundle mimarisi"
+      shopware: "Vue + kurumsal plugin yapısı"
+      solidus: "Ruby tabanlı backend sistem yaklaşımı"
+      medusajs: "plugin-first REST mimarisi kurulup test edilecek"
+      saleor: "ayrık API + Dashboard yapısı incelenecek"
+      crystallize: "Headless içerik ve ürün modeli, GraphQL API gözlemlenecek"
+      ttoc: "tasarimteknesi.com e-ticaret sitesinin yerel kopyası."
+      prestashop: "klasik e-ticaret sistem yapısı gözlemlenecek"
+      bagisto: "Laravel + Vue yapısı, panel ve paket sistemi incelenecek"
+  services:
+    description: "Geliştirme ortamında kullanılan ortak servisler."
+    sub-paths:
+      traefik: "Tüm projeler için merkezi yönlendirme (reverse proxy) servisi"
+
+projects:
+  - id: ttpanel
+    name: "TT Panel"
+    type: Modüler dijital yönetim sistemi – e-ticaret + içerik + otomasyon + CRM + entegrasyon
+    description: >
+      "TT Panel, Tasarım Teknesi’nin dijital dönüşümünü sağlayacak modüler bir yönetim sistemidir.
+      E-ticaret, içerik, otomasyon, finans ve CRM süreçlerini API-first bir yapıyla tek panelde birleştirir.
+      Sistem, iç kullanım için geliştirilmekte olup, ilerleyen fazlarda SaaS modeline dönüştürülecektir."
+    path: /Volumes/Workspace/devroot/projects/ttpanel
+    sub-paths:
+      apps:
+        description: "TT Panel uygulama dizini. API, Admin ve Public uygulamaları içerir."
+        sub-paths:
+          api: "NestJS ile geliştirilmiş REST API uygulamasıdır."
+          admin: "Nuxt 3 tabanlı yönetici panelidir (SSG + SSR destekli)."
+          public: "Son kullanıcıya açık e-ticaret arayüzüdür."
+          mobile: "Opsiyonel olarak Flutter veya Expo tabanlı mobil istemcidir."
+      modules:
+        description: "TT Panel modülleri. E-ticaret, içerik yönetimi, üretim, finans, CRM ve entegrasyon modüllerini içerir."
+        sub-paths:
+          commerce: "Ürün, sipariş, müşteri, pazarlama gibi e-ticaret modülleri."
+          automation: "Görev yönetimi, üretim, CRM gibi operasyonel süreçler."
+          system: "Yetkilendirme, ayarlar, bildirimler gibi çekirdek sistem bileşenleri."
+          integration: "Mikro, Logo, SMS, kargo gibi dış servis entegrasyonları."
+          content: "Blog, sayfa, slider gibi içer"
+      services:
+        description: "Projenin dış bağımlılıklarını (database, cache, mail, storage vb.) içeren servis yapılandırmaları bu klasörde yer alır. Her klasör, genellikle bir Docker konteynerine karşılık gelir ve `docker-compose.yml` ile entegre çalışır."
+        sub-paths:
+          postgres: "PostgreSQL veritabanı servisi ile ilgili init dosyaları"
+          redis: "Redis sunucusu (BullMQ kuyruk sistemiyle birlikte kullanılır)"
+          mailpit: "Geliştirme ortamı için SMTP test ve mail önizleme servisi"
+          minio: "S3 uyumlu dosya depolama sunucusu"
+          worker: "Kuyruk işleyicisi (Redis + BullMQ üzerinden arka plan görevleri)"
+      packages:
+        description: "Bu klasör, frontend ve backend uygulamaları arasında ortak kullanılan yapıların merkezi olarak tutulduğu yerdir. Her alt klasör kendi içinde bağımsız bir paket gibi yapılandırılır ve diğer uygulamalarda import edilerek kullanılır."
+        sub-paths:
+          ui: "Vue/Nuxt bileşenleri (buton, form elemanları, layout’lar, temalar vb.)"
+          tsconfig: "Ortak TypeScript yapılandırması"
+          eslint-config: "Kod kalite kurallarının merkezi yönetimi"
+      config:
+        description: "Projenin çalışma ortamlarına, servis tanımlarına ve sistem ayarlarına dair tüm konfigürasyon dosyaları bu klasörde toplanır. Koddan bağımsız tutularak ortam geçişlerini kolaylaştırır ve altyapı kontrolünü merkezileştirir."
+        sub-paths:
+          docker: "Her servis için Dockerfile ve yapılandırma betikleri"
+          env: "Uygulamalara özel `.env.example` dosyaları (admin, api, public...)"
+          ssl: "Yerel geliştirme için kendi imzalanmış SSL sertifikaları (opsiyonel)"
+          system: "Sabit JSON/YAML sistem konfigürasyonları (örnek: ülkeler, para birimleri, ayarlar)"
+          ci: "Gelecekte CI/CD senaryoları için yer ayrılmıştır"
+      tests:
+        description: "Projedeki test senaryoları modüllerden bağımsız olarak bu klasörde organize edilir. Amaç, testlerin ayrı katmanlarda tutulması ve test stratejilerinin daha net uygulanabilmesidir."
+        sub-paths:
+          unit: "Birim testleri (her modülün servis, helper veya mantıksal parçaları için)"
+          integration: "Modüller arası veri ve iş akışı testleri"
+          e2e: "Uygulama düzeyinde uçtan uca testler (Cypress, Playwright, vs.)"
+      scripts: "Otomasyon komutları, kurulum ve bakım betikleri"
+      docs:
+        description: "Bu klasör, hem geliştirici belgelerini hem de GPT destekli üretim sistemini içerir. Kod barındırmaz; ancak tüm mimari kararlar, faz planları, modül şemaları ve proje hafızası burada tutulur. Belgeler, kullanım amacına göre alt klasörlerde organize edilmiştir:"
+        sub-paths:
+          manual: "Panel, modül, servis gibi sistem bölümlerine dair geliştirici belgeleri"
+          dev: "Ortam kurulumu, yerel geliştirme ve CLI komutlarına dair açıklamalar"
+          gpt: "GPT'nin üretim sürecine katıldığı tüm kontrol dosyaları ve içerikler"
+    configurations:
+      docker-compose:
+        description: "TT Panel uygulaması için Docker Compose yapılandırması. Traefik reverse proxy, PostgreSQL veritabanı, Redis cache, MinIO nesne depolama, Mailpit SMTP sunucusu ve TT Panel API, Admin ve Public servislerini içerir."
+        services:
+          traefik:
+            path: /Volumes/Workspace/devroot/services/traefik/docker-compose.yaml
+            description: "Tüm projeler tarafından paylaşılan, merkezi yönlendirme (reverse proxy) servisini tanımlar."
+            content:
+              networks:
+                traefik:
+                  name: traefik
+                  driver: bridge
+              services:
+                traefik:
+                  image: traefik:v3.4.3
+                  container_name: traefik
+                  restart: unless-stopped
+                  command:
+                    - --entrypoints.web.address=:80
+                    - --api.dashboard=true
+                    - --providers.docker=true
+                    - --providers.docker.exposedbydefault=false
+                  ports:
+                    - "80:80"
+                  volumes:
+                    - /var/run/docker.sock:/var/run/docker.sock:ro
+                    - ./traefik.yml:/etc/traefik/traefik.yml:ro
+                  labels:
+                    - "traefik.enable=true"
+                    - "traefik.http.routers.traefik.rule=Host(`traefik.ttpanel.test`)"
+                    - "traefik.http.routers.traefik.entrypoints=web"
+                    - "traefik.http.routers.traefik.service=api@internal"
+                  networks:
+                    - traefik
+          ttpanel:
+            path: /Volumes/Workspace/devroot/projects/ttpanel/docker-compose.yaml
+            description: "TT Panel uygulamasına ait servisleri (API, Admin, Public, PostgreSQL, Redis, MinIO, Mailpit) tanımlar. Geliştirme ortamında projenin temel bileşenlerini çalıştırmak için kullanılır."
+            notes:
+              postgres: "PostgreSQL veritabanı servisi. Veritabanı verilerini kalıcı hale getirmek için volume kullanır."
+              pgweb: "PostgreSQL veritabanı yönetim aracı. Web tabanlı arayüz sağlar."
+              redis: "Redis cache servisi. Veritabanı önbellekleme için kullanılır."
+              minio: "MinIO nesne depolama servisi. Dosya depolama için kullanılır."
+              mailpit: "Mailpit SMTP sunucusu. E-posta testleri için kullanılır."
+              api: "NestJS tabanlı API servisidir. Postgres ve Redis'e bağımlıdır."
+              admin: "NuxtJS tabanlı yönetim paneli servisidir. API servisine bağımlıdır."
+              public: "NuxtJS tabanlı halka açık arayüz servisidir. API servisine bağımlıdır."
+            content:
+              networks:
+                traefik:
+                  external: true
+                ttpanel:
+                  name: ttpanel
+                  driver: bridge
+              services:
+                postgres:
+                  container_name: ttpanel-postgres
+                  image: postgres:16
+                  restart: unless-stopped
+                  env_file:
+                    - .env.postgres
+                  volumes:
+                    - services/postgres/data:/var/lib/postgresql/data
+                  networks:
+                    - ttpanel
+                pgweb:
+                  container_name: ttpanel-pgweb
+                  image: sosedoff/pgweb:latest
+                  restart: unless-stopped
+                  environment:
+                    - DATABASE_URL=postgres://postgres:postgres@postgres:5432/ttpanel?sslmode=disable
+                  ports:
+                    - "8081:8081"
+                  networks:
+                    - traefik
+                    - ttpanel
+                  labels:
+                    - traefik.enable=true
+                    - traefik.http.routers.pgweb.rule=Host(`db.ttpanel.test`)
+                    - traefik.http.services.pgweb.loadbalancer.server.port=8081
+                redis:
+                  container_name: ttpanel-redis
+                  image: redis:7
+                  restart: unless-stopped
+                  command: redis-server --requirepass ${REDIS_PASSWORD}
+                  env_file:
+                    - .env.redis
+                  volumes:
+                    - services/redis/data:/data
+                  networks:
+                    - ttpanel
+                minio:
+                  container_name: ttpanel-minio
+                  image: minio/minio:latest
+                  restart: unless-stopped
+                  env_file:
+                    - .env.minio
+                  command: server /data
+                  volumes:
+                    - services/minio/data:/data
+                  networks:
+                    - traefik
+                    - ttpanel
+                  ports:
+                    - "9000:9000"
+                    - "9001:9001"
+                  labels:
+                    - traefik.enable=true
+                    - traefik.http.routers.minio.rule=Host(`minio.ttpanel.local`)
+                    - traefik.http.services.minio.loadbalancer.server.port=9001
+                mailpit:
+                  container_name: ttpanel-mailpit
+                  image: axllent/mailpit:latest
+                  restart: unless-stopped
+                  env_file:
+                    - .env.mailpit
+                  ports:
+                    - "8025:8025"
+                  networks:
+                    - traefik
+                    - ttpanel
+                  labels:
+                    - traefik.enable=true
+                    - traefik.http.routers.mail.rule=Host(`mail.ttpanel.local`)
+                    - traefik.http.services.mail.loadbalancer.server.port=8025
+                api:
+                  container_name: ttpanel-api
+                  build:
+                    context: ./config/docker/api
+                    dockerfile: Dockerfile
+                  restart: unless-stopped
+                  env_file:
+                    - .env.api
+                  volumes:
+                    - ./apps/api:/app
+                  networks:
+                    - traefik
+                    - ttpanel
+                  depends_on:
+                    - postgres
+                    - redis
+                  expose:
+                    - "3000"
+                  labels:
+                    - traefik.enable=true
+                    - traefik.http.routers.api.rule=Host(`api.ttpanel.test`)
+                    - traefik.http.services.api.loadbalancer.server.port=3000
+                admin:
+                  container_name: ttpanel-admin
+                  build:
+                    context: ./config/docker/admin
+                    dockerfile: Dockerfile
+                  restart: unless-stopped
+                  env_file:
+                    - .env.admin
+                  volumes:
+                    - ./apps/admin:/app
+                  networks:
+                    - traefik
+                    - ttpanel
+                  expose:
+                    - "3001"
+                  labels:
+                    - traefik.enable=true
+                    - traefik.http.routers.admin.rule=Host(`admin.ttpanel.test`)
+                    - traefik.http.services.admin.loadbalancer.server.port=3001
+                public:
+                  container_name: ttpanel-public
+                  build:
+                    context: ./config/docker/public
+                    dockerfile: Dockerfile
+                  restart: unless-stopped
+                  env_file:
+                    - .env.public
+                  volumes:
+                    - ./apps/public:/app
+                  networks:
+                    - traefik
+                    - ttpanel
+                  expose:
+                    - "3002"
+                  labels:
+                    - traefik.enable=true
+                    - traefik.http.routers.public.rule=Host(`public.ttpanel.test`)
+                    - traefik.http.services.public.loadbalancer.server.port=3002
+
+      env:
+        description: "TT Panel uygulaması için gerekli çevresel değişkenler ve yapılandırmalar."
+        services:
+          postgres:
+            path: /Volumes/Workspace/devroot/projects/ttpanel/env.postgres
+            description: "PostgreSQL veritabanı için gerekli çevresel değişkenler."
+            content:
+              POSTGRES_USER: postgres
+              POSTGRES_PASSWORD: postgres
+              POSTGRES_DB: ttpanel
+              TZ: Europe/Istanbul
+              POSTGRES_PORT: 5432
+          redis:
+            path: /Volumes/Workspace/devroot/projects/ttpanel/env.redis
+            description: "Redis servisi için gerekli çevresel değişkenler."
+            content:
+              REDIS_PASSWORD: redis
+          minio:
+            path: /Volumes/Workspace/devroot/projects/ttpanel/env.minio
+            description: "MinIO nesne depolama servisi için gerekli çevresel değişkenler."
+            content:
+              MINIO_ROOT_USER: minioadmin
+              MINIO_ROOT_PASSWORD: minioadmin
+          mailpit:
+            path: /Volumes/Workspace/devroot/projects/ttpanel/env.mailpit
+            description: "Mailpit SMTP sunucusu için gerekli çevresel değişkenler."
+            content:
+              MAILPIT_SMTP_PORT: 1025
+              MAILPIT_HTTP_PORT: 8025
+          api:
+            path: /Volumes/Workspace/devroot/projects/ttpanel/env.api
+            description: "TT Panel API servisi için gerekli çevresel değişkenler."
+            content:
+              NODE_ENV: development
+              APP_NAME: ttpanel-api
+              APP_PORT: 3000
+              TZ: Europe/Istanbul
+              DEFAULT_LANGUAGE: tr
+              JWT_SECRET: supersecretkey
+              JWT_EXPIRES_IN: 900s
+              JWT_REFRESH_EXPIRES_IN: 7d
+              DATABASE_URL: postgresql://postgres:postgres@postgres:5432/ttpanel?schema=public
+              REDIS_HOST: redis
+              REDIS_PORT: 6379
+              REDIS_PASSWORD: redis
+              SMTP_HOST: mailpit
+              SMTP_PORT: 1025
+              SMTP_USER: ""
+              SMTP_PASS: ""
+          admin:
+            path: /Volumes/Workspace/devroot/projects/ttpanel/env.admin
+            description: "TT Panel Admin arayüzü için gerekli çevresel değişkenler."
+            content:
+              NODE_ENV: development
+              NITRO_PORT: 3001
+              NITRO_HOST: 0.0.0.0
+              APP_NAME: ttpanel-admin
+              TZ: Europe/Istanbul
+              DEFAULT_LANGUAGE: tr
+              API_BASE_URL: http://api.ttpanel.test
+              GA_ID: ""
+              FB_PIXEL_ID: ""
+          public:
+            path: /Volumes/Workspace/devroot/projects/ttpanel/env.public
+            description: "TT Panel Public arayüzü için gerekli çevresel değişkenler."
+            content:
+              NODE_ENV: development
+              NITRO_PORT: 3002
+              NITRO_HOST: 0.0.0.0
+              APP_NAME: ttpanel-public
+              TZ: Europe/Istanbul
+              DEFAULT_LANGUAGE: tr
+              API_BASE_URL: http://api.ttpanel.test
+              GA_ID: ""
+              FB_PIXEL_ID: ""
+
+      dockerfiles:
+        description: "TT Panel uygulaması için Dockerfile yapılandırmaları. Her servis için ayrı Dockerfile'lar içerir."
+        api:
+          path: /Volumes/Workspace/devroot/projects/ttpanel/config/docker/api/Dockerfile
+          description: "TT Panel API servisi için Dockerfile. Node.js tabanlı uygulama için gerekli bağımlılıkları yükler ve uygulamayı başlatır."
+          content: |
+            # Temel imaj
+            FROM node:22
+
+            # Zaman dilimi ayarı için ortam
+            ENV TZ=Europe/Istanbul
+
+            # Çalışma klasörü
+            WORKDIR /app
+
+            # Paket dosyalarını yükle
+            COPY package*.json ./
+            RUN npm install
+
+            # Tüm proje dosyalarını kopyala
+            COPY . .
+
+            # Portu aç
+            EXPOSE 3000
+
+            # Uygulama başlat
+            CMD ["npm", "run", "start:dev"]
+        admin:
+          path: /Volumes/Workspace/devroot/projects/ttpanel/config/docker/admin/Dockerfile
+          description: "TT Panel Admin arayüzü için Dockerfile. Node.js tabanlı uygulama için gerekli bağımlılıkları yükler ve uygulamayı başlatır."
+          content: |
+            FROM node:22
+
+            WORKDIR /app
+
+            ENV TZ=Europe/Istanbul
+
+            COPY package*.json ./
+            RUN npm install
+
+            COPY . .
+
+            EXPOSE 3001
+
+            CMD ["npm", "run", "dev"]
+        public:
+          path: /Volumes/Workspace/devroot/projects/ttpanel/config/docker/public/Dockerfile
+          description: "TT Panel Public arayüzü için Dockerfile. Node.js tabanlı uygulama için gerekli bağımlılıkları yükler ve uygulamayı başlatır."
+          content: |
+            FROM node:22
+
+            WORKDIR /app
+
+            ENV TZ=Europe/Istanbul
+
+            COPY package*.json ./
+            RUN npm install
+
+            COPY . .
+
+            EXPOSE 3002
+
+            CMD ["npm", "run", "dev"]
+
+      makefile:
+        path: /Volumes/Workspace/devroot/projects/ttpanel/makefile
+        description: "TT Panel uygulaması için Makefile komutları. Docker Compose ile servisleri başlatma, durdurma, logları izleme ve veritabanı işlemleri gibi görevleri içerir."
+        content: |
+          .PHONY: help up down restart logs clean psql test migrate seed traefik
+          .DEFAULT_GOAL := help
+
+          # Proje adı
+          PROJECT_NAME=ttpanel
+
+          # Ortam ve path
+          ENV_FILE ?= .env
+          TRAEFIK_PATH=../../services/traefik
+
+          # Compose komutu
+          DC=docker compose
+
+          ## 🔄 Traefik servisi kontrol + başlat
+          traefik:
+            @if ! docker ps --format '{{.Names}}' | grep -q '^traefik$$'; then \
+              echo "🔁 Traefik servisi başlatılıyor..."; \
+              cd $(TRAEFIK_PATH) && $(DC) up -d; \
+            else \
+              echo "✅ Traefik servisi zaten çalışıyor."; \
+            fi
+
+          ## ⬆️ Projeyi başlat (Traefik + Uygulamalar)
+          up: traefik
+            @$(DC) up -d
+
+          ## 🔻 Uygulamayı durdur
+          down:
+            @$(DC) down
+
+          ## 🔁 Yeniden başlat
+          restart:
+            @$(MAKE) down
+            @$(MAKE) up
+
+          ## 🔍 Logları izle
+          logs:
+            @$(DC) logs -f --tail=100
+
+          ## 🧼 Volume + ağ temizliği
+          clean:
+            @$(DC) down -v --remove-orphans
+            @docker volume prune -f
+            @docker network prune -f
+
+          ## 🐘 PostgreSQL'e bağlan
+          psql:
+            @$(DC) exec postgres psql -U postgres -d ttpanel
+
+          ## 🧪 API test çalıştır
+          test:
+            @$(DC) exec api npm run test
+
+          ## 🔄 Prisma migrate + seed
+          migrate:
+            @$(DC) exec api npx prisma migrate dev
+
+          seed:
+            @$(DC) exec api npx prisma db seed
+
+          ## 👋 Yardım menüsü
+          help:
+            @echo ""
+            @echo "TT Panel Makefile Komutları:"
+            @echo "────────────────────────────────────────"
+            @echo " make up        → Traefik + TT Panel uygulamalarını başlat"
+            @echo " make down      → Uygulamaları durdur"
+            @echo " make restart   → Durdur + yeniden başlat"
+            @echo " make logs      → Logları izle"
+            @echo " make clean     → Volume + ağ temizliği"
+            @echo " make psql      → PostgreSQL terminali"
+            @echo " make migrate   → Prisma migration çalıştır"
+            @echo " make seed      → Prisma seed çalıştır"
+            @echo " make test      → API testlerini çalıştır"
+            @echo ""

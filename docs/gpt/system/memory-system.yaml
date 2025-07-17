@@ -1,0 +1,159 @@
+title: "Kullanıcı ve Şirket Hafızası – Bilal Kara & Tasarım Teknesi"
+description: >
+  Bu dosya, GPT’nin Bilal Kara'yı ve birlikte çalıştığı şirket Tasarım Teknesi’ni yakından tanımasını sağlar.  
+  GPT’nin sistem önerileri, mimari kararları, kod üretimi ve süreç eşlikçiliği bu bağlam dikkate alınarak gerçekleştirilir.  
+  Dosya; kişisel üretim tarzı, şirket ihtiyaçları ve hedefler doğrultusunda GPT’nin daha isabetli çalışmasını sağlar.
+
+identity:
+  name: Bilal Kara
+  birth_date: 1983-02-17
+  location: Selçuklu, Konya, Türkiye
+  hometown: Yeniceoba, Cihanbeyli / Konya
+  family: Aynur Kara (eş, Jeoloji Mühendisi, ev hanımı), 3 çocuk (Siraç Mert, Mustafa Kerem, Nergiz Nil), Semra Kara (anne), Arap Kara (baba, vefat 2016), Rabia Özgün ve Hazal Kara (kız kardeşler)
+  life_mission: >
+    Anlamlı, üretken ve dengeli bir yaşam sürmek.  
+    Aile, toplumsal fayda ve bireysel gelişimi dengeleyerek hem dünyada hem ahirette faydalı işler yapmak.
+  core_values: Anlam odaklılık, Ahlaki bütünlük, Aile önceliği, Bilgiyle üretim, Sadelik ve sistem, Rehberlik ve ilham
+  core_domains: Eğitim ve öğretmenlik, Dijital girişimcilik, Yazılım ve sistem geliştirme, Bireysel üretkenlik sistemleri, Teknoloji tabanlı içerik üretimi
+  life_timeline:
+    - 1983–2001: Kökler ve temel değerlerin oluşumu
+    - 2002–2010: Eğitim – mesleğe giriş – liderlik
+    - 2010–2021: Teknik derinleşme – dijital eğitim
+    - 2021–2024: Girişimcilik – sistem kurma – özgürlük
+    - 2025+: Bütünleme – sürdürülebilirlik – vizyon
+  profession:
+    - Öğretmen (Bigisayar ve Öğretim Teknolojileri Öğretmeni ve BT Rehber Öğretmeni)
+    - Tasarım Teknesi kurucu ortağı
+    - Girişimci, geliştirici, sistem kurucusu
+    - Solo sistem kurucusu
+  personality:
+    - Sistematik ve düzenli çalışma alışkanlığı
+    - Teknik altyapıya hâkim, mimari karar süreçlerinde güçlü
+    - Karar almada netlik ve süreç takibinde disiplinli
+    - Gereksiz görsellikten uzak, temiz kod ve net yapı odaklı
+  technical_setup:
+    device: Apple MacBook Pro 14" (M2 Pro, 16 GB RAM, 512 GB SSD) ve 24" Dell Ultrasharp
+    development_environment: Visual Studio Code, Zsh + Oh My Zsh terminal, Git ve GitHub (öğrenme sürecinde), Docker ve Docker Compose, PostgreSQL, MySQL, Redis gibi yerel hizmetler
+    working_directory: /Volumes/Workspace/devroot
+    preferences: Terminal tabanlı sade yapı, İzole ve kontrollü geliştirme ortamı, Tek klasörde tüm projelerin organizasyonu
+    software_stack:
+      known:
+        - PHP, MySQL, JavaScript, HTML, CSS, SCSS, Bootstrap
+      learning:
+        - Node.js, NestJS, Vue.js, Nuxt.js, TailwindCSS, Pinia
+        - PostgreSQL, Prisma, Prettier, Eslint, PHPUnit, Vitest
+    tools:
+      design: CorelDRAW, Adobe Photoshop, Adobe Illustrator (aktif kullanıyor)
+      productivity: Notion, Microsoft To Do, Toggl, ChatGPT Plus (aktif kullanıyor)
+      communication: Google Takvim (yalnızca hatırlatıcı düzeyinde)
+      api: OpenAI API (planlı kullanım – TT Panel & içerik sistemlerinde)
+
+company:
+  name: Tasarım Teknesi
+  founded: 2017-05
+  type: Kreatif üretim atölyesi + e-ticaret girişimi
+  focus:
+    - HORECA sektörüne özel ahşap ürünler
+    - Yurtiçi ve yurtdışı (ETSY) satış
+    - Dijital dönüşüm ve otomasyon sistemleri
+  team:
+    size: 4 (2 idari, 3 atölye)
+    facility: ofis-showroom (120 m²), atölye (120 m²), depo (120 m²)
+    hardware:
+      - 4 lazer kesim makinesi
+      - 1 adet 3D yazıcı
+  sales_channels:
+    domestic: tasarimteknesi.com
+    international:
+      - CafeRestaurant (ETSY – horeca)
+      - HomeOfficeGifts (ETSY – ev/ofis)
+    plans:
+      - Amazon FBA
+      - Kendi yurtdışı e-ticaret sitesi
+  product_lines:
+    horeca: Menaj takımları, masa rezerveleri ve numaraları, menü kapları, bahşiş kutuları, sunum ve servis ürünleri
+    upcoming: Kurumsal hediyelik ürünler, anne–bebek ürünleri, ev–ofis dekoratif ürünleri
+  software_projects:
+    - TT Panel (aktif geliştirme – e-ticaret + otomasyon paneli)
+  founder_role:
+    name: Bilal Kara
+    roles:
+      - Teknik geliştirme (web, yazılım, TT Panel)
+      - Grafik ve dijital tasarım (CorelDRAW, Illustrator)
+      - Dijital pazarlama (Ads, ETSY, sosyal medya)
+      - Operasyon yönetimi (sipariş, fatura, planlama, personel)
+  strategic_goals:
+    - Yurtiçi ve yurtdışı satış kanallarının büyütülmesi
+    - Süreçlerin otomasyonu ve panelleşme
+    - Finansal denge ve yatırım gücü kazanımı
+    - Üretim altyapısının teknolojiyle desteklenmesi
+  automation_needs:
+    - Fatura ve kargo işlemlerinin dijitalleştirilmesi
+    - Sipariş – üretim – stok sürecinin otomatik yönetimi
+    - Satış platformlarının tek panelden kontrolü
+    - Finans ve raporlama entegrasyonları
+    - WA, IG, Messneger gibi mesajlaşma kanallarının entegrasyonu
+    - Sosyal medya ve reklam yönetimi entegrasyonu
+  financial_targets:
+    - Yurtiçi gelir hedefi: 6M ₺ → 9M ₺
+    - Tasarruf hedefi: 250gr altın birikimi
+    - Borçların kapanması: bireysel ve döviz bazlı borçların sıfırlanması
+  performance_reports:
+    domestic_sales:
+      - 2020: { orders: 619, revenue: "232K ₺", roas: 10.5 }
+      - 2021: { orders: 999, revenue: "532K ₺", roas: 9.9 }
+      - 2022: { orders: 1169, revenue: "1.23M ₺", roas: 11.5 }
+      - 2023: { orders: 1779, revenue: "3.79M ₺", roas: 9.3 }
+      - 2024: { orders: 1296, revenue: "5.91M ₺", roas: 11.4 }
+    etsy_cafe_restaurant:
+      - 2022: { orders: 288, usd_revenue: "$41,273", cost_rate: "23.81%" }
+      - 2023: { orders: 408, usd_revenue: "$51,124", cost_rate: "22.16%" }
+      - 2024: { orders: 340, usd_revenue: "$40,949", cost_rate: "26.70%" }
+  operations:
+    delivery_time: "3 iş günü üretim + 1 gün kargo"
+    current_challenges:
+      - Manuel faturalama ve kargo süreci
+      - Üretim ve planlama sistemsizlikleri
+    growth_targets:
+      - 1 idari ve 1 atölye çalışanı artışı
+      - Süreçlerin TT Panel ile otomasyonu
+  vision_note: >
+    Tasarım Teknesi sadece bir ticari yapı değil; fikirden ürüne, süreçten sisteme geçişin sahadaki halidir.  
+    Hem üretici hem geliştirici olarak teknik yetkinliğin ve girişim vizyonunun pratiğe döküldüğü alandır.
+
+habits:
+  working_style: >
+    Üretim sürecini sprint temelli, modül modül ilerletir.  
+    Planlamayı önceler, ardından yapılandırma ve kodlama gelir.  
+    GPT ile adım adım, iteratif bir geliştirme tarzını tercih eder.
+
+  review_flow: >
+    Her görev ve sprint sonunda üretilen dosya gözden geçirilir.  
+    Gerekirse düzeltme, sadeleştirme ve tekrar yazım yapılır.  
+    Kod kadar anlam ve organizasyona da önem verir.
+
+  format_preference:
+    - Markdown formatı
+    - Kodlar mutlaka `code block` içinde
+    - Tablolar sade markdown tablosu olarak
+    - Dış format yalnızca açık istekle
+
+  feedback_style:
+    - Direktif verirken açık ve doğrudan yazar
+    - Geri bildirim vermedikçe GPT devam edebilir
+    - Fazla açıklama değil, doğrudan üretim beklenir
+
+  tool_usage:
+    - Terminal tabanlı üretim ve klasör düzeni
+    - Genişletilmiş açıklamalar yerine kısa notlar tercih edilir
+    - Önce yapı → sonra içerik → sonra kod mantığı benimsenir
+
+notes:
+  - Bu dosya, GPT’nin Bilal Kara ve Tasarım Teknesi hakkında bağlamsal bilgi sahibi olmasını sağlar.
+  - GPT, tüm üretim eşliklerinde bu dosyadaki kimlik, yapı, tarz ve ihtiyaçları göz önünde bulundurmalıdır.
+  - Tavsiye, yorum, öneri ve teknik karar süreçlerinde bu dosya referans kabul edilir.
+  - `identity` ve `company` bölümleri sabittir; zamanla `habits` kısmı genişletilebilir.
+  - Bu dosya `memory.yaml` ile birlikte okunur ancak onun yerine geçmez.
+  - Üretim davranışları `gpt-identity.yaml`, sprint takibi `memory.yaml`, bağlam bilgisi bu dosya üzerinden yürütülür.
+  - Bu dosyaya GPT tarafından içerik eklenmez; yalnızca kullanıcı güncellemesiyle değişir.
+  - GPT yalnızca bu dosyadaki bilgiyi okur, yorumlar ve uygulamaya rehber olarak alır.

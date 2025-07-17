@@ -1,0 +1,86 @@
+# -----------------------------
+# 🚀 Node.js ve Paket Yöneticileri
+# -----------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# -----------------------------
+# 🔧 Build ve Derleme Çıktıları
+# -----------------------------
+dist/
+build/
+.next/
+.nuxt/
+.cache/
+.temp/
+.vite/
+/output/
+
+# -----------------------------
+# 🧪 Test ve Coverage
+# -----------------------------
+coverage/
+.nyc_output/
+test-results/
+tests/**/*.snap
+
+# -----------------------------
+# 📦 Ortam Dosyaları
+# -----------------------------
+.env
+.env.*
+!.env.example
+!.env.api.example
+!.env.admin.example
+!.env.public.example
+!.env.staging
+!.env.test
+
+# -----------------------------
+# 🧭 Geliştirici Araçları ve Sistem Dosyaları
+# -----------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# -----------------------------
+# 🐳 Docker ve Servis Verileri
+# -----------------------------
+*.pid
+*.sock
+docker-compose.override.yml
+services/**/data/
+services/**/buckets/
+services/**/volumes/
+services/traefik/acme.json
+
+# -----------------------------
+# 🧪 Playground / Geliştirme Alanları
+# -----------------------------
+sandbox/
+examples/
+tmp/
+local/
+
+# -----------------------------
+# 🔐 Prisma
+# -----------------------------
+prisma/migrations/
+prisma/dev.db
+prisma/dev.db-journal
+
+# -----------------------------
+# 🤖 GPT Sistem Dosyaları
+# -----------------------------
+gpt/memory-system.yaml
+
+# -----------------------------
+# ✔️ Takip Edilecek Boş Klasörler İçin
+# -----------------------------
+!.gitkeep
