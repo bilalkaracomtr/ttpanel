@@ -39,7 +39,8 @@ working_state:
   active_task_index: 0
   updated_at: 2025-07-15
   tasks:
-    - "05-roadmap.md dosyasını güncelle ve buraya görev ekle"
+    - "05-roadmap.md dosyası detaylı biçimde incelenecek; tüm bölümler güncellenecek, Faz 1 sprint görevleri yeniden yapılandırılacak."
+    - "memory.yaml içindeki working_state.tasks alanı için yeni ve güncel görev listesi tanımlanacak."
 
 timeline:
   - session: 2025-07-02
