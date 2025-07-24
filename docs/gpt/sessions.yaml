@@ -1,0 +1,93 @@
+sessions:
+  title: "Üretim Günlüğü"
+  description: >
+    TT Panel projesine ait haftalık üretim kayıtlarının, planlama ve kodlama sürecine göre
+    tarihli olarak tutulduğu günlüktür. Faz, sprint ve modül ilerlemeleri bu yapı altında takip edilir.
+  structure:
+    weeks: >
+      Haftalık bloklar halinde düzenlenmiş üretim kayıtları. Her hafta, o haftaya ait günler ve
+      o günlerde yapılan üretim faaliyetleri ile birlikte tutulur.
+    summary:
+      production: >
+        Yol haritasında tanımlı modül, görev ve komutlara bağlı teknik üretim çıktıları.
+        (Örnek: API, admin, shop, test, seed, dosya, Makefile vs.)
+      meta: >
+        GPT üretim sisteminin kendisine dair yapısal düzenlemeler, kural tanımları ve üretim mantığı.
+        (Örnek: `sessions.yaml` yapısı değişti, `gpt-meta.yaml` kuralları güncellendi.)
+      other: >
+          Yol haritası dışı ama proje içi zihinsel katkılar:
+          öğrenme, keşif, sorgulama, değerlendirme ve niyet çalışmaları.
+  weeks:
+    - week: "2025-07-21 - 2025-07-27"
+      days:
+        - date: "2025-07-21"
+          faz: "planning"
+          sprint: "planning"
+          summary:
+            meta:
+              - "`sessions.yaml` ilk kez oluşturuldu; haftalık blok yapısıyla tüm geçmiş oturumlar aktarıldı ve anahtar yapısı tanımlandı."
+              - "`gpt-meta.yaml` dosyası blok blok incelendi; tekrarlar temizlendi, `behavior` kuralları sade ve tutarlı hale getirildi."
+              - "`modules` yapısı klasör ağacıyla eşleştirildi; `concept` ve `notes` alanları optimize edildi."
+              - "`tech` ve `workspace` bölümleri güncellendi, gereksiz tekrarlar kaldırıldı."
+              - "`memory:` alanı tamamen kaldırıldı; faz ve sprint bilgisi artık yalnızca `roadmap.stage` içinde tutuluyor."
+              - "`roadmap.stage.updated_at` alanı şimdilik korunuyor, ihtiyaç kalmazsa ileride kaldırılacak."
+              - "`behavior.planning` kuralları yeniden yazıldı; üretim yalnızca `roadmap.phases[*].sprints[*].modules` ve gerektiğinde `roadmap.phases[*].sprints[*].tasks` alanlarına göre yürütülüyor."
+              - "Modül üretimi tanımı genişletildi: Her modül, API, admin, shop, test, seed, i18n ve dokümantasyon dahil tüm bileşenleriyle birlikte tek blok olarak ele alınıyor."
+              - "`sessions.yaml` dosyasının rolü yeniden tanımlandı: Teknik oturum değil, üretim günlüğü olarak kullanılıyor."
+              - "Faz 1 tüm sprintleri tamamlandı: Sprint 1’den Sprint 10’a kadar tüm `modules`, `tasks` ve `done_criteria` alanları netleştirildi."
+              - "Her sprint için versiyon etiketi belirlendi (`v0.1.0 → v1.0.0`) ve GPT üretim davranışıyla birebir uyumlu hale getirildi."
+              - "Sprint 10’daki modül faz karışıklığı fark edildi, düzeltildi ve sprint yalnızca yayınlama & geçiş odaklı olarak yeniden kurgulandı."
+              - "2025-07-02'den itibaren günlük kayıt disiplini oturdu; 20 gün boyunca üretim bilinci inşa edildi."
+              - "Bu süreçte `gpt-meta.yaml`, `profile-context.yaml` ve `sessions.yaml` dosyaları onlarca kez evrim geçirdi; sistem sadeleşti ve netleşti."
+              - "Fazlar, sprintler, modüller ve üretim rehberi artık birbirine tamamen entegre; GPT üretim sistemi kullanıma hazır."
+        - date: "2025-07-22"
+          faz: "planning"
+          sprint: "planning"
+          summary:
+            meta:
+              - "session.yaml > summary alanına `production`, `meta` ve `other` bölümleri eklendi."
+              - "**Planlama tamamlandı; Faz 1 – Sprint 1 resmen başlamış kabul edildi.**"
+            other:
+              - "NestJS framework felsefesi ve modüler yapısı üzerine derinlemesine inceleme yapıldı."
+              - "Prisma, Drizzle, MikroORM, TypeORM gibi ORM araçları karşılaştırıldı. Prisma'nın kullanım kolaylığı ve esnekliği öne çıktı."
+              - "TT Panel projesi için Makefile komutları ve script yapısı belirlendi. docs/guide/makefile-guide.md dosyası oluşturuldu."
+              - "TT Panel üretim mantığı ve felsefesi üzerine kapsamlı bir değerlendirme yapıldı."
+              - “Modüllerin roadmap içindeki veri bağımlılıklarına göre sıralanması gündeme alındı; ancak MVP hedefi açısından gerekli olmadığı değerlendirildi. Mükemmeliyetçi yaklaşım yerine, modüllerin bağımsız ve iteratif biçimde üretileceği bir yapı tercih edildi.”
+              - "**Planlama tamamlandı; Faz 1 – Sprint 1 resmen başlamış kabul edildi.**"
+        - date: "2025-07-23"
+          faz: "faz1"
+          sprint: "sprint1"
+          summary:
+            production:
+              - "Tüm `.env.*` dosyaları `config/env/` klasörüne taşındı ve `docker-compose.yml` içinde yolları güncellendi."
+              - "`api` servisi için `test` ve `prod` ortam dosyaları eklendi."
+              - "Ortam ayrımı (dev / test / prod) sistemi netleştirildi."
+              - "`Makefile` komutları (up, down, migrate, seed, test) doğrulandı."
+              - build.context ve dockerfile yolları düzenlendi (apps/* + config/docker/*)
+              - healthcheck tanımları yazıldı (api, admin, shop)
+              - volume mount hatası (postgres/data) çözüldü
+              - Redis requirepass hatası düzeltildi (komut sabitlendi)
+              - make up ile tüm sistem ayağa kaldırıldı
+              - NestJS ve Nuxt 3 projeleri bootstrap edildi (api, admin, shop)
+              - "Sprint 1 modül dışı temel altyapı görevleri başarıyla tamamlandı."
+              - "Veritabanı migration ve seed işlemleri başarıyla gerçekleştirildi."
+              - "Pgweb üzerinden veritabanı erişimi ve tablolar doğrulandı."
+              - "Test altyapısı (Vitest, Supertest, Cypress) ve UI bileşen geliştirme sonraki sprintlere bırakıldı."
+              - "Sprint 1 önceliği, çekirdek modüllerin (auth, user, role vb.) geliştirilmesine hazır hale getirilmek oldu."
+              - "Sprint 1 kapsamındaki `system/access` modülleri için üretim sıralaması belirlendi: `role` → `permission` → `user` → `auth` → `token`. Bu sıralama, veri ilişkileri ve bağımlılık zincirine göre planlandı. Shop arayüzü bu sprintte yer almayacak; tüm geliştirme sadece API ve Admin tarafını kapsayacak."
+            meta:
+              - "Dosya ve klasör isimlendirmelerinde kebab-case, YAML içi anahtar adlandırmalarında ise snake_case standardı benimsendi. gpt-identity anahtarı gpt_identity olarak güncellendi."
+              - "`gpt-meta.yaml > workspace` bloğu proje yapısıyla uyumlu hale getirildi."
+            other:
+              - "Ortam yönetimi ve kullanım mantığı üzerine detaylı açıklamalar yapıldı."
+              - "`env-guide.md` oluşturularak ortam rehberi tamamlandı."
+        - date: "2025-07-24"
+          faz: "faz1"
+          sprint: "sprint1"
+          summary:
+            production:
+              - "İlk git deposu oluşturuldu; tüm klasör yapısı ve .gitignore ile birlikte yapılandırıldı. Boş klasörler `.gitkeep` ile takip edildi. İlk commit '🎉 İlk yapılandırma – v0.0.0' olarak tanımlandı ve `v0.0.0` etiketi ile GitHub'a gönderildi."
+              - "Sprint üretimi izole yürütülmek üzere faz1-sprint1-access adlı geliştirme branch’i açıldı. Bu branch üzerinde auth, user, role, permission, token modülleri geliştirilecek. Sprint sonunda main dalına birleştirme planlandı."
+            meta:
+              - "`profile-context.yaml` dosyası `context.yaml` olarak değiştirildi. Dosya içeriği güncellendi."
+            other:
