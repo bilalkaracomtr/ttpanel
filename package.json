@@ -1,0 +1,16 @@
+{
+  "name": "ttpanel",
+  "version": "1.0.0",
+  "description": "Modüler, API-first ve geliştirici dostu bir dijital yönetim paneli. TT Panel; e-ticaret, içerik, üretim, finans ve entegrasyon süreçlerini tek noktadan yönetmek için tasarlanmış açık mimarili bir sistemdir.",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No global test. Use make mt or module-specific tests.\" && exit 0"
+  },
+
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "tsconfig-paths": "^4.2.0",
+    "ts-node": "^10.9.2"
+  }
+}

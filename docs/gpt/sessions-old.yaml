@@ -1,0 +1,217 @@
+sessions:
+  - week: "2025-06-30 - 2025-07-06"
+    days:
+      - date: "2025-07-02"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "Proje hedefleri, modül yapısı ve kullanılacak teknolojiler değerlendirildi"
+          - "`01-goals.md`, `02-modules.md`, `04-tech.md` dosyalarının yazımına karar verildi"
+          - "Yol haritası planlandı, `04-roadmap.md` dosyası belirlendi"
+
+      - date: "2025-07-03"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "Teknik üretim süreci başlatıldı, GPT yapı kurucu olarak devreye alındı"
+          - "Aşağıdaki sistem dosyaları oluşturuldu: `00–README.md`, `01–goals.md`, `02–modules.md`, `03–tech.md`, `04–roadmap.md`, `gpt-identity.yaml`, `gpt-prompt.txt`, `gpt-file-format.md`, `memory.yaml`, `memory-system.yaml`, `memory-tasarimteknesi.md`"
+          - "Modül yapısı, faz planı, teknoloji yığını ve GPT davranışları tanımlandı"
+
+      - date: "2025-07-04"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "Yerel Docker ortamı kuruldu"
+          - "Git ve GitHub kullanımına dair temel bilgiler öğrenildi"
+  - week: "2025-07-07 - 2025-07-13"
+    days:
+      - date: "2025-07-07"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "GPT ile mimari kavramlar ve proje yapılandırmaları çalışıldı"
+
+      - date: "2025-07-08"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "Büyük ölçekli projelerde klasör yapısı üzerine öğrenme derinleştirildi"
+
+      - date: "2025-07-09"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "TT Panel için temel mimari kararlar ve geliştirme prensipleri belirlendi"
+
+      - date: "2025-07-10"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "TT Panel’in klasör yapısı ve servis mimarisi kesinleştirildi"
+
+      - date: "2025-07-11"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "`memory-tasarimteknesi.md` ve `memory-system.yaml` birleştirilerek güncellendi"
+          - "`04-roadmap.md` içeriğinden bazı bölümler çıkarılarak `05-learning-sandbox.md` dosyasına aktarıldı"
+          - "Tüm rehber dosyaları (`00–05.md`) ve GPT sistem dosyaları revize edildi"
+          - "`05-learning-sandbox.md` dosyasının adı `05-setup.md` olarak değiştirildi"
+
+      - date: "2025-07-12"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "`04-roadmap.md` içeriği `05-setup.md` dosyasına aktarıldı"
+          - "`05-setup.md` dosyasının adı `01-beginning.md` olarak değiştirildi"
+          - "Dosya sıralaması yeniden düzenlendi: `00–README.md`, `01-beginning.md`, `02–goals.md`, `03–modules.md`, `04–tech.md`, `05–roadmap.md`, `gpt-identity.yaml`, `gpt-prompt.txt`, `gpt-file-format.md`, `memory.yaml`, `memory-system.yaml`"
+          - "İlk sprint planı oluşturuldu"
+
+      - date: "2025-07-13"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "GPT sistem dosyaları `docs/gpt/system/` klasörüne taşındı"
+          - "Tüm sistem dosyaları gözden geçirilerek içeriksel ve yapısal olarak düzenlendi"
+  - week: "2025-07-14 - 2025-07-20"
+    days:
+      - date: "2025-07-14"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "`projects/ttpanel/` klasörü oluşturuldu"
+          - "`apps/`, `modules/`, `services/`, `config/`, `tests/`, `scripts/`, `packages/` dizinleri açıldı"
+          - "Her servis için `.env` ve `.env.example` dosyaları konumlandırıldı"
+          - "`docker-compose.yml` yapılandırıldı, ortak `traefik` ağı tanımlandı"
+          - "PostgreSQL, Redis, MinIO, Mailpit ve PGWeb servisleri kuruldu"
+          - "Her servis için `env` ve `Dockerfile` düzenlemeleri yapıldı"
+          - "Ortam değişkenleri `.env.*` dosyaları ile izole edildi"
+          - "Subdomain yapısı `.test` uzantısıyla güncellendi: `api`, `admin`, `shop`, `mail`, `db`"
+          - "Makefile hazırlandı, `make up`, `make reset`, `make logs`, `make psql` komutları tanımlandı"
+          - "Prisma kurulumu Sprint 1 kapsamına alındı"
+          - "`schema.prisma`, migration ve seed yapısı roadmap'e eklendi"
+
+      - date: "2025-07-15"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "`memory.yaml` içindeki `mode:` alanı kaldırıldı"
+          - "Üretim mantığı `working_state` ve `timeline` üzerinden yürütülmeye başlandı"
+          - "`working_state` içine `phrase` ve `sprint` alanları eklendi"
+          - "`timeline` içeriği sadeleştirildi, günlük session dosyalarına bağlandı"
+          - "`timeline` artık `docs/gpt/sessions/YYYY-MM-DD.md` dosyalarını referans alıyor"
+          - "2025-07-02 → 2025-07-13 süreci tek bir session dosyasında özetlendi"
+          - "`2025.07.02.md` dosyası oluşturuldu"
+          - "`gpt-identity.yaml` dosyası güncellendi: `output_policy`, `working_style` alanları revize edildi"
+          - "`05-roadmap.md` dosyasındaki `mode:` referansları kaldırıldı"
+          - "`00-README.md` dosyasında sıralama ve klasör odaklı yapı düzeltildi"
+          - "`production-guide.md` dosyası oluşturuldu ve `docs/gpt/notes/` içine eklendi"
+          - "`gpt-file-format.md` dosyasına session belgeleri için özel kurallar ve örnek şablon eklendi"
+          - "Aşağıdaki dosyalar eklendi: `production-guide.md`, `2025.07.02.md`, `git-strategy.md`, `.gitignore`, `README.md`, `CHANGELOG.md`"
+          - "Proje klasör yapısı `tree` çıktısıyla gözden geçirildi, tüm ana dizinler oluşturuldu"
+          - "`docs/gpt/` altında `system/`, `sessions/`, `notes/` klasörleri belirlendi"
+          - "`06-workspace.yaml` dosyası oluşturuldu, ortam ve servis yapılandırmaları bu dosyada toplandı"
+          - "`.env` dosyaları `path`, `description`, `content` formatında işlendi"
+          - "Git versiyonlama yapısı tanımlandı: `main`, `feature/`, `hotfix/`, `sandbox`"
+          - "GitHub bağlantısı ve ilk commit atıldı: `chore: başlangıç sistemi ve GPT üretim yapısı kuruldu`"
+          - "`CHANGELOG.md` dosyası `v0.0.0` etiketiyle başlatıldı"
+
+      - date: "2025-07-16"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "VSCode eklentileri yüklendi, `settings.json` dosyası hazırlandı"
+          - "GitHub Copilot kurulumu yapıldı, kullanım rehberi yazıldı"
+          - "Terminal yapılandırıldı, `.zshrc` ve `aliases.zsh` dosyaları ayrıştırıldı"
+          - "Powerlevel10k prompt ve Oh My Zsh dizini optimize edildi"
+          - "`extensions.json` dosyası oluşturuldu"
+          - "`copilot-guide.md` ve `vscode-guide.md` dosyaları eklendi"
+          - "NestJS mimarisi ve temel yapı taşları örneklerle öğrenildi"
+          - "`main.ts` → `AppModule` → `HelloModule` → `HelloController` → `HelloService` zinciri kuruldu"
+          - "Controller, Service, Module görevleri ve decorator yapıları test edildi"
+          - "`@Query()`, `@Param()`, `@Body()` kullanımı öğrenildi"
+          - "`CreateHelloDto` oluşturuldu, `class-validator` ile doğrulama kuralları uygulandı"
+          - "`ValidationPipe` global olarak tanımlandı (`whitelist`, `forbidNonWhitelisted`, `transform`)"
+          - "`curl` ve Postman ile testler yapıldı, otomatik hata mesajları incelendi"
+          - "`@Transform()` ile veri dönüşümleri denendi"
+          - "`@typescript-eslint/no-unsafe-call` kuralı DTO dosyalarında devre dışı bırakıldı (`eslint.config.mjs` override)"
+
+      - date: "2025-07-17"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "`modules/` klasörünün proje kökünde kalmasına karar verildi"
+          - "DDD ve mikroservis yaklaşımı için bu yapının uygun olduğu teyit edildi"
+          - "`apps/`, `modules/`, `packages/` klasörlerinin görevleri netleştirildi"
+          - "Monolit içinde `commerce`, `content`, `system` modülleriyle başlama kararı alındı"
+          - "Frontend tarafı API client olarak çalışacak şekilde kurgulandı"
+          - "Vendure, Shopware, Drupal karşılaştırmaları üzerinden kavramsal değerlendirmeler yapıldı"
+          - "Klasör yapısının son hali netleştirildi ve listelendi"
+          - "Başta `modules/` klasörünün frontend ilişkili sanıldığı, sonra NestJS yapısıyla bunun düzeltildiği öğrenildi"
+          - "Headless yapı ve bağımsız frontend ilişkisi kavramsal olarak netleştirildi"
+          - "GPT üretim sistemine dair tüm davranış, yetki ve çıktı kuralları güncellendi"
+          - "`gpt-identity.yaml`, `memory.yaml`, `01-03.md` dosyaları revize edildi"
+          - "`gpt-prompt.txt` kaldırıldı, içeriği editör talimatlarına aktarıldı"
+          - "GPT çıktı kuralları: `code block`, geçerli uzantı, dosya bağlantısı yasağı gibi maddelerle netleştirildi"
+          - "GPT üretimi yalnızca `memory > working_state` içeriğine göre sınırlandırıldı"
+          - "`06-workspace.yaml` dosyasının adı `memory-workspace.yaml` olarak değiştirildi ve `memory` altına taşındı"
+          - "`00-README.md` dosyasının kaldırıldığı teyit edildi, içeriği `gpt-identity.yaml` içinde referanslandı"
+          - "`notes/` klasörü `guide/` olarak yeniden adlandırıldı"
+          - "`sessions` (çoğul) ve `guide` (tekil) adlandırmaları dilsel olarak netleştirildi"
+          - "`gpt-identity.yaml` dosyasına `project.name`, `type`, `description` alanları eklendi"
+          - "`memory.yaml` sadeleştirildi, sadece görev izni ve zaman çizelgesi yönetimi kaldı"
+          - "`scope:` alanı madde listesi formatına dönüştürüldü"
+          - "`guide:` alanı tanımlandı, `notes:` kaldırıldı"
+          - "Tüm `01–05.md` dosyaları `gpt-identity.yaml` kurallarına göre kontrol edildi ve uyumlu bulundu"
+          - "`memory-workspace.yaml` sadece ortam bilgisi olarak yeniden konumlandırıldı"
+          - "`gpt-file-format.md` üretim biçimi kurallarına göre kontrol edildi"
+          - "Üretimin yalnızca `working_state` kapsamına göre yapılması tüm sistemde geçerli kılındı"
+          - "`sessions/` sürece ait üretim günlüğü; `guide/` statik karar belgeleri olarak ayrıştırıldı"
+          - "Dosyalar arası sorumluluk dağılımı netleştirildi (`identity`, `memory`, `workspace`, `sessions`, `guide`)"
+
+      - date: "2025-07-18"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "`modules/` dizini yeniden yapılandırıldı: `content/` grubu `commerce/` altına taşındı"
+          - "`integration/` modülü kaldırıldı, alt modüller `automation/` altına taşındı"
+          - "`reporting/` grubu `commerce/` altında ayrı bir yapı olarak tanımlandı"
+          - "`apps/public` klasörü `apps/shop` olarak yeniden adlandırıldı"
+          - "`apps/{api, admin, shop}` uygulamaları birlikte geliştirilecek şekilde planlandı"
+          - "Her modül tamamlandığında admin ve shop arayüzleri birlikte ele alınacak"
+          - "`02-goals.md`, `03-modules.md`, `04-tech.md` dosyaları yapısal kararlara göre güncellendi"
+          - "Tüm modül adlandırmaları gözden geçirildi, tekrar eden ifadeler ayıklandı"
+          - "`tests/integration/` klasörünün anlamı netleştirildi, teknik açıklama eklendi"
+          - "`docs/gpt/sessions` klasörü tarih formatına göre düzenlendi"
+          - "`gpt/system`, `guide`, `sessions/` klasör yapısı netleştirildi"
+          - "`05-roadmap.md` dosyasının sıfırdan yazılmasına karar verildi"
+          - "Yeni klasör yapısı: `modules/` altında `commerce`, `automation`, `system` grupları tanımlandı"
+          - "`apps/shop` adı altında frontend yapısı sabitlendi"
+          - "Modüllerin hem API hem admin hem shop tarafında birlikte geliştirileceği kararlaştırıldı"
+          - "E-ticaret süreci 3 ana faza bölündü (temel, gelişmiş, operasyonel)"
+          - "Tüm roadmap faz sıralaması yeniden tanımlandı, 7 faza çıkarıldı"
+          - "Modüller `group / subgroup / module` formatında listelendi ve fazlara atandı"
+          - "Bazı modüller ileri fazlara taşındı (wishlist, testimonial, note, login-history)"
+          - "Her faz için: hedef, modüller, tamamlanma kriterleri ve sprint alanları oluşturuldu"
+          - "`05-roadmap.md` dosyasının başlığı, YAML bloğu ve içeriği yeniden tasarlandı"
+          - "Roadmap içine entegrasyon, takip ve revizyon stratejisi eklenecek şekilde planlandı"
+          - "Variant yapısı detaylı konuşuldu, modül klasörleri ayrı ayrı değerlendirildi"
+          - "Faz 2 ve Faz 4 modül kapsamları sadeleştirildi"
+          - "Faz sıralaması yönlendirmene göre yeniden düzenlendi"
+          - "Tüm kararlar sohbet içinde birlikte alındı"
+
+      - date: "2025-07-19"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "GPT sistemindeki dosyaların dağınık yapısı üzerine konuşuldu, tümünün `gpt-meta.yaml` içinde toplanmasına karar verildi ve dosya oluşturuldu"
+          - "`memory-system.yaml` içeriğinin repoya dahil edilmemesi gerektiği için ayrı tutulmasına karar verildi ve `profile.context.yaml` dosyası oluşturuldu"
+          - "`gpt-identity.yaml`, `memory.yaml`, `02–06.md` dosyaları `gpt-meta.yaml` içine taşındı; `memory-system.yaml` → `profile.context.yaml` oldu; `gpt-file-format.md` kaldırıldı"
+
+      - date: "2025-07-20"
+        faz: planlama
+        sprint: planlama
+        summary:
+          - "TT Panel projesindeki tüm modüller üzerine sohbet edildi, `modules` anahtarı ve `modules/` klasörü güncellendi"
+          - "`goals`, `tech`, `roadmap` içerikleri yeniden düzenlendi"
+          - "Roadmap fazları sıfırdan belirlendi, Faz 1 sprintleri oluşturuldu"

@@ -1,0 +1,188 @@
+context:
+  title: "GPT Üretim Bağlamı – Bilal Kara & Tasarım Teknesi"
+  description: >
+    Bu dosya GPT’nin Bilal Kara’nın üretim tarzını, teknik ortamını ve şirket bağlamını anlamasını sağlar.
+    Teknik öneriler, kod yapıları ve süreç eşlikçiliği bu profil çerçevesinde yürütülür.
+  profile:
+    name: "Bilal Kara"
+    birth_date: "1983-02-17"
+    location: "Selçuklu, Konya, Türkiye"
+    hometown: "Yeniceoba, Cihanbeyli / Konya"
+    family:
+      spouse: "Aynur Kara (eş, Jeoloji Mühendisi, ev hanımı)"
+      children:
+        - "Siraç Mert"
+        - "Mustafa Kerem"
+        - "Nergiz Nil"
+      parents:
+        mother: "Semra Kara (anne)"
+        father: "Arap Kara (baba, vefat 2016)"
+      siblings:
+        - "Rabia Özgün (kız kardeş)"
+        - "Hazal Kara (kız kardeş)"
+    life_mission: >
+      Anlamlı, üretken ve dengeli bir yaşam sürmek.
+      Aile, toplumsal fayda ve bireysel gelişimi dengeleyerek
+      hem dünyada hem ahirette faydalı işler yapmak.
+    core_values:
+      - "Anlam odaklılık"
+      - "Ahlaki bütünlük"
+      - "Aile önceliği"
+      - "Bilgiyle üretim"
+      - "Sadelik ve sistem"
+      - "Rehberlik ve ilham"
+    core_domains:
+      - "Eğitim ve öğretmenlik"
+      - "Dijital girişimcilik"
+      - "Yazılım ve sistem geliştirme"
+      - "Bireysel üretkenlik sistemleri"
+      - "Teknoloji tabanlı içerik üretimi"
+    life_timeline:
+      - 1983–2001: "Kökler ve temel değerlerin oluşumu"
+      - 2002–2010: "Eğitim – mesleğe giriş – liderlik"
+      - 2010–2021: "Teknik derinleşme – dijital eğitim"
+      - 2021–2024: "Girişimcilik – sistem kurma – özgürlük"
+      - 2025+: "Bütünleme – sürdürülebilirlik – vizyon"
+    profession:
+      - "Öğretmen (Bilgisayar ve Öğretim Teknolojileri Öğretmeni ve BT Rehber Öğretmeni)"
+      - "Tasarım Teknesi kurucu ortağı"
+      - "Girişimci, geliştirici, sistem kurucusu"
+      - "Solo sistem kurucusu"
+    personality:
+      - "Sistematik ve düzenli çalışma alışkanlığı"
+      - "Teknik altyapıya hâkim, mimari karar süreçlerinde güçlü"
+      - "Karar almada netlik ve süreç takibinde disiplinli"
+      - "Gereksiz görsellikten uzak, temiz kod ve net yapı odaklı"
+    technical_setup:
+      device: 'Apple MacBook Pro 14" (M2 Pro, 16 GB RAM, 512 GB SSD) ve 24" Dell Ultrasharp'
+      development_environment: "Visual Studio Code, Zsh + Oh My Zsh terminal, Git ve GitHub (öğrenme sürecinde), Docker ve Docker Compose, PostgreSQL, MySQL, Redis gibi yerel hizmetler"
+      working_directory: "/Volumes/Workspace/devroot"
+      preferences: "Terminal tabanlı sade yapı, İzole ve kontrollü geliştirme ortamı, Tek klasörde tüm projelerin organizasyonu"
+      software_stack:
+        known:
+          ["PHP", "MySQL", "JavaScript", "HTML", "CSS", "SCSS", "Bootstrap"]
+        learning:
+          [
+            "Node.js",
+            "NestJS",
+            "Vue.js",
+            "Nuxt.js",
+            "TailwindCSS",
+            "Pinia",
+            "PostgreSQL",
+            "Prisma",
+            "Prettier",
+            "Eslint",
+            "PHPUnit",
+            "Vitest",
+          ]
+      tools:
+        design:
+          [
+            "CorelDRAW",
+            "Adobe Photoshop",
+            "Adobe Illustrator (aktif kullanıyor)",
+          ]
+        productivity:
+          [
+            "Notion",
+            "Microsoft To Do",
+            "Toggl",
+            "ChatGPT Plus (aktif kullanıyor)",
+          ]
+        communication: ["Google Takvim (yalnızca hatırlatıcı düzeyinde)"]
+        api: ["OpenAI API (planlı kullanım – TT Panel & içerik sistemlerinde)"]
+    style:
+      mindset:
+        - "Sistemli, modüler ve anlam temelli üretim yaklaşımına sahiptir."
+        - "Öncelikle yapıyı kurar, ardından içeriği inşa eder."
+        - "Karar almada netlik, uygulamada sadelik önceliklidir."
+      habits:
+        - "Planlı ve adım adım ilerleyen işleri tercih eder."
+        - "Yazmadan önce düşünür, yazdıktan sonra düzenler."
+        - "Tekrar eden işleri otomatize etme eğilimindedir."
+      interaction:
+        - "GPT ile birlikte üretim yaparken birlikte düşünen bir ortak gibi davranılmasını tercih eder."
+        - "Sürekli yönlendirme yerine, varsayılan üretim ve iyileştirme bekler."
+        - "Yorumdan çok yapı ve öneri ister."
+  company:
+    name: "Tasarım Teknesi"
+    type: "Kreatif üretim atölyesi + e-ticaret girişimi"
+    vision: >
+      Tasarım Teknesi, yaratıcı üretim atölyesi ve e-ticaret girişimi olarak, özgün, şık ve işlevsel ürünler sunar.
+      Hem üretici hem geliştirici olarak teknik yetkinliğin ve girişim vizyonunun pratiğe döküldüğü alandır.
+    sectors: ["HORECA"]
+    product_lines:
+      horeca: "Menaj takımları, masa rezerveleri ve numaraları, menü kapları, bahşiş kutuları, sunum ve servis ürünleri"
+      upcoming: "Kurumsal hediyelik ürünler, anne–bebek ürünleri, ev–ofis dekoratif ürünleri"
+    team:
+      size: 4
+      breakdown:
+        - admin: 2
+        - workshop: 2
+    facility:
+      office_showroom: "120 m²"
+      workshop: "120 m²"
+      warehouse: "120 m²"
+    hardware:
+      - "4 laser cutting machines"
+      - "1 3D printer"
+    founder_role:
+      name: Bilal Kara
+      roles:
+        - Teknik geliştirme (web, yazılım, TT Panel)
+        - Grafik ve dijital tasarım (CorelDRAW, Illustrator)
+        - Dijital pazarlama (Ads, ETSY, sosyal medya)
+        - Operasyon yönetimi (sipariş, fatura, planlama, personel)
+    goals:
+      strategic:
+        - Yurtiçi ve yurtdışı satış kanallarının büyütülmesi
+        - Süreçlerin otomasyonu ve panelleşme
+        - Finansal denge ve yatırım gücü kazanımı
+        - Üretim altyapısının teknolojiyle desteklenmesi
+      automation_needs:
+        - Fatura ve kargo işlemlerinin dijitalleştirilmesi
+        - Sipariş – üretim – stok sürecinin otomatik yönetimi
+        - Satış platformlarının tek panelden kontrolü
+        - Finans ve raporlama entegrasyonları
+        - WA, IG, Messenger gibi mesajlaşma kanallarının entegrasyonu
+        - Sosyal medya ve reklam yönetimi entegrasyonu
+      financial_targets:
+        - Yurtiçi gelir hedefi: 6M ₺ → 9M ₺
+        - Tasarruf hedefi: 250gr altın birikimi
+        - Borçların kapanması: bireysel ve döviz bazlı borçların sıfırlanması
+    performance_reports:
+      domestic_sales:
+        - 2020: { orders: 619, revenue: "232K ₺", roas: 10.5 }
+        - 2021: { orders: 999, revenue: "532K ₺", roas: 9.9 }
+        - 2022: { orders: 1169, revenue: "1.23M ₺", roas: 11.5 }
+        - 2023: { orders: 1779, revenue: "3.79M ₺", roas: 9.3 }
+        - 2024: { orders: 1296, revenue: "5.91M ₺", roas: 11.4 }
+      etsy_cafe_restaurant:
+        - 2022: { orders: 288, usd_revenue: "$41,273", cost_rate: "23.81%" }
+        - 2023: { orders: 408, usd_revenue: "$51,124", cost_rate: "22.16%" }
+        - 2024: { orders: 340, usd_revenue: "$40,949", cost_rate: "26.70%" }
+    operations:
+      delivery_time: "3 iş günü üretim + 1 gün kargo"
+      current_challenges:
+        - Manuel faturalama ve kargo süreci
+        - Üretim ve planlama sistemsizlikleri
+      growth_targets:
+        - 1 idari ve 1 atölye çalışanı artışı
+        - Süreçlerin TT Panel ile otomasyonu
+    platforms:
+      - "tasarimteknesi.com"
+      - "Etsy Cafe Restaurant"
+      - "Instagram"
+      - "Facebook"
+      - "Google"
+      - "Facebook Ads"
+      - "Google Ads"
+    platform_plans:
+      - "Amazon FBA"
+      - "Kendi yurtdışı e-ticaret sitesi"
+      - "TikTok"
+      - "Youtube"
+      - "Pinterest"
+      - "TikTok Ads"
+      - "Linkedin"

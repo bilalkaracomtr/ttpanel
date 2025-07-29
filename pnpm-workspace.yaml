@@ -1,0 +1,9 @@
+# pnpm-workspace.yaml
+
+packages:
+  - "apps/*"
+  - "modules/*/*"
+  - "packages/*"
+  - "scripts/*"
+
+injectWorkspacePackages: true

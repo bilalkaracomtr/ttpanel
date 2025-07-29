@@ -1,0 +1,181 @@
+sessions:
+  title: "Üretim Günlüğü"
+  description: >
+    TT Panel projesine ait haftalık üretim kayıtlarının, planlama ve kodlama sürecine göre
+    tarihli olarak tutulduğu günlüktür. Faz, sprint ve modül ilerlemeleri bu yapı altında takip edilir.
+  structure:
+    weeks: >
+      Haftalık bloklar halinde düzenlenmiş üretim kayıtları. Her hafta, o haftaya ait günler ve
+      o günlerde yapılan üretim faaliyetleri ile birlikte tutulur.
+    summary:
+      production: >
+        Yol haritasında tanımlı modül, görev ve komutlara bağlı teknik üretim çıktıları.
+        (Örnek: API, admin, shop, test, seed, dosya, Makefile vs.)
+      meta: >
+        GPT üretim sisteminin kendisine dair yapısal düzenlemeler, kural tanımları ve üretim mantığı.
+        (Örnek: `sessions.yaml` yapısı değişti, `gpt-meta.yaml` kuralları güncellendi.)
+      other: >
+        Yol haritası dışı ama proje içi zihinsel katkılar:
+        öğrenme, keşif, sorgulama, değerlendirme ve niyet çalışmaları.
+  weeks:
+    - week: "2025-07-21 - 2025-07-27"
+      days:
+        - date: "2025-07-21"
+          faz: "planning"
+          sprint: "planning"
+          summary:
+            meta:
+              - "`sessions.yaml` ilk kez oluşturuldu; haftalık blok yapısıyla tüm geçmiş oturumlar aktarıldı ve anahtar yapısı tanımlandı."
+              - "`gpt-meta.yaml` dosyası blok blok incelendi; tekrarlar temizlendi, `behavior` kuralları sade ve tutarlı hale getirildi."
+              - "`modules` yapısı klasör ağacıyla eşleştirildi; `concept` ve `notes` alanları optimize edildi."
+              - "`tech` ve `workspace` bölümleri güncellendi, gereksiz tekrarlar kaldırıldı."
+              - "`memory:` alanı tamamen kaldırıldı; faz ve sprint bilgisi artık yalnızca `roadmap.stage` içinde tutuluyor."
+              - "`roadmap.stage.updated_at` alanı şimdilik korunuyor, ihtiyaç kalmazsa ileride kaldırılacak."
+              - "`behavior.planning` kuralları yeniden yazıldı; üretim yalnızca `roadmap.phases[*].sprints[*].modules` ve gerektiğinde `roadmap.phases[*].sprints[*].tasks` alanlarına göre yürütülüyor."
+              - "Modül üretimi tanımı genişletildi: Her modül, API, admin, shop, test, seed, i18n ve dokümantasyon dahil tüm bileşenleriyle birlikte tek blok olarak ele alınıyor."
+              - "`sessions.yaml` dosyasının rolü yeniden tanımlandı: Teknik oturum değil, üretim günlüğü olarak kullanılıyor."
+              - "Faz 1 tüm sprintleri tamamlandı: Sprint 1’den Sprint 10’a kadar tüm `modules`, `tasks` ve `done_criteria` alanları netleştirildi."
+              - "Her sprint için versiyon etiketi belirlendi (`v0.1.0 → v1.0.0`) ve GPT üretim davranışıyla birebir uyumlu hale getirildi."
+              - "Sprint 10’daki modül faz karışıklığı fark edildi, düzeltildi ve sprint yalnızca yayınlama & geçiş odaklı olarak yeniden kurgulandı."
+              - "2025-07-02'den itibaren günlük kayıt disiplini oturdu; 20 gün boyunca üretim bilinci inşa edildi."
+              - "Bu süreçte `gpt-meta.yaml`, `profile-context.yaml` ve `sessions.yaml` dosyaları onlarca kez evrim geçirdi; sistem sadeleşti ve netleşti."
+              - "Fazlar, sprintler, modüller ve üretim rehberi artık birbirine tamamen entegre; GPT üretim sistemi kullanıma hazır."
+        - date: "2025-07-22"
+          faz: "planning"
+          sprint: "planning"
+          summary:
+            meta:
+              - "`session.yaml > summary` alanına `production`, `meta` ve `other` bölümleri eklendi."
+              - "**Planlama tamamlandı; Faz 1 – Sprint 1 resmen başlamış kabul edildi.**"
+            other:
+              - "NestJS framework felsefesi ve modüler yapısı üzerine derinlemesine inceleme yapıldı."
+              - "Prisma, Drizzle, MikroORM, TypeORM gibi ORM araçları karşılaştırıldı. Prisma'nın kullanım kolaylığı ve esnekliği öne çıktı."
+              - "TT Panel projesi için Makefile komutları ve script yapısı belirlendi. docs/guide/makefile-guide.md dosyası oluşturuldu."
+              - "TT Panel üretim mantığı ve felsefesi üzerine kapsamlı bir değerlendirme yapıldı."
+              - "Modüllerin roadmap içindeki veri bağımlılıklarına göre sıralanması gündeme alındı; ancak MVP hedefi açısından gerekli olmadığı değerlendirildi. Mükemmeliyetçi yaklaşım yerine, modüllerin bağımsız ve iteratif biçimde üretileceği bir yapı tercih edildi."
+              - "**Planlama tamamlandı; Faz 1 – Sprint 1 resmen başlamış kabul edildi.**"
+        - date: "2025-07-23"
+          faz: "faz1"
+          sprint: "sprint1"
+          summary:
+            production:
+              - "Tüm `.env.*` dosyaları `config/env/` klasörüne taşındı ve `docker-compose.yml` içinde yolları güncellendi."
+              - "`api` servisi için `test` ve `prod` ortam dosyaları eklendi."
+              - "Ortam ayrımı (dev / test / prod) sistemi netleştirildi."
+              - "`Makefile` komutları (up, down, migrate, seed, test) doğrulandı."
+              - "build.context ve dockerfile yolları düzenlendi (apps/* + config/docker/*)"
+              - "healthcheck tanımları yazıldı (api, admin, shop)"
+              - "volume mount hatası (postgres/data) çözüldü"
+              - "Redis requirepass hatası düzeltildi (komut sabitlendi)"
+              - "make up ile tüm sistem ayağa kaldırıldı"
+              - "NestJS ve Nuxt 3 projeleri bootstrap edildi (api, admin, shop)"
+              - "Sprint 1 modül dışı temel altyapı görevleri başarıyla tamamlandı."
+              - "Veritabanı migration ve seed işlemleri başarıyla gerçekleştirildi."
+              - "Pgweb üzerinden veritabanı erişimi ve tablolar doğrulandı."
+              - "Test altyapısı (Vitest, Supertest, Cypress) ve UI bileşen geliştirme sonraki sprintlere bırakıldı."
+              - "Sprint 1 önceliği, çekirdek modüllerin (auth, user, role vb.) geliştirilmesine hazır hale getirilmek oldu."
+              - "Sprint 1 kapsamındaki `system/access` modülleri için üretim sıralaması belirlendi: `role` → `permission` → `user` → `auth` → `token`. Bu sıralama, veri ilişkileri ve bağımlılık zincirine göre planlandı. Shop arayüzü bu sprintte yer almayacak; tüm geliştirme sadece API ve Admin tarafını kapsayacak."
+            meta:
+              - "Dosya ve klasör isimlendirmelerinde kebab-case, YAML içi anahtar adlandırmalarında ise snake_case standardı benimsendi. gpt-identity anahtarı gpt_identity olarak güncellendi."
+              - "`gpt-meta.yaml > workspace` bloğu proje yapısıyla uyumlu hale getirildi."
+            other:
+              - "Ortam yönetimi ve kullanım mantığı üzerine detaylı açıklamalar yapıldı."
+              - "`env-guide.md` oluşturularak ortam rehberi tamamlandı."
+        - date: "2025-07-24"
+          faz: "faz1"
+          sprint: "sprint1"
+          summary:
+            meta:
+              - "`profile-context.yaml` dosyası `context.yaml` olarak değiştirildi. Dosya içeriği güncellendi."
+            other:
+              - "Köye gittim."
+        - date: "2025-07-27"
+          faz: "faz1"
+          sprint: "sprint1"
+          summary:
+            production:
+              - "`scripts/module-create.sh` dosyası oluşturuldu; modül klasörlerini ve içerik dosyalarını (service, controller, dto, test, seed vs.) otomatik üreten yapı kuruldu."
+              - "`make mc` komutu tanımlandı; `make mc system/access/role` gibi çağrılarla yeni modül oluşturulabiliyor."
+              - "`scripts/module-seed.sh` dosyası oluşturuldu; verilen modül için seed dosyasını çalıştırıyor."
+              - "`make ms` komutu tanımlandı; `make ms system/access/role` gibi çağrılarla modül bazlı seed çalıştırılabiliyor."
+              - "`scripts/module-test.sh` dosyası oluşturuldu; modülün test klasörünü çalıştırıyor."
+              - "`make mt` komutu tanımlandı; `make mt system/access/role` çağrısı ile modül testleri yürütülüyor."
+              - "`Makefile` içeriği güncellendi; `mc`, `ms`, `mt` komutları eklendi, `make help` menüsü detaylandırıldı."
+              - "`scripts/module-register.ts` eklendi. Bu betik `AppModule` içine otomatik `import` ve `imports[]` kaydı yapar."
+              - "Kök dizine ts-node, typescript ve tsconfig.json eklendi; `make mr` komutu yeniden çalışır hale getirildi."
+              - ".vscode/settings.json içine `typescript.tsdk` tanımı eklendi; VSCode artık `apps/api/node_modules` içindeki NestJS paketlerini tanıyabiliyor."
+              - "`tsconfig.json` içindeki hatalı `@nestjs/*` → `apps/api/node_modules/@nestjs/*` paths tanımı kaldırıldı; sistem kararlılığı sağlandı."
+              - "`apps/api` içinde Prisma kurulumu yapıldı (`prisma`, `@prisma/client` eklendi, `npx prisma init` ile yapı başlatıldı)."
+            meta:
+              - "`modules/` klasörünün yalnızca NestJS tabanlı backend (API) modüllerini içerdiği tanımı netleştirildi; admin ve shop arayüzlerinin `apps/` altında bağımsız uygulamalar olduğu açıklandı."
+              - "Bu ayrım `modules.concept`, `modules.notes`, `behavior.architecture` ve `behavior.coding` alanlarında kavramsal ve teknik olarak tanımlandı."
+              - "Artık frontend bileşenleri yalnızca `apps/admin` ve `apps/shop` içinde üretilecek; `modules/` yalnızca API-first üretimlere ayrılmış olacak."
+              - "`gpt-meta.yaml > gpt_identity` bloğu baştan sona gözden geçirildi; `role`, `scope`, `behavior.allowed.architecture` ve `behavior.allowed.coding` başlıkları detaylı şekilde revize edildi."
+              - "`architecture` alanına eksik kalan teknik dizin yapıları (`guard`, `pipe`, `factory`, `interceptor`, `helper` vb.) yeniden dahil edildi."
+              - "`coding` alanına test stratejisi, üretim klasör düzeni ve örnek sistem modülleri eklendi; yapı bütünlük kazandı."
+              - "`gpt-meta.yaml` içindeki `tech.tooling`, `tech.config`, `workspace.directories.apps` gibi alanlar, merkezî yapılandırma kararları doğrultusunda güncellendi."
+            other:
+              - "`docs/guide/module-guide.md` dosyası oluşturuldu; mc, ms, mt, mr komutları ve modül üretim yapısı belgelendi."
+    - week: "2025-07-28 - 2025-08-03"
+      days:
+        - date: "2025-07-28"
+          faz: "faz1"
+          sprint: "sprint1"
+          summary:
+            production:
+              - "`make mc` komutu iki modlu hale getirildi (`minimal` ve `full`); yalnızca gerekli klasörlerin üretildiği sade ve sürdürülebilir yapı benimsendi."
+              - "Modül klasör yapısına dair anlam temelli değerlendirme yapıldı; 6 temel klasör `minimal` modda varsayılan kabul edildi."
+              - "`scripts/module-create.ts`, `module-seed.ts`, `module-test.ts`, `module-register.ts` dosyaları yazıldı; CLI komutları TypeScript'e taşındı."
+              - "`scripts/*.ts` dosyalarının başına kullanım açıklamaları eklendi (örn: make mc, ms, mt, mr)."
+              - "`tsx` paketi workspace root'a devDependency olarak eklendi."
+              - "`Makefile` içindeki mc, ms, mt, mr komutları pnpm tsx uyumlu hale getirildi."
+              - "Shell script (.sh) bağımlılığı tamamen kaldırıldı; tüm CLI komutları pnpm + tsx üzerinden çağrılacak şekilde yeniden yapılandırıldı."
+              - "Ana dizindeki package-lock.json dosyası silindi, pnpm sistemine geçiş için temizlendi."
+              - "apps/api/package.json içindeki devDependencies, root package.json'a taşındı ve sıfırlandı."
+              - "`pnpm-workspace.yaml` dosyası eklendi, apps/* ve modules/*/* düzeyinde workspace tanımı yapıldı."
+              - "`pnpm-lock.yaml` dosyası ilk kez üretildi, pnpm install ile tüm bağımlılıklar merkezi olarak kuruldu."
+              - "admin ve shop uygulamaları pnpm workspace'e dahil edildi, kendi package.json dosyaları korunarak postinstall süreçleri başarıyla tamamlandı."
+              - "docs/guide/monorepo-donusum-rehberi.md dosyası oluşturuldu, mimari dönüşüm süreci belgelenmeye başlandı."
+              - "Tüm `scripts/*.sh` dosyaları silindi; CLI betikleri tamamen TypeScript (`.ts`) formatına taşındı."
+              - "`config/docker/{api,admin,shop}/Dockerfile` dosyaları pnpm ve corepack desteğiyle yeniden yazıldı; monorepo uyumlu hale getirildi."
+              - "`docker-compose.yml` dosyasına node_modules mount'u eklendi, modüller canlı izlenebilir hale getirildi."
+              - "`scripts/tsconfig.json` ve `apps/api/tsconfig.json` dosyaları root tsconfig'e extend edecek şekilde sadeleştirildi."
+              - "Ana `tsconfig.json` dosyası, `baseUrl` ve `paths` ayarlarıyla tüm modül yollarını çözecek şekilde yeniden yapılandırıldı."
+            meta:
+              - "Monorepo dönüşüm kararı netleştirildi; `modules/*/*` düzeyinde her modül grubu bağımsız `pnpm` paketi olacak şekilde yapılandırılacak."
+              - "Paket isimlendirme yapısı belirlendi: `@ttpanel/system/access`, `@ttpanel/commerce/catalog` gibi fonksiyonel namespace kullanılacak."
+              - "`modules/*/*/package.json` dosyaları henüz eklenmedi; modül üretimi başladıkça tanımlanmasına karar verildi."
+              - "Monorepo yapısında sade, anlamlı ve disiplinli ilerlenmesi için `docs/guide/monorepo-donusum-rehberi.md` rehberi oluşturulacak."
+              - "TypeScript paths içinde `modules/*/*` gibi çift yıldızlı yolların TypeScript 5+ sürümünde hata verdiği belirlendi, yapı `modules/*` şeklinde sadeleştirildi."
+              - "Tüm import path'lerinin çözülebilirliği hem VSCode hem de Docker içinde test edilerek onaylandı."
+              - "Yerel ve Docker içindeki çalışma dizinleri (`WORKDIR`) senkronize edilerek tüm yolların stabil çalışması sağlandı."
+
+            other: []
+        - date: "2025-07-29"
+          faz: "faz1"
+          sprint: "sprint1"
+          summary:
+            production:
+              - "pnpm workspace yapısı ve pnpm install süreci dün geceden bir sürü eziyet etti. Toplam 18 saatten fazla zaman harcandı."
+              - "API servisi Docker içinde localhost:3000 portuna bağlanamıyordu; app.listen içine '0.0.0.0' host'u eklenerek erişilebilir hale getirildi."
+              - "Traefik network ve label konfigürasyonları gözden geçirildi; doğru network ve port yönlendirmesi ayarlandı."
+              - "Traefik servisi, Docker içinde doğru ağa bağlı değildi, manuel restart edilerek sorun çözüldü."
+              - "Makefile içine traefik kontrol ve restart komutları eklendi, böylece traefik servisinin düzgün başlatılması sağlandı."
+              - "Admin uygulaması Nuxt 4 ile sıfırdan kuruldu, pnpm workspace yapısına dahil edildi."
+              - "Admin Dockerfile'da pnpm install sırasında 'injectWorkspacePackages' uyumsuzluğu ve frozen-lockfile hatası çıktı."
+              - "Root dizinde pnpm-lock.yaml ve node_modules silinip temiz kurulum yapılarak frozen-lockfile problemi giderildi."
+              - "Admin ve Shop uygulamalarının Dockerfile'ları monorepo uyumlu olarak güncellendi."
+              - "Shop uygulaması da sıfırdan kurulup pnpm workspace yapısına dahil edildi."
+              - "pnpm --filter komutları root dizinde çalışmazken, apps/shop içinde sorunsuz çalıştı; workspace tanımları ve pathler kontrol edildi."
+              - "Tüm containerlar (api, admin, shop, traefik vs.) sorunsuz ayağa kalktı ve trafiğe açıldı."
+              - "Makefile komutları (up, down, restart, traefik, clean vs.) üretildi ve süreç otomasyona bağlandı."
+              - "pnpm workspace packages tanımları, injectWorkspacePackages ayarları, package.json isimlendirmeleri detaylı incelendi."
+              - "Docker build sırasında cache ve katman sıralaması optimize edildi."
+              - "Nuxt config içinde dotenv kullanımı ve ortam değişkenlerinin yüklenmesi sağlandı."
+              - "Geliştirme ortamında Docker, Traefik ve pnpm entegrasyonu için kapsamlı debug yapıldı."
+              - "Workspace monorepo yapısına adaptasyon ve CI/CD için ön hazırlıklar yapıldı."
+              - "NestJS, Nuxt 4 ve pnpm workspace entegrasyonu başarıyla tamamlandı."
+              - "Makefile komutları ve Docker Compose ile tüm ortam ayağa kaldırıldı."
+              -
+              - "İlk git deposu oluşturuldu; tüm klasör yapısı ve .gitignore ile birlikte yeniden yapılandırıldı. Boş klasörler `.gitkeep` ile takip edildi. İlk commit 'İlk yapılandırma – v0.0.0' olarak tanımlandı ve `v0.0.0` etiketi ile yeniden etiketlendi."
+              - "Sprint üretimi izole yürütülmek üzere `faz1-sprint1-access` adlı geliştirme branch’i tekrar açıldı. Bu branch üzerinde auth, user, role, permission, token modülleri geliştirilecek. Geliştirme bu branch üzerinden devam edecek."
