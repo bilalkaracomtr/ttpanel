@@ -1,0 +1,27 @@
+# Stage 1: Build
+FROM node:22 AS builder
+
+WORKDIR /app
+
+COPY pnpm-lock.yaml package.json ./
+COPY pnpm-workspace.yaml ./
+COPY apps/shop ./apps/shop
+
+RUN corepack enable && corepack prepare pnpm@10.13.1 --activate
+RUN pnpm config set injectWorkspacePackages true
+RUN pnpm install --frozen-lockfile
+RUN pnpm --filter shop build
+
+# Stage 2: Production
+FROM node:22-alpine AS production
+
+WORKDIR /app
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/apps/shop/.output ./.output
+
+ENV NODE_ENV=production
+
+EXPOSE 3002
+
+CMD ["node", ".output/server/index.mjs"]
