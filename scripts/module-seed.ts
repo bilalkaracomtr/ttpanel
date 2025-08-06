@@ -1,4 +1,4 @@
-// 🌱 TT Panel - Modül Seed Çalıştırıcı
+// 🌱 TT Panel - Modül Seed Çalıştırıcı (yerel kullanım için)
 // Kullanım:
 //   make ms system/access/role
 
@@ -13,12 +13,12 @@ if (!path) {
 }
 
 const name = basename(path);
-const target = `src/modules/${path}/seed/${name}.seed.ts`;
+const target = `apps/api/src/modules/${path}/seed/${name}.seed.ts`;
 
 console.log(`🌱 Seed çalıştırılıyor → ${target}`);
 
 try {
-  execSync(`docker compose exec api npx ts-node -P tsconfig.json ${target}`, {
+  execSync(`npx tsx ${target}`, {
     stdio: 'inherit',
   });
   console.log('✅ Seed işlemi tamamlandı.');
