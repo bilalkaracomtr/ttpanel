@@ -1,0 +1,29 @@
+# Node modülleri – asla Docker image içinde olmamalı
+node_modules
+**/node_modules
+
+# pnpm dosyaları (link sistemi bozulmasın)
+.pnpm
+
+# Nuxt ve diğer frameworklerin derlenmiş klasörleri
+.nuxt
+dist
+.build
+.out
+
+# Geliştirme yardımcı dosyaları
+.vscode
+.idea
+
+# Sistem dosyaları
+.DS_Store
+Thumbs.db
+
+# Loglar ve geçici dosyalar
+npm-debug.log
+yarn-debug.log
+pnpm-debug.log
+*.log
+
+# Docker build cache (pnpm + image layer cache için
+.docker-cache
