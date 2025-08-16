@@ -1,0 +1,169 @@
+# -----------------------------
+# 🗂️ Geçici Dosyalar
+# -----------------------------
+temp/
+tmp/
+*.tmp
+
+# -----------------------------
+# 🚀 Node.js ve Paket Yöneticileri
+# -----------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.pnpm-store/
+.npm/
+.yarn/
+
+# -----------------------------
+# 🔧 Build ve Derleme Çıktıları
+# -----------------------------
+dist/
+build/
+.next/
+.nuxt/
+.cache/
+.temp/
+.vite/
+.output/
+.data/
+.server/
+*.tsbuildinfo
+
+# -----------------------------
+# 🧬 Nuxt 3 & Nitro
+# -----------------------------
+.nitro/
+.vercel/
+.netlify/
+
+# -----------------------------
+# 🧪 Test ve Coverage
+# -----------------------------
+coverage/
+.nyc_output/
+test-results/
+tests/**/*.snap
+
+# -----------------------------
+# 📦 Ortam Dosyaları
+# -----------------------------
+.env
+.env.*
+!.env.example
+!.env.api.example
+!.env.admin.example
+!.env.shop.example
+!.env.staging
+!.env.test
+
+# -----------------------------
+# 🧭 Geliştirici Araçları ve IDE
+# -----------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.idea/
+*.swp
+*.swo
+.fleet/
+.eslintcache
+.stylelintcache
+
+# Kişisel VS Code ayarları (ignore et)
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+
+# -----------------------------
+# 🐳 Docker ve Servis Verileri
+# -----------------------------
+*.pid
+*.sock
+.docker-cache/
+docker-compose.override.yml
+acme.json
+services/**/data/
+services/**/buckets/
+services/**/volumes/
+
+# -----------------------------
+# 🧰 Nginx, Log, Deploy Araçları
+# -----------------------------
+logs/
+*.log
+*.gz
+*.zip
+*.tgz
+*.tar
+
+# -----------------------------
+# 🚧 Geliştirme ve Derleyici Kalanları
+# -----------------------------
+.terraform/
+local/
+.turbo/
+
+# -----------------------------
+# 🧪 Playground ve Geliştirme Alanları
+# -----------------------------
+sandbox/
+examples/
+tmp/
+
+# -----------------------------
+# 🔐 Prisma (API Modülü)
+# -----------------------------
+apps/api/prisma/dev.db
+apps/api/prisma/dev.db-journal
+apps/api/prisma/generated/
+
+# -----------------------------
+# 🔑 TT Panel Güvenlik
+# -----------------------------
+config/ssl/*.key
+config/ssl/*.pem
+config/ssl/*.crt
+!config/ssl/README.md
+*.backup
+*.bak
+*.sql.gz
+backups/
+docker-compose.local.yml
+docker-compose.prod.yml
+*.s3cfg
+.aws/
+
+# -----------------------------
+# 📱 Platform Özel Dosyalar
+# -----------------------------
+.fseventsd/
+.TemporaryItems/
+.apdisk
+desktop.ini
+$RECYCLE.BIN/
+.directory
+
+# -----------------------------
+# 🚀 CI/CD ve Deployment
+# -----------------------------
+.github/workflows/secrets.yml
+k8s/secrets/
+helm/values.local.yaml
+
+# -----------------------------
+# 🤖 AI Sistem Dosyaları
+# -----------------------------
+docs/ai/context.yaml
+.archive/
+
+# -----------------------------
+# ✔️ Takip Edilecek Boş Klasörler
+# -----------------------------
+!.gitkeep

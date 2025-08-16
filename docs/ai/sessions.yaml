@@ -1,0 +1,20 @@
+sessions:
+  title: "Üretim Günlüğüm"
+  description: >
+    Bu dosya, TT Panel görevlerine dair haftalık üretimlerini içerir.
+    Her hafta; gün gün yazılan üretim notları ve alan bazlı haftalık özetlerle yapılandırılır.
+  structure:
+    weeks:
+      description: >
+        Her hafta, o haftaya ait üretimlerin gün gün özetlendiği bir yapı içerir.
+        Her gün için tarih, durum ve üretim özeti bulunur.
+        Ayrıca, haftalık özetler ve görev havuzu da yer alır.
+    task_pool:
+      description: >
+        Görev havuzu, tamamlanması gereken görevlerin ve projelerin listelendiği bir alandır.
+        Her görev için başlık, açıklama, durum ve öncelik bilgileri yer alır.
+  weeks:
+    - week: "2025-08-11 → 2025-08-17"
+      days:
+        - date: "2025-08-11"
+          summary:
