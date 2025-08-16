@@ -52,10 +52,7 @@ tests/**/*.snap
 # -----------------------------
 .env
 .env.*
-!.env.example
-!.env.api.example
-!.env.admin.example
-!.env.shop.example
+!.env.*.example
 !.env.staging
 !.env.test
 

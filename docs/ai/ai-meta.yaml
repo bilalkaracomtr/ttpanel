@@ -98,7 +98,7 @@ ai:
         - "Çıktılar workspace altında tanımlanan dizin yapısına uygun üretilir."
         - "Uygulamalar ve modüller, pnpm workspace glob’larına göre apps/* ve packages/* altında organize edilir."
         - "Ortam adresi örnekleri workspace.configurations.endpoints bloğuna uygun kullanılır."
-        - "Yerel geliştirmede: localhost:3001 (admin), localhost:3002 (shop); testte *.ttpanel.test; prodda *.tasarimteknesi.com"
+        - "Yerel geliştirmede: localhost:3010 (admin), localhost:3020 (shop); testte *.ttpanel.test; prodda *.tasarimteknesi.com"
         - "Route path'lerinde gereksiz önek kullanma; panelde doğrudan /system/access/role gibi sade path kullanılır."
         - "Fonksiyon ve sınıf tanımlarının üstüne kısa JSDoc açıklaması eklenir."
         - "JSDoc açıklamaları tüm DTO, Entity, Service, Controller, Function, Utility için geçerlidir ve Türkçe validasyon açıklaması içermelidir."
@@ -733,8 +733,8 @@ tech:
     cors:
       allowed_origins:
         - "http://localhost:3000"
-        - "http://localhost:3001"
-        - "http://localhost:3002"
+        - "http://localhost:3010"
+        - "http://localhost:3020"
       allow_credentials: true
       allowed_methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
     rate_limit:
@@ -940,8 +940,8 @@ tech:
     - name: "dev"
       url:
         api: "http://localhost:3000"
-        admin: "http://localhost:3001"
-        shop: "http://localhost:3002"
+        admin: "http://localhost:3010"
+        shop: "http://localhost:3020"
       secrets_source: ".env"
       database: "postgresql://localhost:5432/tt_dev"
       storage: "minio://localhost:9000/tt-dev"
@@ -1146,11 +1146,11 @@ workspace:
         local-docker: "api.ttpanel.test"
         prod: "api.tasarimteknesi.com"
       admin:
-        local-pnpm: "localhost:3001"
+        local-pnpm: "localhost:3010"
         local-docker: "admin.ttpanel.test"
         prod: "admin.tasarimteknesi.com"
       shop:
-        local-pnpm: "localhost:3002"
+        local-pnpm: "localhost:3020"
         local-docker: "shop.ttpanel.test"
         prod: "www.tasarimteknesi.com"
     env:
@@ -1244,7 +1244,7 @@ workspace:
           description: "TT Panel Admin arayüzü için gerekli çevresel değişkenler."
           content: |
             NODE_ENV: development
-            NITRO_PORT: 3001
+            NITRO_PORT: 3010
             NITRO_HOST: 0.0.0.0
             APP_NAME: ttpanel-admin
             TZ: Europe/Istanbul
@@ -1257,7 +1257,7 @@ workspace:
           description: "TT Panel Shop arayüzü için gerekli çevresel değişkenler."
           content: |
             NODE_ENV: development
-            NITRO_PORT: 3002
+            NITRO_PORT: 3020
             NITRO_HOST: 0.0.0.0
             APP_NAME: ttpanel-shop
             TZ: Europe/Istanbul
@@ -1288,7 +1288,6 @@ workspace:
               ttpanel:
                 name: ttpanel
                 driver: bridge
-
             services:
               traefik:
                 container_name: ttpanel-traefik
@@ -1311,7 +1310,6 @@ workspace:
                   - "traefik.http.routers.traefik.service=api@internal"
                 networks:
                   - ttpanel
-
               postgres:
                 container_name: ttpanel-postgres
                 image: postgres:16
@@ -1324,7 +1322,6 @@ workspace:
                   - ./services/postgres/data:/var/lib/postgresql/data
                 networks:
                   - ttpanel
-
               pgweb:
                 container_name: ttpanel-pgweb
                 image: sosedoff/pgweb:latest
@@ -1339,7 +1336,6 @@ workspace:
                   - traefik.enable=true
                   - traefik.http.routers.pgweb.rule=Host(`pgweb.ttpanel.test`)
                   - traefik.http.services.pgweb.loadbalancer.server.port=8081
-
               redis:
                 container_name: ttpanel-redis
                 image: redis:7
@@ -1351,7 +1347,6 @@ workspace:
                   - ./services/redis/data:/data
                 networks:
                   - ttpanel
-
               minio:
                 container_name: ttpanel-minio
                 image: minio/minio:latest
@@ -1370,7 +1365,6 @@ workspace:
                   - traefik.enable=true
                   - traefik.http.routers.minio.rule=Host(`minio.ttpanel.test`)
                   - traefik.http.services.minio.loadbalancer.server.port=9001
-
               mailpit:
                 container_name: ttpanel-mailpit
                 image: axllent/mailpit:latest
@@ -1387,7 +1381,6 @@ workspace:
                   - traefik.enable=true
                   - traefik.http.routers.mailpit.rule=Host(`mailpit.ttpanel.test`)
                   - traefik.http.services.mailpit.loadbalancer.server.port=8025
-
               api:
                 container_name: ttpanel-api
                 build:
@@ -1417,7 +1410,6 @@ workspace:
                   interval: 30s
                   timeout: 10s
                   retries: 3
-
               admin:
                 container_name: ttpanel-admin
                 build:
@@ -1438,15 +1430,14 @@ workspace:
                 labels:
                   traefik.enable: "true"
                   traefik.http.routers.admin.rule: Host(`admin.ttpanel.test`)
-                  traefik.http.services.admin.loadbalancer.server.port: "3001"
+                  traefik.http.services.admin.loadbalancer.server.port: "3010"
                 depends_on:
                   - api
                 healthcheck:
-                  test: ["CMD", "curl", "-f", "http://localhost:3001/"]
+                  test: ["CMD", "curl", "-f", "http://localhost:3010/"]
                   interval: 30s
                   timeout: 10s
                   retries: 3
-
               shop:
                 container_name: ttpanel-shop
                 build:
@@ -1467,11 +1458,11 @@ workspace:
                 labels:
                   traefik.enable: "true"
                   traefik.http.routers.shop.rule: Host(`shop.ttpanel.test`)
-                  traefik.http.services.shop.loadbalancer.server.port: "3002"
+                  traefik.http.services.shop.loadbalancer.server.port: "3020"
                 depends_on:
                   - api
                 healthcheck:
-                  test: ["CMD", "curl", "-f", "http://localhost:3002/"]
+                  test: ["CMD", "curl", "-f", "http://localhost:3020/"]
                   interval: 30s
                   timeout: 10s
                   retries: 3
@@ -1573,7 +1564,7 @@ workspace:
 
             COPY --from=build /build /app
             WORKDIR /app/apps/admin
-            EXPOSE 3001
+            EXPOSE 3010
 
             CMD ["pnpm", "dev"]
 
@@ -1589,7 +1580,7 @@ workspace:
             COPY --from=build /build/node_modules ./node_modules
 
             ENV NODE_ENV=production
-            EXPOSE 3001
+            EXPOSE 3010
 
             CMD ["node", ".output/server/index.mjs"]
         shop:
@@ -1629,7 +1620,7 @@ workspace:
 
             COPY --from=build /build /app
             WORKDIR /app/apps/shop
-            EXPOSE 3001
+            EXPOSE 3010
 
             CMD ["pnpm", "dev"]
 
@@ -1645,7 +1636,7 @@ workspace:
             COPY --from=build /build/node_modules ./node_modules
 
             ENV NODE_ENV=production
-            EXPOSE 3001
+            EXPOSE 3010
 
             CMD ["node", ".output/server/index.mjs"]
     makefile:
@@ -2135,15 +2126,15 @@ workspace:
                 "eslint": "^9.32.0",
                 "eslint-config-prettier": "^10.1.8",
                 "eslint-plugin-prettier": "^5.5.3",
+                "pluralize": "^8.0.0",
                 "prettier": "^3.6.2",
+                "prettier-plugin-prisma": "^5.0.0",
+                "tailwindcss": "^4.1.12",
                 "ts-loader": "^9.5.2",
                 "ts-node": "^10.9.2",
                 "tsconfig-paths": "^4.2.0",
                 "tsx": "^4.20.3",
                 "typescript": "^5.8.3"
-              },
-              "dependencies": {
-                "pluralize": "^8.0.0"
               },
               "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748"
             }
@@ -2231,8 +2222,8 @@ workspace:
           content: |
             {
               "name": "admin",
-              "private": true,
               "type": "module",
+              "private": true,
               "scripts": {
                 "build": "nuxt build",
                 "dev": "nuxt dev",
@@ -2241,14 +2232,14 @@ workspace:
                 "postinstall": "nuxt prepare"
               },
               "dependencies": {
-                "@nuxt/eslint": "1.7.1",
+                "@nuxt/eslint": "1.8.0",
                 "@nuxt/image": "1.11.0",
                 "@nuxt/scripts": "0.11.10",
                 "@nuxt/test-utils": "3.19.2",
-                "@nuxt/ui": "3.3.0",
-                "@unhead/vue": "^2.0.13",
-                "eslint": "^9.32.0",
-                "nuxt": "^4.0.1",
+                "@nuxt/ui": "3.3.2",
+                "@unhead/vue": "^2.0.14",
+                "eslint": "^9.33.0",
+                "nuxt": "^4.0.3",
                 "typescript": "^5.9.2",
                 "vue": "^3.5.18",
                 "vue-router": "^4.5.1"
@@ -2260,8 +2251,8 @@ workspace:
           content: |
             {
               "name": "shop",
-              "private": true,
               "type": "module",
+              "private": true,
               "scripts": {
                 "build": "nuxt build",
                 "dev": "nuxt dev",
@@ -2270,14 +2261,14 @@ workspace:
                 "postinstall": "nuxt prepare"
               },
               "dependencies": {
-                "@nuxt/eslint": "1.7.1",
+                "@nuxt/eslint": "1.8.0",
                 "@nuxt/image": "1.11.0",
                 "@nuxt/scripts": "0.11.10",
                 "@nuxt/test-utils": "3.19.2",
-                "@nuxt/ui": "3.3.0",
-                "@unhead/vue": "^2.0.13",
-                "eslint": "^9.32.0",
-                "nuxt": "^4.0.1",
+                "@nuxt/ui": "3.3.2",
+                "@unhead/vue": "^2.0.14",
+                "eslint": "^9.33.0",
+                "nuxt": "^4.0.3",
                 "typescript": "^5.9.2",
                 "vue": "^3.5.18",
                 "vue-router": "^4.5.1"
@@ -2413,7 +2404,6 @@ workspace:
 
               css: ['~/assets/css/main.css'],
             });
-
 roadmap:
   title: "Üretim Yol Haritası"
   description: "TT Panel projesinin faz bazlı üretim sürecini, sprint yapılarını ve modül geliştirme dizilimini tanımlar. AI destekli teknik üretim bu plana bağlı yürütülür."

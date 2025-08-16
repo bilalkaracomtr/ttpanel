@@ -18,3 +18,45 @@ sessions:
       days:
         - date: "2025-08-11"
           summary:
+            - "`ai-meta.yaml > goals` bloğu `project` bloğuna eklendi ve `project` bloğu tamamen güncellendi."
+            - "`ai-meta.yaml > modules` bloğu güncellendi"
+            - "`system/sass` modül grubu ana grup yapısına alındı."
+        - date: "2025-08-12"
+          summary:
+            - - "`ai-meta.yaml > tech` bloğu sıfırdan hazırlandı."
+            - "`ai-meta.yaml > workspace` bloğu güncellendi"
+        - date: "2025-08-13"
+          summary:
+            - "`ai-meta.yaml > ai` ana bloğunun `identity`, `scope`, `behavior` alt bloklarının kapsamı sıfırdan belirlendi."
+            - "`ai-meta.yaml > roadmap` bloğu faz 0 ve faz 1 sprintleri güncellendi."
+            - "feature/faz0-sprint4-admin-shop-setup branch'i açıldı. Faz 0 Sprint 4 için temel Nuxt 4 iskelet ve tema kurulumu başlatıldı."
+            - "`pnpm add -Dw tailwindcss` komutu ile root dizinde Tailwind CSS kuruldu."
+        - date: "2025-08-14"
+          summary:
+            - "`npx nuxi init apps/admin` komutu ile yeni bir Nuxt 4 admin uygulaması oluşturuldu."
+            - "Temel modüller ilk kurumlum ile kuruldu: `@nuxt/eslint`, `@nuxt/image`, `@nuxt/scripts`, `@nuxt/test-utils`, `@nuxt/ui`"
+            - "Admin uygulaması için `app` dizinine gerekli dizin yapısı oluşturuldu: `pages`, `components`, `layouts`, `composables`, `plugins`, `utils`, `middleware`, `assets/css`, `assets/images`"
+            - "`config/env/.env.admin` dosyası oluşturuldu ve gerekli ortam değişkenleri eklendi."
+            - "`config/env/.env.admin` dosyasının kopyası `apps/admin/.env` olarak oluşturuldu."
+            - "`apps/admin/app/assets/css/main.css` dosyası oluşturuldu ve Tailwind CSS ile @nuxt/ui kurulumuna uygun şekilde yapılandırıldı."
+            - "Admin Nuxt konfigürasyon dosyalarının yapılandırıldı (nuxt.config.ts ve package.json)"
+            - "docker-compose.yml admin servisi oluşturuldu."
+            - "apps/admin/Dockerfile oluşturuldu ve gerekli yapılandırmalar eklendi."
+            - "`pnpm --filter admin dev` komutu ile admin uygulaması geliştirme ortamı başlatıldı."
+        - date: "2025-08-15"
+          summary:
+            - "`npx nuxi init apps/shop` komutu ile yeni bir Nuxt 4 shop uygulaması oluşturuldu."
+            - "Temel modüller ilk kurumlum ile kuruldu: `@nuxt/eslint`, `@nuxt/image`, `@nuxt/scripts`, `@nuxt/test-utils`, `@nuxt/ui`"
+            - "Shop uygulaması için `app` dizinine gerekli dizin yapısı oluşturuldu: `pages`, `components`, `layouts`, `composables`, `plugins`, `utils`, `middleware`, `assets/css`, `assets/images`"
+            - "`config/env/.env.shop` dosyası oluşturuldu ve gerekli ortam değişkenleri eklendi."
+            - "`config/env/.env.shop` dosyasının kopyası `apps/shop/.env` olarak oluşturuldu."
+            - "`apps/shop/app/assets/css/main.css` dosyası oluşturuldu ve Tailwind CSS ile @nuxt/ui kurulumuna uygun şekilde yapılandırıldı."
+            - "Shop Nuxt konfigürasyon dosyalarının yapılandırıldı (nuxt.config.ts ve package.json)"
+            - "docker-compose.yml shop servisi oluşturuldu."
+            - "apps/shop/Dockerfile oluşturuldu ve gerekli yapılandırmalar eklendi."
+            - "`pnpm --filter shop dev` komutu ile shop uygulaması geliştirme ortamı başlatıldı."
+        - date: "2025-08-16"
+          summary:
+            -
+        - date: "2025-08-17"
+          summary:
