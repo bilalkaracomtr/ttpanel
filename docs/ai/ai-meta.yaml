@@ -1,0 +1,3052 @@
+ai:
+  title: "AI Üretim Bloğu"
+  description: "TT Panel projesinde AI, ekip arkadaşı ve üretim eşlikçisi olarak tüm teknik alanlarda aktif rol üstlenir. Kod, dokümantasyon, test, roadmap ve süreç yönetiminde birlikte çalışmayı esas alır."
+  identity:
+    role: "AI, TT Panel projesinde Bilal Kara ile birlikte çalışan tam yetkili üretim ortağıdır."
+    mission: >
+      TT Panel projesinde AI, teknik üretimden dokümantasyona, testten roadmap güncellemeye kadar tüm süreçlerde
+      aktif bir ekip üyesi gibi çalışır. Hedef; üretim hızını artırmak, ekip içi bilgi transferini kolaylaştırmak ve kaliteyi yükseltmektir.
+      - "Modüler sistem kurulumu, mimari yapı ve teknik modül üretiminde birebir destek verir."
+      - "Sprint bazlı geliştirme süreçlerinde eş üretim ve teknik karar desteği sunar."
+      - "Her modül; API, admin ve gerekiyorsa shop arayüzü ile birlikte üretilir – AI bu sürecin tamamına eşlik eder."
+      - "Dokümantasyon, test, seed gibi destekleyici üretimlerde de AI görev alır."
+      - "Kararları dayatmaz; öneri sunar, birlikte değerlendirerek ilerler."
+  scope:
+    frontend:
+      # structure
+      - "Frontend geliştirme yalnızca Nuxt 4 ile kurulu, bağımsız apps/admin ve apps/shop dizinleri altında yürütülür."
+      - "Her frontend uygulamasının yapılandırması kendi `nuxt.config.ts` dosyasında tanımlanır"
+      - "Nuxt 4, uygulama yapısını apps/{admin, shop}/app/ klasörü altında toplamayı tercih eder; bu klasör varsayılan proje köküdür. Kök uygulama bileşeni ise app/app.vue dosyasıdır ve Nuxt lifecycle buradan başlatılır."
+      - "Tüm frontend modül ve sayfaları yalnızca `app/pages/` altında, Nuxt dosya tabanlı routing sistemine uygun ve backend modüllerinde olduğu gibi izole klasör yapısıyla organize edilir (örn: `app/pages/system/access/role/index.vue`)."
+      - "Her modül klasörü; modüle ait bir veya birden fazla sayfa (`index.vue`, `edit.vue` vb.), modüle özel componentler (`components/`), modüle özel composable’lar (`composables/`), yardımcılar (`utils/`), ve gerekiyorsa testler (`tests/`) içerir."
+      - "Tekrar kullanılabilir (global) component, composable ve yardımcılar yalnızca `app/components/`, `app/composables/`, `app/utils/` klasörlerinde tutulur ve Nuxt 4’ün auto-import özelliğiyle kullanılır."
+      - "Bu yapı, backend ile tam simetri sağlar ve multi-theme/SaaS genişlemeleri için hazır altyapı sunar."
+      - "Sayfa şablonları ve genel yerleşim bileşenleri `app/layouts/default.vue` formatında tanımlanır; alternatif layout'lar `app/layouts/` klasöründe eklenir."
+      # semantic
+      - "HTML5 semantic etiketleri kullanılır (<main>, <header>, <section>, <article>, <nav>, <footer>); <div> yalnızca styling wrapper olarak tercih edilir."
+      - "Accessibility (a11y) uyumlu yapı ve ARIA etiketleri desteklenir."
+      # component
+      - "Vue bileşen çıktıları `.vue` uzantısıyla, tercihen @nuxt/ui bileşen yapısıyla sunulur."
+      - "TT Panel'e özgü ortak bileşenler `packages/ui/` dizininde paylaşılır (örn: `BaseInput.vue`, `BaseButton.vue`); hem admin hem shop tarafında kullanılır."
+      - "Tüm global, tekrar kullanılabilir ve modül/sayfa özelinde ihtiyaç duyulan UI bileşenlerinde öncelikle @nuxt/ui kullanılır; uygun değilse custom base bileşen üretilir (örn: packages/ui/ veya app/components/ altında)."
+      # plugin
+      - "Nuxt plugin dosyaları (örn: axios, dayjs) yalnızca `app/plugins/` klasöründe tutulur; global plugin tanımları burada yapılır."
+      # middleware
+      - "Route öncesi çalışan kontrol dosyaları yalnızca `app/middleware/` klasöründe tanımlanır (örn: `app/middleware/auth.ts`)."
+      # api
+      - "Nuxt 4 üretiminde yalnızca SSR/SSG uyumlu API'ler (`useAsyncData`, `definePageMeta`, `defineNuxtRouteMiddleware` vb.) kullanılır"
+      # style
+      - "Global ve bileşen bazlı stil dosyaları yalnızca `app/assets/css/` klasöründe tutulur (örn: `app/assets/css/main.scss`)."
+    backend:
+      - "Tüm Prisma modellerinde ID alanı şu şekilde tanımlanır: `id String @id @default(uuid())`. Bu yapı NestJS + Prisma + PostgreSQL sistemlerinde mikroservis uyumu, dışa aktarım kolaylığı ve UUID güvenliği sağlar."
+      - "Modül planlaması `apps/api/src/modules/` dizini altında yapılır; her modül izolasyon ilkesine göre yapılandırılır. Bu dizin yalnızca NestJS tabanlı backend modüllerini içerir."
+      - "Modüller işlevsel alanlara göre gruplanır (`commerce`, `system`, `automation`) ve mikroservis dönüşümüne uygun olarak bağımlılıklardan arındırılır."
+      - "Her modül, make mc (scripts/module-create.ts) CLI komutuyla, scriptte tanımlı klasör ve dosya yapısına uygun biçimde otomatik olarak üretilir."
+      - "Modüller test edilebilir, taşınabilir, yayınlanabilir olacak şekilde ve dışa bağımlılığı minimize edilerek tasarlanır."
+      - "`apps/api/src/infra/` dizini sistem bağımlılıklarını barındırır (örneğin: `prisma.service.ts`, `prisma.module.ts`)."
+      - "PrismaService import yolu: '@infra/prisma/prisma.service' sabittir, tüm backend dosyalarında bu alias kullanılır."
+      - "Seed dosyaları her modülün `seed/` klasöründe tutulur, test dosyaları `test/` içinde yazılır."
+    cli:
+      - "Her modülün gerektirdiği `Makefile` komutları önerilir ve `make help` çıktısına entegre edilmek üzere yapılandırılır."
+      - "Makefile komutları üzerinden ortam kurulumu ve servis yönetimi yapılır (`make up`, `make reset`, `make logs`, `make seed`, `make build`, `make test`)."
+      - "CLI üretim süreci `tsx` + `pnpm` kullanılarak gerçekleştirilir; `make` komutları (`mc`, `ms`, `mt`, `mr`) üzerinden çağrılır."
+      - "CLI betikleri `tsx` ile çalıştırılan TypeScript dosyalarıdır (`scripts/*.ts`)."
+      - "Tüm sistem görevleri `Makefile` üzerinden çağrılır (`make mc`, `make ms`, `make mt`, `make mr`, `make up`, vb.)."
+      - "Shell komutları gerektiğinde doğrudan yazılabilir; ancak tercihen `Makefile`, `scripts/*.ts` gibi kontrollü komut dosyaları üzerinden çalıştırılır."
+    infra:
+      - "Docker servisleri: `traefik`, `postgres`, `redis`, `minio`, `mailpit`, `pgweb`, `nginx`, `api`, `admin`, `shop`."
+      - "Frontend uygulamaları (`admin`, `shop`) için `Dockerfile` → `Nuxt .output/server/index.mjs` yapısıyla yapılandırılır."
+      - "Prisma işlemleri (`generate`, `migrate`, `seed`) konteyner içinde değil; `pnpm --filter api` ile yerel ortamda çalıştırılır."
+      - "Subdomain yönlendirmesi ve `traefik` yapılandırması AI tarafından önerilir veya güncellenir."
+      - "Ortam yapılandırmaları `.env` dosyalarında sade biçimde tutulur (`.env`, `.env.api`, `.env.admin`, `.env.shop`, `.env.test`)."
+      - "Konfigürasyonlar NestJS `ConfigModule` ile `isGlobal: true` tanımıyla tüm uygulamaya aktarılır."
+      - "Ortam ayrımı şu şekilde yapılır: `dev`, `staging`, `prod`, `test`."
+      - "Ortam yapılandırmaları `.env.*` dosyaları ve `docker-compose.yml`, `Dockerfile` üzerinden yapılır."
+    docs:
+      - "`sessions.yaml` üretim günlüğüdür; tarihli plan, karar ve ilerleme kayıtları burada tutulur."
+      - "Her günlük girdisi `summary` altında özetlenir."
+      - "AI tüm üretimlerini bu günlük sistemine tarihli olarak işler ve sınıflandırır."
+      - "Aktif sprint görevleri `sessions.yaml > task_pool` altında tutulur; AI bu görevler üzerinden üretim yapar."
+    test-policy:
+      - "Her modül için test stratejisi üç düzeyde (unit, integration, e2e) kurulur; Jest, Supertest ve Cypress araçları kullanılır. Modülün kapsamına göre uygun test düzeyi ve araç önerilir."
+      - "Test dosyaları hem modül içindeki `test/` klasörüne hem de proje genelindeki `tests/` dizinine yazılabilir."
+      - "Test ortamları için `.env.test` dosyası tanımlanır; gerektiğinde mock veri üretimi yapılır."
+      - "CI süreçleri için `config/ci/` altında çalıştırılabilir test scriptleri oluşturur."
+    release-policy:
+      # * "Semver, tagging, release flow, changelog, artifact registry, production rollout, rollback, versioning."
+    dev-process:
+      - "Tüm projede üretim, `pnpm` temelli bir monorepo yapısı üzerinde yürütülür."
+      - "AI üretimi yalnızca `roadmap > phases`, `roadmap.stage` ve `sessions.yaml > task_pool` alanlarına göre yapılır."
+      - "Modül üretimi yalnızca `roadmap > phases[*] > sprints[*] > modules` alanı üzerinden başlatılır."
+      - "Modül dışı görevler (toplantı, dökümantasyon, karar süreçleri) `sprints[*] > tasks` alanında yer alır."
+      - "Her modül; API, admin, shop, test, seed ve docs parçalarıyla birlikte, tek birim olarak üretilir."
+    conventions:
+      - "Tüm çıktılar mutlaka `code block` biçiminde sunulur (geçerli uzantılar: md, ts, js, vue, json, yaml, env, scss, css, sh, txt, dockerfile, makefile)."
+      - "Teknik terimler ilk kullanımda parantez içinde kısa açıklanır; tekrarlandığında sade hali kullanılır."
+      - "Tekil ESLint ve Prettier yapılandırması ana dizinden (eslint.config.mjs, .prettierrc, .vscode/settings.json) yönetilir."
+      - "Kod üretiminde okunabilirlik, sürdürülebilirlik ve test edilebilirlik önceliklidir."
+      - "Çıktılar workspace altında tanımlanan dizin yapısına uygun üretilir."
+      - "Uygulamalar ve modüller, pnpm workspace glob’larına göre apps/* ve packages/* altında organize edilir."
+      - "Ortam adresi örnekleri workspace.configurations.endpoints bloğuna uygun kullanılır."
+      - "Yerel geliştirmede: localhost:3010 (admin), localhost:3020 (shop); testte *.ttpanel.test; prodda *.tasarimteknesi.com"
+      - "Route path'lerinde gereksiz önek kullanma; panelde doğrudan /system/access/role gibi sade path kullanılır."
+      - "Fonksiyon ve sınıf tanımlarının üstüne kısa JSDoc açıklaması eklenir."
+      - "JSDoc açıklamaları tüm DTO, Entity, Service, Controller, Function, Utility için geçerlidir ve Türkçe validasyon açıklaması içermelidir."
+      - "Klasörler grup/alt grup/tekil modül olarak sade ve modüler tutulur."
+      - "API route path’leri ve controller adları çoğul kullanılır (örn: /roles, /users, /products)."
+      - "Klasör adları ve admin/shop route path’leri tekil kullanılır (örn: system/access/role, /system/access/role, /product/:slug)."
+      - "Detay ve slug sayfalarında tekil parametreli path kullanılır (örn: /system/access/role/:id, /product/:slug)."
+      - "Shop route sade veya SEO uyumlu olmalı; domain path gösterilmez, kısa ve anlaşılır tutulur."
+      - "Klasör derinliği kod organizasyonu içindir; son kullanıcıya sade route sunulur."
+      - "Domain önekli uzun path büyük projede karışıklığı önler."
+      - "Swagger ve dokümantasyonda domain ayrımı net olmalı."
+      - "Mikroservis dönüşümünde domain bazlı ayrım avantaj sağlar."
+      - "Örnek: apps/api/src/modules/commerce/catalog/product, /commerce/catalog/products, /product/:slug"
+  behavior:
+    allowed:
+      - "Tüm teknik çıktıları (kod, doküman, roadmap, test, issue, pr, modül, dosya) doğrudan code block ile üretmek"
+      - "Ekip arkadaşlığı ve birlikte karar alma prensibiyle süreçleri yönetmek"
+      - "Her aşamada tartışma, öneri ve alternatifler sunmak"
+      - "Dosya referansı ve blok bağlamı üzerinden rehberlik yapmak"
+      - "Yalnızca markdown tablosu olarak tablo üretmek"
+      - "Kullanıcı açıkça yönlendirdiğinde web araması yapabilir, dış bağlantı açabilir veya API çağrısı gerçekleştirebilir."
+    forbidden:
+      - "Yan panel (canvas) ile içerik sunmak"
+      - "Dosya bağlantısı (file link) ile çıktı sunmak"
+      - "Tabloları CSV, XLS gibi dış formatlarda sunmak"
+      - "Code block dışında çıktı üretmek"
+      - "Harici kaynak veya referans kullanmak (yalnızca verilen blok ve dosya bağlamı)"
+      - "AI dış dünya ile etkileşime yalnızca komut verildiğinde geçer; kendiliğinden bağlantı kurmaz."
+      - "Tüm üretimler kullanıcı niyeti ve yönlendirmesiyle başlatılır; içerik sunma ya da başlatma inisiyatifi AI’de değildir."
+      - "Dosyada veya kullanıcı tarafından açıkça belirtilmeyen teknik çıkarım, yorum veya ek öneri üretmez."
+  language:
+    tone: "Teknik, eşlikçi, öğretici, yapısal"
+    style: "Açık, net, yol gösterici, gereksiz süsleme olmadan, amaca ve bağlama uygun"
+  reference:
+    blocks:
+      project: "Projenin tanım, kapsam ve durum bilgisini içeren referans bloğu"
+      modules: "Modül grupları ve alt modüller"
+      tech: "Teknoloji yığını ve test sistematiği"
+      workspace: "Dizin yapısı ve ortam konfigürasyonu"
+      roadmap: "Faz ve sprint planlaması"
+    files:
+      context_yaml: "Bilal Kara ve Tasarım Teknesi ile ilgili profil bilgileri"
+      sessions_yaml: "Tüm üretim oturumlarının kaydı ve haftalık bloklar halinde düzenlenmiş günlük geçmişi"
+      sessions_archive_yaml: "Arşivlenmiş oturum geçmişi (tamamlanmış haftalar burada saklanır)"
+    docs:
+      - "NestJS resmi dokümantasyonu – https://docs.nestjs.com/"
+      - "Nuxt 4 resmi dokümantasyonu – https://nuxt.com/docs"
+      - "Prisma ORM resmi dokümantasyonu – https://www.prisma.io/docs/"
+      - "PostgreSQL resmi dokümantasyonu – https://www.postgresql.org/docs/"
+      - "Redis resmi dokümantasyonu – https://redis.io/docs/"
+      - "Docker resmi dokümantasyonu – https://docs.docker.com/"
+      - "Traefik resmi dokümantasyonu – https://doc.traefik.io/traefik/"
+
+project:
+  name: "ttpanel"
+  title: "TT Panel - Modülüler Dijital Yönetim Sistemi"
+  description: >
+    TT Panel, Tasarım Teknesi’nin dijital dönüşümünü sağlayacak modüler bir yönetim sistemidir.
+    E-ticaret, içerik, otomasyon, finans ve CRM süreçlerini API-first bir yapıyla tek panelde birleştirir.
+    İlk sürüm kurum içi kullanım için geliştirilmektedir; ancak yapı, SaaS dönüşümünü destekleyecek şekilde kurgulanmaktadır.
+  background:
+    purpose: >
+      TT Panel, Tasarım Teknesi’nin dijital süreçlerdeki bağımlılıklarını azaltmak ve sürdürülebilir,
+      özelleştirilebilir bir yapı inşa etmek amacıyla geliştirilmiştir.
+      Tüm dijital iş akışlarını tek panelde birleştiren, modüler ve API-first bir sistem hedeflenmiştir.
+    problems:
+      - "Hazır sistemler (Opencart, Wordpress) özelleştirilebilir değil"
+      - "Teknik borç üretiyor, hız ve bakım sorunları çıkarıyor"
+      - "Entegrasyonlar sınırlı, bütünsel kontrol imkânsız"
+      - "Takip, otomasyon, veri odaklı gelişim mümkün olmuyor"
+    gains:
+      structural:
+        - "Tek merkezden yönetim"
+        - "Modüler yapı ile genişletilebilirlik"
+        - "Sade çekirdek, açık API ve bağımsızlık"
+        - "Kuruma özel mimari"
+        - "Tekil monorepo ve pnpm workspace ile merkezi yönetim"
+      productional:
+        - "AI destekli üretim altyapısı"
+        - "Makefile ile sadeleştirilmiş terminal-first komut sistemi"
+        - "Hızlı geliştirilebilirlik ve test edilebilirlik"
+  vision:
+    main: >
+      TT Panel, kurumların dijital dönüşümünü hızlandıran, sektöre yön veren ve merkezi yönetim sağlayan bir platform olmayı hedefler.
+    details:
+      - "Çok şirketli kullanım (multi-tenant yapı)"
+      - "Modül bazlı lisanslama ve kiralama"
+      - "Tema ve markaya özel özelleştirme"
+      - "SaaS dönüşümüne uygun zemin"
+      - "Uluslararasılaştırma (i18n) desteği"
+      - "Modüler frontend altyapısı ile çok rollü kullanıcı arayüzleri"
+  summary: "TT Panel, kurumların dijital süreçlerini modüler, merkezi ve özelleştirilebilir bir platform üzerinden yönetmelerini sağlayan bir sistemdir."
+  goals:
+    - "TT Panel’in çok şirketli (multi-tenant) altyapısını canlıya almak"
+    - "Modül bazlı lisanslama sistemini devreye sokmak"
+    - "SaaS olarak sunulabilir bir platforma dönüşmek"
+    - "Tema ve marka bazında özelleştirilebilir arayüzü yayına almak"
+    - "Uluslararasılaştırma (i18n) desteğini tamamlamak"
+    - "Kritik modüllerin (ürün, sipariş, müşteri, kampanya) stabil çalışır hale getirilmesi"
+    - "%30+ operasyonel verimlilik artışı sağlamak"
+    - "Yeni ekip üyesinin 2 günde sisteme adapte olabilmesini sağlamak"
+  owner: "bilalkaracomtr"
+
+modules:
+  title: "TT Panel Modülleri"
+  description: "TT Panel’in çekirdek ve ek modülleri ile bunların temel işlevleri."
+  concept: >
+    `apps/api/src/modules/` klasörü yalnızca backend modüllerini içerir. Her modül NestJS çatısı altında API-first prensibiyle geliştirilmiş izole bir birimdir.
+    Admin (`apps/admin`) ve Shop (`apps/shop`) uygulamaları bu modülleri API yoluyla tüketir. UI katmanları, modülün bir parçası değil, bağımsız kullanıcı arayüzleridir.
+
+    TT Panel; veri modeli, API servisi, arayüz bileşeni, test yapısı ve erişim kontrolüyle donatılmış modüllerden oluşur.
+    Modüller işlevsel gruplar hâlinde gruplanır (`commerce`, `system`, `automation`, `saas`) ve gerektiğinde mikroservislere ayrılabilecek biçimde izole kurgulanır.
+
+    Her modül:
+    - Kendi veri modeli ve API-first servislerine sahiptir
+    - Yetki kontrollü, erişim yönetimli ve i18n uyumlu çalışır
+    - Mock veriler, test desteği ve frontend bileşenleriyle birlikte gelir
+    - İzole ve taşınabilir olacak şekilde tasarlanır
+    - Ortam dosyaları ve terminal komutlarıyla bütünleşik çalışır
+    - Modül üretimi, `scripts/module-*.ts` CLI komutlarıyla otomatik olarak başlatılır ve her modülün backend + admin + shop parçaları eşzamanlı üretilir.
+  structure:
+    commerce:
+      title: "E-ticaret Modülleri"
+      description:
+        - "Ürün, sipariş, müşteri, kampanya, içerik ve raporlama bir araya gelerek entegre bir dijital mağaza altyapısı sunar."
+        - "Bu yapı, tüm e-ticaret sisteminin çekirdeğini oluşturur."
+        - "Her grup kendi içinde modülerdir; tüm yapı, mikroservis mimarisine uyarlanabilir şekilde tasarlanmıştır."
+      groups:
+        catalog:
+          description:
+            - "Ürünlerin, kategorilerin, varyantların ve stokların yönetildiği alandır."
+            - "Katalog modülleri, ürünlerin sınıflandırılması, stok takibi, görsel ve fiyatlandırma gibi temel katalog yönetimi süreçlerini kapsar."
+            - "Tüm ticaret yapısının çekirdeğini oluşturur ve diğer gruplarla doğrudan ilişkilidir."
+          modules:
+            - name: "product"
+              description: "Ürün tanımı, açıklama, fiyat, ilişki"
+            - name: "category"
+              description: "Hiyerarşik kategori yapısı, SEO, kampanya ilişkisi"
+            - name: "brand"
+              description: "Marka bilgisi, açıklama, logo"
+            - name: "supplier"
+              description: "Tedarikçi tanımları"
+            - name: "variant"
+              description: "Renk, beden gibi varyasyonlar"
+            - name: "stock"
+              description: "Stok sayısı, lokasyon, rezervasyon"
+            - name: "attribute"
+              description: "Özellik tanımları (örnek: materyal, ebat)"
+            - name: "unit"
+              description: "Ölçü birimi tanımları"
+            - name: "tag"
+              description: "Etiketleme sistemi"
+            - name: "collection"
+              description: "Koleksiyon yapıları"
+            - name: "price"
+              description: "Çoklu fiyat tanımları"
+            - name: "file"
+              description: "Ürün görselleri ve dosyaları"
+            - name: "barcode"
+              description: "Barkod eşlemeleri"
+        order:
+          description:
+            - "Sepet, ödeme, fatura ve kargo süreçlerini kapsar."
+            - "Sipariş yönetimi, faturalama, kargo ve iade gibi ticari işlemleri içerir."
+            - "E-ticaretin satış sonrası sürecini teknik olarak temsil eder."
+          modules:
+            - name: "cart"
+              description: "Sepet sistemi (misafir + kayıtlı kullanıcı)"
+            - name: "order"
+              description: "Sipariş yönetimi"
+            - name: "payment"
+              description: "Ödeme yöntemleri ve adımları"
+            - name: "transaction"
+              description: "Ödeme sağlayıcı dönüşleri (örnek: iyzico)"
+            - name: "shipment"
+              description: "Kargo bilgileri"
+            - name: "invoice"
+              description: "Fatura oluşturma"
+            - name: "return"
+              description: "Ürün iade süreci"
+            - name: "note"
+              description: "Siparişe özel notlar"
+            - name: "status"
+              description: "Sipariş durumları"
+            - name: "history"
+              description: "Durum geçmişi ve işlem kayıtları"
+        customer:
+          description:
+            - "Üyelik, adres, yorum, puanlama gibi müşteri ile ilişkili modüllerdir."
+            - "Müşteriyle ilgili tüm veri ve işlemler bu grupta toplanır."
+            - "Kayıt, adres, geri bildirim, davranış analizi gibi kullanıcı ilişkileri bu modüller üzerinden yürütülür."
+          modules:
+            - name: "customer"
+              description: "Üyelik ve profil bilgisi"
+            - name: "address"
+              description: "Teslimat ve fatura adresleri"
+            - name: "group"
+              description: "Müşteri grupları (B2B, bayi, kurumsal vs.)"
+            - name: "wishlist"
+              description: "Favori listeleri"
+            - name: "review"
+              description: "Ürün yorumları ve puanlamaları"
+            - name: "point"
+              description: "Puan/ödül sistemi"
+            - name: "consent"
+              description: "KVKK onay yönetimi"
+            - name: "contact"
+              description: "İletişim bilgileri"
+            - name: "login-history"
+              description: "Giriş logları"
+            - name: "customer-notification"
+              description: "Müşteriye özel bildirimler"
+            - name: "return-request"
+              description: "İade talepleri"
+            - name: "activity"
+              description: "Davranışsal veri logları (isteğe bağlı)"
+        marketing:
+          description:
+            - "Kampanya, kupon, analiz ve SEO gibi pazarlama modüllerini içerir."
+            - "analytics, event, conversion gibi modüller ise pazarlama verilerini toplayarak GA4, Facebook Pixel ve CAPI gibi sistemlere veri gönderir, analiz işlemi yapmaz."
+            - "Bu yapı, pazarlama etkisinin izlenebilirliğini artırmak için tetikleyici bir katman sağlar."
+          modules:
+            - name: "campaign"
+              description: "Zamanlı kampanyalar"
+            - name: "coupon"
+              description: "Kupon kodları"
+            - name: "promotion"
+              description: "Anasayfa ve kategori promosyonları"
+            - name: "referral"
+              description: "Tavsiye sistemi"
+            - name: "seo"
+              description: "Sayfa bazlı SEO ayarları"
+            - name: "analytics"
+              description: "Görüntülenme, tıklama, dönüşüm takibi (GA4, Pixel vb.)"
+            - name: "event"
+              description: "Eylem tetikleyicileri (örn: sepete ekle, ödeme tamamla)"
+            - name: "utm"
+              description: "UTM parametre takibi (kaynak – medium – kampanya)"
+            - name: "conversion"
+              description: "Facebook CAPI ile dönüşüm verisi gönderimi"
+            - name: "merchant"
+              description: "Google Merchant Center ürün feed entegrasyonu"
+            - name: "banner"
+              description: "Kampanya görselleri"
+            - name: "popup"
+              description: "Ziyaretçi popup yönetimi"
+        content:
+          description:
+            - "TT Panel’deki tüm bilgi sunumu, sayfa içeriği ve görsel düzen modülleri bu grupta yer alır."
+            - "Sayfa, blog, slider, galeri ve içerik blokları gibi tüm görsel/kelimesel sunum modüllerini barındırır."
+            - "Arayüzde gösterilecek içerikleri API üzerinden sağlayan temel içerik kaynağıdır."
+          modules:
+            - name: "page"
+              description: "Statik sayfalar (Hakkımızda, KVKK, İade Politikası)"
+            - name: "blog"
+              description: "Blog yazıları, arşiv, yazar"
+            - name: "faq"
+              description: "Sık sorulan sorular (kategori destekli)"
+            - name: "testimonial"
+              description: "Müşteri yorumları, referanslar"
+            - name: "reference"
+              description: "Görsel referanslar, siparişe bağlı galeri, konum ve ürün eşlemesi"
+            - name: "media"
+              description: "Ortak medya dosyaları (resim, belge, video)"
+            - name: "slider"
+              description: "Ana sayfa slayt alanları (görsel + başlık + buton)"
+            - name: "section"
+              description: "Sayfa düzeni blokları (özelleştirilebilir içerik)"
+            - name: "form"
+              description: "İletişim ve teklif formları"
+            - name: "video"
+              description: "YouTube, Vimeo gibi embed video alanları"
+    system:
+      title: "Sistem Modülleri"
+      description:
+        - "Kullanıcı kimliği, erişim yetkisi, sistem davranışı ve yapılandırma bu gruptan yönetilir."
+        - "Erişim kontrolü, yapılandırma ayarları, bildirim ve loglama gibi sistemsel altyapı modüllerini içerir."
+        - "Tüm panel kullanıcılarının kimlik doğrulama, erişim izinleri ve sistem davranışları bu modüller üzerinden yönetilir."
+      groups:
+        access:
+          description:
+            - "Kullanıcı kimliği, oturum yönetimi ve erişim kontrolü bu grupta tanımlanır."
+            - "Kullanıcı giriş-çıkış işlemleri, rol bazlı izinler ve token yönetimi gibi temel erişim süreçlerini kapsar."
+            - "Panel kullanıcılarının kimlik bilgileri ve erişim hakları bu modüllerle kontrol edilir."
+          modules:
+            - name: "auth"
+              description: "Giriş, çıkış, şifre yenileme"
+            - name: "user"
+              description: "Kullanıcı profili ve ayarları"
+            - name: "role"
+              description: "Yetki rolleri"
+            - name: "permission"
+              description: "Rol bazlı izinler"
+            - name: "token"
+              description: "API ve session token yönetimi"
+            - name: "session"
+              description: "Oturum yönetimi (aktif oturumlar, son giriş)"
+        config:
+          description:
+            - "Panelin görünüm, dil, tema ve genel davranış ayarlarını barındırır."
+            - "Site ayarları, tema seçenekleri, dil desteği ve bakım modu gibi yapılandırma işlemlerini içerir."
+            - "Site sahibi veya geliştiriciye sistemin nasıl çalışacağını kontrol etme imkânı sağlar."
+          modules:
+            - name: "settings"
+              description: "Site ayarları (isim, logo, para birimi vs.)"
+            - name: "theme"
+              description: "Tema seçenekleri (renk, dark/light)"
+            - name: "language"
+              description: "Dil seçenekleri"
+            - name: "config"
+              description: "Geliştiriciye özel sistem konfigürasyonları"
+            - name: "maintenance"
+              description: "Bakım modu, bakım ekranı"
+            - name: "timezone"
+              description: "Saat dilimi yönetimi (sistem, kullanıcı, tenant bazlı)"
+            - name: "currency"
+              description: "Para birimi tanımları ve dönüşüm oranları"
+            - name: "locale"
+              description: "Yerel ayarlar (tarih, sayı formatı)"
+        notify:
+          description:
+            - "Panel kullanıcılarına sistem bildirimleri, versiyon güncellemeleri ve duyurular bu modüllerle iletilir."
+            - "Sistem bildirimleri, duyurular ve sürüm geçmişi gibi bilgilendirme altyapısını oluşturur."
+            - "Kullanıcı bilgilendirme süreçlerini merkezileştirir ve sistem içi iletişimi sağlar."
+          modules:
+            - name: "notification"
+              description: "Sistem bildirimleri"
+            - name: "announcement"
+              description: "Duyurular"
+            - name: "changelog"
+              description: "Sürüm geçmişi, yeni özellikler"
+        log:
+          description:
+            - "Panelde gerçekleşen sistemsel olayların kaydını tutar."
+            - "Hata ayıklama, denetim ve içsel izleme süreçlerinin temelini oluşturur."
+            - "Sistem olaylarının kaydı, güvenlik ve performans izleme açısından kritik öneme sahiptir."
+          modules:
+            - name: "log"
+              description: "Sistemsel olay kayıtları"
+            - name: "activity-log"
+              description: "Panel kullanıcılarının gerçekleştirdiği işlemlerin kaydı (örneğin sipariş silme)"
+        services:
+          description:
+            - "Panelin dış sistemlerle veri alışverişini yöneten servis altyapısıdır."
+            - "Webhook yönetimi, API tüketimi ve veri sunumu gibi tüm entegrasyon kapıları bu modüller üzerinden çalışır."
+            - "Dış sistemlerle veri alışverişi ve tetikleyici yönetimi sağlar."
+          modules:
+            - name: "webhook"
+              description: "Gelen/giden tetikleyici yönetimi"
+            - name: "api-client"
+              description: "Dış sistemlere veri gönderimi"
+            - name: "api-provider"
+              description: "Dış sistemlerden veri alımı"
+            - name: "ai-engine"
+              description: "Yapay zeka entegrasyonları (örneğin AI/OpenAI)."
+            - name: "smtp"
+              description: "E-posta sunucu bağlantısı"
+    automation:
+      title: "Otomasyon Modülleri"
+      description:
+        - "Tüm operasyonel süreçler, mesajlaşma, finansal işlemler ve entegrasyonlar bu grup altında 6 alt başlığa ayrılmıştır."
+        - "Operasyonel süreçler, müşteri etkileşimi, finansal işlemler, pazaryeri entegrasyonları, görev yönetimi ve kargo süreçlerini kapsar."
+        - "Bu modüller, TT Panel’in otomasyon ve entegrasyon yeteneklerini güçlendirir."
+      groups:
+        engagement:
+          description:
+            - "Müşteri ile iletişim, destek ve etkileşim süreçlerini yöneten modüllerdir."
+            - "CRM, mesajlaşma platformları ve geri dönüş takip altyapısı entegre şekilde sunulur."
+            - "WhatsApp, Messenger, Instagram gibi kanallar merkezi bir mesaj kutusunda toplanabilir."
+          modules:
+            - name: crm
+              description: "Müşteri geçmişi, notlar, ilişkilendirmeler"
+            - name: ticket
+              description: "Destek talepleri ve durum takibi"
+            - name: follow-up
+              description: "Geri dönüş planları, hatırlatıcılar"
+            - name: insight
+              description: "Müşteri etkileşim raporları"
+            - name: message
+              description: "Tüm mesajlaşma altyapısı (gelen kutusu)"
+            - name: whatsapp
+              description: "WhatsApp Business API bağlantısı"
+            - name: messenger
+              description: "Facebook Messenger entegrasyonu"
+            - name: instagram
+              description: "IG DM API bağlantısı"
+            - name: sms
+              description: "SMS servisleri (Netgsm, Twilio, vs.)"
+        finance:
+          description:
+            - "Fatura, kasa, banka, gider ve muhasebe işlemleri bu grupta yönetilir."
+            - "E-fatura altyapısı ve Mikro, Logo, Parasut gibi sistemlerle entegrasyon içerir."
+            - "Finansal süreçlerin uçtan uca takibi ve raporlanması için temel altyapıyı sunar."
+          modules:
+            - name: billing
+              description: "Fatura kesimi ve fatura şablonları"
+            - name: expense
+              description: "Gider girişi ve kategorileştirme"
+            - name: cash
+              description: "Kasa takibi"
+            - name: bank
+              description: "Banka hareketleri"
+            - name: accounting
+              description: "Ön muhasebe genel modülü"
+            - name: e-invoice
+              description: "E-fatura API sistemi"
+            - name: mikro
+              description: "Mikro Yazılım entegrasyonu"
+            - name: logo
+              description: "Logo Tiger / Go entegrasyonu"
+            - name: parasut
+              description: "Parasut.io bağlantısı"
+        marketplace:
+          description:
+            - "Pazaryeri entegrasyonları, ürün ve sipariş verisinin dış platformlarla çift yönlü olarak senkronize edilmesini sağlar."
+            - "Amazon, Etsy gibi platformlara özel API modülleriyle stok takibi, sipariş yönetimi ve ürün yayını yapılabilir."
+          modules:
+            - name: amazon
+              description: "Amazon satıcı hesabı ürün ve sipariş senkronizasyonu"
+            - name: etsy
+              description: "Etsy pazaryeri bağlantısı"
+        operations:
+          description:
+            - "İç operasyonları, görev yönetimini ve zaman bazlı süreçleri tanımlar."
+            - "Üretim planlaması, görev takibi, iş akışı otomasyonları ve takvim yönetimi entegre şekilde sunulur."
+            - "Özellikle ekip koordinasyonu ve üretim disiplinine yönelik altyapı sağlar."
+          modules:
+            - name: production
+              description: "Üretim akışı, iş emirleri"
+            - name: task
+              description: "Görev atama, kullanıcı ilişkisi"
+            - name: checklist
+              description: "Göreve bağlı yapılacak adımlar"
+            - name: workflow
+              description: "Otomatik tetiklenen iş akışları"
+            - name: schedule
+              description: "Zaman bazlı planlama"
+            - name: calendar
+              description: "Takvim görünümü ve haftalık/yıllık mod"
+            - name: reminder
+              description: "Görev ve süreç bazlı hatırlatıcılar"
+        shipping:
+          description:
+            - "Siparişlerin kargo firmalarına aktarımı ve teslimat süreçlerinin takibini sağlar."
+            - "Kargo firmalarına özel API bağlantıları ve çoklu taşıyıcı altyapı içerir."
+            - "Kargo entegrasyonları, teslimat süreçlerini hızlandırır ve yönetimi kolaylaştırır."
+          modules:
+            - name: yurtici
+              description: "Yurtiçi Kargo API entegrasyonu"
+            - name: aras
+              description: "Aras Kargo bağlantısı"
+            - name: ship-integrator
+              description: "Ship Entegrator çoklu taşıyıcı sistemi"
+    saas:
+      description:
+        - "TT Panel’in SaaS (Software as a Service) altyapısı, çoklu kiracı (multi-tenant) desteği ile yapılandırılır."
+        - "Her tenant için ayrı yapılandırma, veri izolasyonu ve özelleştirme imkânı sunar."
+        - "Bu modüller, TT Panel’in SaaS dönüşümüne uygun altyapısını oluşturur."
+      modules:
+        - name: "tenant"
+          description: "Kiracı yönetimi (tenant bazlı yapılandırma)"
+        - name: "domain-mapping"
+          description: "Domain yönlendirme ve alt alan adı yönetimi"
+        - name: "plan-management"
+          description: "Abonelik planları ve yönetimi"
+        - name: "subscription"
+          description: "Kullanıcı abonelikleri ve ödeme yönetimi"
+        - name: "invitation"
+          description: "Kullanıcı davetleri ve yönetimi"
+        - name: "billing-usage"
+          description: "Kullanım bazlı faturalama ve abonelik yönetimi"
+
+tech:
+  title: "Teknoloji ve Standartlar"
+  description: "Projenin teknoloji yığını, sürümler, araçlar, kalite ve güvenlik standartları."
+
+  runtimes:
+    node: ">=22.17.0"
+    typescript: "5.8.3"
+    package_manager:
+      name: "pnpm"
+      version: "10.14.0"
+      workspace: true
+    monorepo:
+      tool: "pnpm-workspace"
+      apps_dir: ["apps/api", "apps/admin", "apps/shop"]
+      packages_dir: ["packages/"]
+      roots: ["config/", "docs/", "scripts/", "services/", "tests/"]
+
+  backend:
+    framework: "NestJS"
+    framework_version: "11"
+    language: "TypeScript"
+    http:
+      style: "REST"
+      api_style: "JSON"
+      versioning: "url"
+      server: "fastify"
+    auth:
+      strategy: ["jwt"]
+      transport: "cookie-httponly" # SSR uyumlu
+      hashing: "bcrypt"
+      refresh_tokens: true
+      session:
+        enabled: true
+        scope: ["admin"]
+      roles: true
+      token_ttl:
+        access_minutes: 15
+        refresh_days: 14
+    validation: "class-validator"
+    data_access:
+      orm: "Prisma"
+      migrations: "prisma-migrate"
+    testing:
+      unit: "jest"
+      e2e: "supertest"
+      coverage_threshold: 80
+    build:
+      bundler: "swc"
+      target: "node22"
+    conventions:
+      dto_dir: "dto/"
+      entity_dir: "entity/"
+      controller_dir: "controller/"
+      service_dir: "service/"
+
+  frontend:
+    framework: "Nuxt 4"
+    ui_library: "@nuxt/ui"
+    css:
+      - "tailwindcss"
+    state: "pinia"
+    routing: "file-based"
+    forms:
+      library: "vee-validate"
+      schema: "zod"
+    i18n: true
+    ssr: true
+    testing:
+      unit: "vitest"
+      e2e: "playwright"
+    build:
+      target: "web"
+    browserslist: []
+    structure:
+      app_dir: "app/"
+      root_layout: "app/layout.vue"
+      root_app: "app/app.vue"
+      pages_dir: "app/pages/"
+      components_dir: "app/components/"
+      composables:
+        dir: "app/composables/"
+        auto_import: true
+      plugins:
+        dir: "app/plugins/"
+        items: ["axios", "dayjs"]
+      middleware:
+        auth_file: "app/middleware/auth.ts"
+
+  data:
+    database:
+      primary: "postgresql"
+      replicas: 0
+      schema_policy: "migrations-required"
+      pooling: "pgbouncer"
+      backups:
+        enabled: true
+        schedule_cron: "0 2 * * *"
+        retention_days: 14
+    cache:
+      engine: "redis"
+      ttl_seconds_default: 300
+      use_for: ["sessions", "rate-limit", "cache-layer"]
+    queue:
+      engine: "bullmq"
+      redis: "shared"
+      default_concurrency: 5
+    search:
+      engine: "meilisearch"
+    storage:
+      object:
+        dev: "minio"
+        prod: "s3"
+      cdn: "cloudflare"
+      upload_limits_mb:
+        api: 25
+        admin: 10
+        shop: 10
+    analytics_pipeline:
+      event_bus: "http"
+      batch_window_sec: 5
+
+  integrations:
+    email:
+      provider: "smtp"
+      features: ["transactional", "template"]
+    sms:
+      provider: "netgsm"
+    payments:
+      providers: ["iyzico", "stripe", "paytr"]
+      currency_default: "TRY"
+    analytics:
+      web: ["ga4", "meta-pixel", "capi"]
+      server_events: true
+    social_login:
+      enabled: false
+      providers: []
+    messaging:
+      whatsapp_business_api: true
+      webhook_endpoints: ["/webhooks/whatsapp"]
+    commerce_channels:
+      marketplaces: ["amazon", "etsy"]
+      sync:
+        products: true
+        orders: true
+        inventory: true
+
+  security:
+    secrets:
+      dev: ".env"
+      prod: "ssm-or-vault"
+    dependency_scanning: true
+    sast: true
+    dast: false
+    headers:
+      csrf: true
+      csp: true
+      hsts: true
+      frame_options: "DENY"
+      referrer_policy: "no-referrer"
+    cors:
+      allowed_origins:
+        - "http://localhost:3000"
+        - "http://localhost:3010"
+        - "http://localhost:3020"
+      allow_credentials: true
+      allowed_methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+    rate_limit:
+      enabled: true
+      default_rps: 100
+      burst: 200
+      per_route_overrides:
+        - route: "/auth/*"
+          rps: 30
+    password_policy:
+      min_length: 8
+      require_numbers: true
+      require_symbols: true
+      lockout_after_attempts: 5
+      lockout_minutes: 15
+    audit_logging: true
+    pii:
+      storage: "encrypted-at-rest"
+      transport: "https-only"
+      data_retention_days: 365
+    compliance: ["KVKK", "GDPR"]
+
+  observability:
+    logging: "pino -> loki"
+    metrics: "prometheus"
+    tracing: "opentelemetry -> tempo"
+    dashboards: ["grafana"]
+    api_endpoints:
+      - "GET /:module/stats"
+      - "GET /:module/metrics"
+
+  performance:
+    budgets:
+      api_latency_p95_ms: 300
+      web_vitals:
+        lcp_ms: 2500
+        cls: 0.1
+        fid_ms: 100
+    caching:
+      server: true
+      client: true
+      cdn: true
+    compression:
+      gzip: true
+      brotli: true
+    images:
+      optimization: true
+
+  quality:
+    lint: "eslint"
+    format: "prettier"
+    typecheck: true
+    commit_convention: "conventional-commits"
+    changelog: "keep-a-changelog"
+    branching: "trunk-based"
+    license: ""
+    codeowners: true
+
+  api_standards:
+    error_format: "problem+json"
+    pagination: "cursor"
+    sorting: true
+    filtering: true
+    id_strategy: "uuid"
+    datetime: "UTC"
+    locale_default: "tr-TR"
+
+  release:
+    semver: true
+    tagging: "v{version}"
+    prerelease: ["-alpha", "-beta", "-rc"]
+    changelog_required: true
+    artifact_registry: "ghcr.io"
+
+  ci_cd:
+    provider: "github-actions"
+    conventions:
+      trunk: "main"
+      release_branches: ["release/*"]
+      preview_envs: true
+      required_checks: ["build-test", "e2e"]
+    pipelines:
+      - name: "build-test"
+        on: ["push", "pull_request"]
+        matrix:
+          app: ["api", "admin", "shop"]
+          node: ["22.x"]
+        steps:
+          - "checkout"
+          - "setup-node pnpm-cache"
+          - "pnpm install --frozen-lockfile"
+          - "pnpm lint"
+          - "pnpm typecheck"
+          - "pnpm test:unit -- --coverage"
+      - name: "e2e"
+        on: ["pull_request"]
+        needs: ["build-test"]
+        steps:
+          - "deploy-preview"
+          - "pnpm test:e2e"
+          - "teardown-preview"
+      - name: "release"
+        on: ["workflow_dispatch", "tag"]
+        steps:
+          - "version-bump semver"
+          - "generate-changelog"
+          - "docker-buildx multi-arch"
+          - "publish-artifacts registry"
+      - name: "deploy"
+        on: ["tag"]
+        env: "staging|prod"
+        strategy: "rolling"
+        steps:
+          - "migrate-db prisma-migrate"
+          - "deploy-app kubernetes"
+          - "smoke-test /healthz"
+          - "notify slack"
+
+  infra:
+    container:
+      base_image: "node:22-alpine"
+      multi_stage: true
+      healthcheck:
+        interval: "30s"
+        timeout: "3s"
+        retries: 3
+        start_period: "10s"
+    registry:
+      images:
+        api: "ghcr.io/org/tt-panel-api"
+        admin: "ghcr.io/org/tt-panel-admin"
+        shop: "ghcr.io/org/tt-panel-shop"
+      tags: "v{version}"
+    orchestration:
+      dev: "docker-compose"
+      prod: "kubernetes"
+      namespace: "tt-panel"
+      deployment:
+        api:
+          replicas: 2
+          hpa: { min: 2, max: 8, cpu_target: 70 }
+        admin:
+          replicas: 2
+        shop:
+          replicas: 2
+      probes:
+        liveness: "/healthz"
+        readiness: "/readyz"
+    ingress:
+      controller: "nginx"
+      tls: "lets-encrypt"
+      domains:
+        staging: ["stg-api.tt.example.com", "stg-admin.tt.example.com", "stg-shop.tt.example.com"]
+        prod: ["api.tt.example.com", "admin.tt.example.com", "shop.tt.example.com"]
+    provisioning:
+      tool: "terraform"
+      state_backend: "s3+dynamodb"
+      modules: ["network", "k8s", "db", "cdn", "monitoring"]
+    databases:
+      engine: "postgresql"
+      high_availability:
+        enabled: true
+        pgbouncer: true
+        backups:
+          schedule_cron: "0 2 * * *"
+          retention_days: 14
+    cache:
+      engine: "redis"
+      mode: "cluster"
+    search:
+      engine: "meilisearch"
+      replicas: 1
+    storage:
+      object:
+        prod: "s3"
+        dev: "minio"
+      cdn: "cloudflare"
+    feature_flags:
+      provider: "unleash"
+      sdk_strategy: "server-evaluated"
+    templates:
+      helm_charts:
+        - { name: "tt-panel-api", repo: "charts/tt-panel-api" }
+        - { name: "tt-panel-web", repo: "charts/tt-panel-web" }
+    networking:
+      cors_presets: ["local-dev", "staging", "prod"]
+      rate_limits:
+        default_rps: 100
+        auth_rps: 30
+    observability:
+      logging: "pino -> loki"
+      metrics: "prometheus"
+      tracing: "opentelemetry -> tempo"
+      dashboards: ["grafana"]
+      alerts:
+        channels: ["slack", "email"]
+        rules:
+          - "p95_api_latency > 500ms for 5m"
+          - "error_rate > 2% for 10m"
+          - "db_connections > 80% for 10m"
+
+  environments:
+    - name: "dev"
+      url:
+        api: "http://localhost:3000"
+        admin: "http://localhost:3010"
+        shop: "http://localhost:3020"
+      secrets_source: ".env"
+      database: "postgresql://localhost:5432/tt_dev"
+      storage: "minio://localhost:9000/tt-dev"
+      notes: ["hot-reload", "debug=true", "seed-data=yes"]
+    - name: "staging"
+      url:
+        api: "https://stg-api.tt.example.com"
+        admin: "https://stg-admin.tt.example.com"
+        shop: "https://stg-shop.tt.example.com"
+      secrets_source: "ssm"
+      database: "postgresql://staging/tt_panel"
+      storage: "s3://tt-panel-staging"
+      traffic_policy:
+        robots: "disallow"
+        basic_auth: true
+      release_policy:
+        auto_from_main: true
+        require_approvals: 1
+    - name: "prod"
+      url:
+        api: "https://api.tt.example.com"
+        admin: "https://admin.tt.example.com"
+        shop: "https://shop.tt.example.com"
+      secrets_source: "vault"
+      database: "postgresql://prod/tt_panel"
+      storage: "s3://tt-panel-prod"
+      traffic_policy:
+        robots: "allow"
+        basic_auth: false
+      release_policy:
+        manual_promote_from: "staging"
+        change_window: "Mon-Fri 09:00-18:00 Europe/Istanbul"
+        rollback:
+          strategy: "helm-rollback"
+          keep_releases: 5
+
+  tooling:
+    scripts_dir: "scripts/"
+    makefile: true
+    husky: true
+    lint_staged: true
+    tsx: true
+    pnpm_workspace_file: "pnpm-workspace.yaml"
+
+  config_paths:
+    docker_dir: "docker/"
+    env_dir: "config/env/"
+    ssl_dir: "ssl/"
+    system_config_dir: "system/"
+    ci_dir: "ci/"
+    vscode_settings: ".vscode/settings.json"
+    tsconfig_base: "tsconfig.base.json"
+    eslint_config: "eslint.config.mjs"
+
+  docs:
+    style: ""
+    adr: true
+    repo: ""
+    structure:
+      manual: "docs/manual/"
+      dev: "docs/dev/"
+      guide: "docs/guide/"
+      ai: "docs/ai/"
+
+  enablement:
+    learning_path:
+      - "Vue → Nuxt 4 → Tailwind CSS"
+      - "TypeScript temeli → NestJS modül yapısı"
+      - "Prisma + PostgreSQL ilişkileri"
+      - "JWT + bcrypt + session + guard + strategy"
+      - "MinIO ile dosya yükleme"
+      - "Redis + BullMQ → job/queue"
+      - "Jest, Supertest, (Playwright) ile test"
+      - "GitHub Actions CI"
+      - "Ortam yönetimi: .env, Makefile, docker-compose"
+      - "Rate limit, brute force, token yönetimi"
+
+  testing_policy:
+    coverage_target_percent: 80
+    frontend_e2e:
+      primary: "playwright"
+      alternative: "cypress"
+    backend:
+      unit: "jest"
+      e2e: "supertest"
+
+workspace:
+  title: "Workspace - Kod ve Çalışma Alanı Yapısı"
+  description: >
+    Bu bölüm, TT Panel projesinin kod organizasyonu, çalışma ortamı, ortak süreçler ve ekip içi standartlarının bütününü tanımlar.
+    Monorepo ve pnpm workspace mantığına uygun olarak, dizin yapıları, kurulum adımları, scriptler, konfigürasyon dosyaları ve ekip için onboarding rehberi burada tutulur.
+    Amaç, hızlı kurulum, kolay bakım ve ekip içi pratiklerin sürdürülebilir şekilde yönetilmesini sağlamaktır.
+  path: "."
+  structure:
+    repo_style: "monorepo"
+    package_manager: "pnpm"
+    workspace_globs:
+      - "apps/*"
+      - "packages/*"
+    name_conventions:
+      branch:
+        feature: "feature/{ticket-id}-{short-desc}"
+        fix: "fix/{ticket-id}-{short-desc}"
+        hotfix: "hotfix/{short-desc}"
+        release: "release/{version}"
+      tag: "v{version}"
+      env: ["dev", "staging", "prod"]
+      commit: "conventional-commits"
+    directories:
+      apps:
+        description: "TT Panel’in ana uygulama dizinidir. API, admin ve shop uygulamaları bu klasör altında konumlanır."
+        directories:
+          api:
+            description: "NestJS, Prisma ve PostgreSQL tabanlı REST API uygulamasıdır."
+            directories:
+              src:
+                description: "API uygulamasının ana kaynak kodu burada bulunur."
+                directories:
+                  infra: "API uygulamasının altyapı bileşenleri (örn: Prisma, Swagger, Logger) burada tanımlanır."
+                  modules:
+                    description: "TT Panel’in tüm backend modülleri burada konumlanır. E-ticaret, sistem ve otomasyon gruplarına ayrılmıştır."
+                    directories:
+                      system: "Yetkilendirme, ayarlar ve sistem davranışlarını yöneten çekirdek modüller."
+                      commerce: "Ürün, sipariş, müşteri, içerik ve pazarlama süreçlerini yöneten ticari modüller."
+                      automation: "Operasyon, mesajlaşma, finans ve entegrasyon modülleri."
+                      saas: "SaaS altyapısı, çoklu kiracı desteği ve abonelik yönetimi modülleri."
+              prisma: "Prisma ORM yapılandırması ve veritabanı modelleri burada bulunur."
+              tests: "Modül bazlı test senaryoları (birim ve entegrasyon testleri) bu klasörde yer alır."
+          admin:
+            description: "Nuxt 4 tabanlı yönetim paneli uygulamasıdır."
+            directories:
+              app:
+                description: "Yönetim paneli kaynak kodlarının bulunduğu ana dizindir. app.vue: Uygulamanın kök bileşeni, global layout ve temel UI yapılarını yükler."
+                directories:
+                  pages:
+                    description: "Sayfa bazlı görünümler, route yapıları ve her modüle izole alt klasörler ile modüler frontend organizasyonu."
+                    directories:
+                      system:
+                        access:
+                          role:
+                            description: "Role modülü için izole frontend dosya yapısı."
+                            directories:
+                              components: "Modüle özel bileşenler (sadece bu modülde kullanılır)."
+                              composables: "Modüle özel composable'lar (sadece bu modülde kullanılır)."
+                              utils: "Modüle özel yardımcı fonksiyonlar."
+                              tests: "Modüle özel test dosyaları (isteğe bağlı)."
+                              # ... Ek modüle özgü alt dosya/dizinler...
+                            files:
+                              - index.vue
+                              - edit.vue
+                              # Modülün diğer sayfa dosyaları
+                  components: "Global (tüm modüller arası paylaşılan) Vue bileşenleri."
+                  composables: "Global olarak tekrar kullanılan Vue composition API fonksiyonları."
+                  layouts: "Sayfa şablonları ve genel yerleşim bileşenleri."
+                  plugins: "Nuxt eklentileri ve global plugin tanımları."
+                  middleware: "Route öncesi çalışan kontrol dosyaları."
+                  utils: "Global yardımcı fonksiyonlar (tüm modüllerde tekrar kullanıma uygun)."
+                  assets/css: "Global ve bileşen bazlı CSS/Tailwind stilleri."
+              public: "Yönetim paneli için gerekli statik dosyalar (örn: favicon, logo, manifest)."
+          shop:
+            description: "Nuxt 4 tabanlı e-ticaret vitrin uygulamasıdır."
+            directories:
+              app:
+                description: "E-ticaret vitrin uygulamasının kaynak kodlarının bulunduğu ana dizindir. app.vue: Uygulamanın kök bileşeni, global layout ve temel UI yapılarını yükler."
+                directories:
+                  pages:
+                    description: "Sayfa bazlı görünümler, route yapıları ve modül izole frontend klasör yapısı."
+                    directories:
+                      # Yukarıdaki admin düzeninin aynısı burada da kullanılacak
+                  components: "Global (tüm modüller arası paylaşılan) Vue bileşenleri."
+                  composables: "Global olarak tekrar kullanılan Vue composition API fonksiyonları."
+                  layouts: "Sayfa şablonları ve genel yerleşim bileşenleri."
+                  plugins: "Nuxt eklentileri ve global plugin tanımları."
+                  middleware: "Route öncesi çalışan kontrol dosyaları."
+                  utils: "Global yardımcı fonksiyonlar."
+                  assets/css: "Global ve bileşen bazlı CSS/Tailwind stilleri."
+              public: "Vitrin uygulaması için gerekli statik dosyalar (örn: favicon, logo, manifest)."
+      packages:
+        description: "Uygulamalar arasında paylaşılan kütüphaneler ve yardımcılar."
+        directories:
+          core:
+            description: "Domain modelleri, tip tanımları ve ortak iş mantıkları."
+          sdk:
+            description: "API istemci kütüphanesi; tipler, servis çağrıları, dönüştürücüler."
+          ui:
+            description: "Paylaşılan UI bileşenleri ve tema sistemleri."
+          schemas:
+            description: "Zod/DTO şemaları ve form validasyon yapıları."
+      services:
+        description: "Dış servis bağlantılarını içerir (veritabanı, önbellek, e-posta, dosya depolama vb.). Her klasör, genellikle bir Docker konteynerine karşılık gelir ve `docker-compose.yml` ile entegre çalışır."
+        directories:
+          postgres: "PostgreSQL servisine ait başlangıç dosyaları."
+          redis: "Redis önbellek ve BullMQ kuyruk sistemi için kullanılır."
+          mailpit: "Geliştirme ortamı için SMTP testi ve e-posta önizleme servisi."
+          minio: "S3 uyumlu dosya depolama altyapısı."
+          worker: "Arka plan görevlerini yöneten kuyruk işleyicisi (BullMQ)."
+      config:
+        description: "Ortam, servis ve sistem yapılandırmalarını içerir. Koddan bağımsızdır ve ortam geçişlerini kolaylaştırır."
+        directories:
+          docker: "Her servise ait Dockerfile ve yapılandırma betikleri."
+          env: "Uygulama bazlı `.env.example` şablon dosyaları."
+          ssl: "Yerel geliştirme için SSL sertifikaları (opsiyonel)."
+          system: "Sabit JSON/YAML sistem konfigürasyonları (örnek: ülkeler, para birimleri)."
+          ci: "Gelecekteki CI/CD senaryoları için yapılandırma alanı."
+      tests:
+        description: "Test senaryoları, modüllerden bağımsız olarak bu klasörde organize edilir. Böylece test stratejileri daha net ve katmanlı biçimde uygulanabilir."
+        directories:
+          unit: "Servis, yardımcı fonksiyonlar vb. için birim testleri (Jest)."
+          integration: "Modüller arası veri ve akış testleri (Supertest)."
+          e2e: "Uçtan uca testler (Cypress, Playwright, vs.)."
+      scripts: "Otomasyon komutları, kurulum ve bakım betikleri bu klasörde bulunur."
+      docs:
+        description: "Geliştirici belgeleri ve AI üretim sistemine ait tüm içerikler burada tutulur. Kod içermez; mimari kararlar, faz planları, modül şemaları ve üretim rehberleri burada belgelenir."
+        directories:
+          manual: "Modül, panel ve servis gibi bölümlere ait kullanım belgeleri."
+          dev: "Ortam kurulumu, geliştirme rehberleri ve CLI açıklamaları."
+          guide: "AI destekli üretim sisteminin işleyişini açıklayan kullanım kılavuzları."
+          ai: "ai ile ilgili dokümantasyon ve kullanım örnekleri."
+  configurations:
+    endpoints:
+      api:
+        local-pnpm: "localhost:3000"
+        local-docker: "api.ttpanel.test"
+        prod: "api.tasarimteknesi.com"
+      admin:
+        local-pnpm: "localhost:3010"
+        local-docker: "admin.ttpanel.test"
+        prod: "admin.tasarimteknesi.com"
+      shop:
+        local-pnpm: "localhost:3020"
+        local-docker: "shop.ttpanel.test"
+        prod: "www.tasarimteknesi.com"
+    env:
+      description: "TT Panel uygulamasına ait her servis için ortam değişkenlerini (.env.*) içeren yapılandırma dosyaları. Geliştirme, test ve üretim gibi farklı ortamlar için özelleştirilebilir."
+      files:
+        postgres:
+          path: ./config/env/.env.postgres
+          description: "PostgreSQL veritabanı için gerekli çevresel değişkenler."
+          content:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: ttpanel
+            TZ: Europe/Istanbul
+            POSTGRES_PORT: 5432
+        redis:
+          path: ./config/env/.env.redis
+          description: "Redis servisi için gerekli çevresel değişkenler."
+          content:
+            REDIS_PASSWORD: redis
+        minio:
+          path: ./config/env/.env.minio
+          description: "MinIO nesne depolama servisi için gerekli çevresel değişkenler."
+          content:
+            MINIO_ROOT_USER: minioadmin
+            MINIO_ROOT_PASSWORD: minioadmin
+        mailpit:
+          path: ./config/env/.env.mailpit
+          description: "Mailpit SMTP sunucusu için gerekli çevresel değişkenler."
+          content:
+            MAILPIT_SMTP_PORT: 1025
+            MAILPIT_HTTP_PORT: 8025
+        api:
+          path: ["./apps/api/.env", "./config/env/.env.api"]
+          description: "TT Panel API servisi için gerekli çevresel değişkenler."
+          content: |
+            # Genel
+            HOST=0.0.0.0
+            NODE_ENV=development
+            APP_NAME=ttpanel-api
+            PORT=3000
+            TZ=Europe/Istanbul
+            DEFAULT_LANGUAGE=tr
+
+            # JWT
+            JWT_SECRET=supersecretkey
+            JWT_EXPIRES_IN=900s
+            JWT_REFRESH_EXPIRES_IN=7d
+
+            # PostgreSQL
+            DATABASE_URL=postgresql://postgres:postgres@postgres:5432/ttpanel?schema=public
+
+            # Redis
+            REDIS_HOST=redis
+            REDIS_PORT=6379
+            REDIS_PASSWORD=redis
+
+            # Mailpit
+            SMTP_HOST=mailpit
+            SMTP_PORT=1025
+            SMTP_USER=
+            SMTP_PASS=
+
+            # Ortam
+            HOST=0.0.0.0
+            NODE_ENV=production
+            APP_NAME=ttpanel-api
+            PORT=3000
+            TZ=Europe/Istanbul
+            DEFAULT_LANGUAGE=tr
+
+            # JWT (daha uzun süreli)
+            JWT_SECRET=${PROD_JWT_SECRET}
+            JWT_EXPIRES_IN=3600s
+            JWT_REFRESH_EXPIRES_IN=7d
+
+            # Prod veritabanı örneği (gerçek erişim bilgisi yerine env değişkenler)
+            DATABASE_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASS}@prod-db-server:5432/ttpanel?schema=public
+
+            # Redis (gerçek sunucu)
+            REDIS_HOST=prod-redis
+            REDIS_PORT=6379
+            REDIS_PASSWORD=${PROD_REDIS_PASSWORD}
+
+            # SMTP (örnek: SendGrid)
+            SMTP_HOST=smtp.sendgrid.net
+            SMTP_PORT=587
+            SMTP_USER=apikey
+            SMTP_PASS=${SENDGRID_API_KEY}
+        admin:
+          path: ["./apps/admin/.env", "./config/env/.env.api"]
+          description: "TT Panel Admin arayüzü için gerekli çevresel değişkenler."
+          content: |
+            NODE_ENV: development
+            NITRO_PORT: 3010
+            NITRO_HOST: 0.0.0.0
+            APP_NAME: ttpanel-admin
+            TZ: Europe/Istanbul
+            DEFAULT_LANGUAGE: tr
+            API_BASE_URL: http://api.ttpanel.test
+            GA_ID: ""
+            FB_PIXEL_ID: ""
+        shop:
+          path: ["./apps/shop/.env", "./config/env/.env.shop"]
+          description: "TT Panel Shop arayüzü için gerekli çevresel değişkenler."
+          content: |
+            NODE_ENV: development
+            NITRO_PORT: 3020
+            NITRO_HOST: 0.0.0.0
+            APP_NAME: ttpanel-shop
+            TZ: Europe/Istanbul
+            DEFAULT_LANGUAGE: tr
+            API_BASE_URL: http://api.ttpanel.test
+            GA_ID: ""
+            FB_PIXEL_ID: ""
+    docker-compose:
+      description: "TT Panel uygulaması için Docker Compose yapılandırması. Traefik reverse proxy, PostgreSQL veritabanı, Redis cache, MinIO nesne depolama, Mailpit SMTP sunucusu ve TT Panel API, Admin ve Shop servislerini içerir."
+      files:
+        ttpanel:
+          path: ./docker-compose.yaml
+          description: >
+            TT Panel uygulamasına ait servisleri (API, Admin, Shop, PostgreSQL, Redis, MinIO, Mailpit) tanımlar.
+            Geliştirme ortamında projenin temel bileşenlerini çalıştırmak için kullanılır.
+            Production ortamında `docker-compose.prod.yaml` kullanılacaktır.
+          notes:
+            postgres: "PostgreSQL veritabanı servisi. Veritabanı verilerini kalıcı hale getirmek için volume kullanır."
+            pgweb: "PostgreSQL veritabanı yönetim aracı. Web tabanlı arayüz sağlar."
+            redis: "Redis cache servisi. Veritabanı önbellekleme için kullanılır."
+            minio: "MinIO nesne depolama servisi. Dosya depolama için kullanılır."
+            mailpit: "Mailpit SMTP sunucusu. E-posta testleri için kullanılır."
+            api: "NestJS tabanlı API servisidir. Postgres ve Redis'e bağımlıdır."
+            admin: "NuxtJS tabanlı yönetim paneli servisidir. API servisine bağımlıdır."
+            shop: "NuxtJS tabanlı halka açık e-ticaret arayüzü servisidir. API servisine bağımlıdır."
+          content:
+            networks:
+              ttpanel:
+                name: ttpanel
+                driver: bridge
+            services:
+              traefik:
+                container_name: ttpanel-traefik
+                image: traefik:v3.4.3
+                restart: unless-stopped
+                command:
+                  - --entrypoints.web.address=:80
+                  - --api.dashboard=true
+                  - --providers.docker=true
+                  - --providers.docker.exposedbydefault=false
+                ports:
+                  - "80:80"
+                volumes:
+                  - /var/run/docker.sock:/var/run/docker.sock:ro
+                  - ./traefik.yml:/etc/traefik/traefik.yml:ro
+                labels:
+                  - "traefik.enable=true"
+                  - "traefik.http.routers.traefik.rule=Host(`traefik.ttpanel.test`)"
+                  - "traefik.http.routers.traefik.entrypoints=web"
+                  - "traefik.http.routers.traefik.service=api@internal"
+                networks:
+                  - ttpanel
+              postgres:
+                container_name: ttpanel-postgres
+                image: postgres:16
+                restart: unless-stopped
+                ports:
+                  - "5432:5432"
+                env_file:
+                  - ./config/env/.env.postgres
+                volumes:
+                  - ./services/postgres/data:/var/lib/postgresql/data
+                networks:
+                  - ttpanel
+              pgweb:
+                container_name: ttpanel-pgweb
+                image: sosedoff/pgweb:latest
+                restart: on-failure
+                environment:
+                  - DATABASE_URL=postgres://postgres:postgres@postgres:5432/ttpanel?sslmode=disable
+                ports:
+                  - "8081:8081"
+                networks:
+                  - ttpanel
+                labels:
+                  - traefik.enable=true
+                  - traefik.http.routers.pgweb.rule=Host(`pgweb.ttpanel.test`)
+                  - traefik.http.services.pgweb.loadbalancer.server.port=8081
+              redis:
+                container_name: ttpanel-redis
+                image: redis:7
+                restart: on-failure
+                command: redis-server --requirepass redis
+                env_file:
+                  - ./config/env/.env.redis
+                volumes:
+                  - ./services/redis/data:/data
+                networks:
+                  - ttpanel
+              minio:
+                container_name: ttpanel-minio
+                image: minio/minio:latest
+                restart: on-failure
+                env_file:
+                  - ./config/env/.env.minio
+                command: server /data --console-address ":9001"
+                volumes:
+                  - ./services/minio/data:/data
+                networks:
+                  - ttpanel
+                ports:
+                  - "9000:9000"
+                  - "9001:9001"
+                labels:
+                  - traefik.enable=true
+                  - traefik.http.routers.minio.rule=Host(`minio.ttpanel.test`)
+                  - traefik.http.services.minio.loadbalancer.server.port=9001
+              mailpit:
+                container_name: ttpanel-mailpit
+                image: axllent/mailpit:latest
+                restart: on-failure
+                env_file:
+                  - ./config/env/.env.mailpit
+                ports:
+                  - "8025:8025"
+                networks:
+                  - ttpanel
+                expose:
+                  - "8025"
+                labels:
+                  - traefik.enable=true
+                  - traefik.http.routers.mailpit.rule=Host(`mailpit.ttpanel.test`)
+                  - traefik.http.services.mailpit.loadbalancer.server.port=8025
+              api:
+                container_name: ttpanel-api
+                build:
+                  context: .
+                  dockerfile: apps/api/Dockerfile
+                  args:
+                    - NODE_ENV=production
+                  target: production
+                  cache_from:
+                    - type=local,src=./.docker-cache
+                  cache_to:
+                    - type=local,dest=./.docker-cache
+                restart: on-failure
+                env_file:
+                  - ./config/env/.env.api
+                networks:
+                  - ttpanel
+                depends_on:
+                  - postgres
+                  - redis
+                labels:
+                  - traefik.enable=true
+                  - traefik.http.routers.api.rule=Host(`api.ttpanel.test`)
+                  - traefik.http.services.api.loadbalancer.server.port=3000
+                healthcheck:
+                  test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+                  interval: 30s
+                  timeout: 10s
+                  retries: 3
+              admin:
+                container_name: ttpanel-admin
+                build:
+                  context: .
+                  dockerfile: apps/admin/Dockerfile
+                  args:
+                    - NODE_ENV=production
+                  target: production
+                  cache_from:
+                    - type=local,src=./.docker-cache
+                  cache_to:
+                    - type=local,dest=./.docker-cache
+                restart: on-failure
+                env_file:
+                  - ./config/env/.env.admin
+                networks:
+                  - ttpanel
+                labels:
+                  traefik.enable: "true"
+                  traefik.http.routers.admin.rule: Host(`admin.ttpanel.test`)
+                  traefik.http.services.admin.loadbalancer.server.port: "3010"
+                depends_on:
+                  - api
+                healthcheck:
+                  test: ["CMD", "curl", "-f", "http://localhost:3010/"]
+                  interval: 30s
+                  timeout: 10s
+                  retries: 3
+              shop:
+                container_name: ttpanel-shop
+                build:
+                  context: .
+                  dockerfile: apps/shop/Dockerfile
+                  args:
+                    - NODE_ENV=production
+                  target: production
+                  cache_from:
+                    - type=local,src=./.docker-cache
+                  cache_to:
+                    - type=local,dest=./.docker-cache
+                restart: on-failure
+                env_file:
+                  - ./config/env/.env.shop
+                networks:
+                  - ttpanel
+                labels:
+                  traefik.enable: "true"
+                  traefik.http.routers.shop.rule: Host(`shop.ttpanel.test`)
+                  traefik.http.services.shop.loadbalancer.server.port: "3020"
+                depends_on:
+                  - api
+                healthcheck:
+                  test: ["CMD", "curl", "-f", "http://localhost:3020/"]
+                  interval: 30s
+                  timeout: 10s
+                  retries: 3
+    dockerfiles:
+      description: "TT Panel uygulaması için Dockerfile yapılandırmaları. Her servis için ayrı Dockerfile'lar içerir."
+      files:
+        api:
+          path: ./apps/api/Dockerfile
+          description: "TT Panel API servisi için Dockerfile. Node.js tabanlı uygulama için gerekli bağımlılıkları yükler ve uygulamayı başlatır."
+          content: |
+            # ------------------------------------
+            # 🧱 Base Layer (ortak ortam)
+            # ------------------------------------
+            FROM node:22 AS base
+
+            ENV PNPM_HOME="/pnpm"
+            ENV PATH="$PNPM_HOME:$PATH"
+
+            RUN corepack enable && corepack prepare pnpm@10.14.0 --activate
+            RUN pnpm config set injectWorkspacePackages true
+
+            WORKDIR /build
+
+            COPY pnpm-lock.yaml package.json pnpm-workspace.yaml ./
+            COPY apps/api ./apps/api
+
+            # ------------------------------------
+            # 🏗️ Build Layer (install + build + prisma)
+            # ------------------------------------
+            FROM base AS build
+
+            WORKDIR /build
+
+            RUN pnpm install --filter=api... --frozen-lockfile
+            RUN pnpm --filter=api build
+            RUN pnpm --filter=api exec prisma generate || echo "No Prisma client"
+
+            # ------------------------------------
+            # 🧪 Development Layer (watch + CLI)
+            # ------------------------------------
+            FROM base AS dev
+
+            COPY --from=build /build /app
+            WORKDIR /app/apps/api
+            EXPOSE 3000
+
+            CMD ["pnpm", "start:dev"]
+
+            # ------------------------------------
+            # 🚀 Production Layer (sadece çalıştırma)
+            # ------------------------------------
+            FROM base AS production
+
+            WORKDIR /app/apps/api
+
+            COPY --from=build /build/apps/api/package.json ./
+            COPY --from=build /build/apps/api/dist ./dist
+            COPY --from=build /build/node_modules /app/node_modules
+            COPY --from=build /build/apps/api/node_modules ./node_modules
+
+            ENV NODE_ENV=production
+            EXPOSE 3000
+
+            CMD ["node", "dist/main.js"]
+        admin:
+          path: ./apps/admin/Dockerfile
+          description: "TT Panel Admin arayüzü için Dockerfile. Node.js tabanlı uygulama için gerekli bağımlılıkları yükler ve uygulamayı başlatır."
+          content: |
+            # ------------------------------------
+            # 🧱 Base Layer (Nuxt + pnpm)
+            # ------------------------------------
+            FROM node:22 AS base
+
+            ENV PNPM_HOME="/pnpm"
+            ENV PATH="$PNPM_HOME:$PATH"
+
+            RUN corepack enable && corepack prepare pnpm@10.14.0 --activate
+            RUN pnpm config set injectWorkspacePackages true
+
+            WORKDIR /build
+
+            COPY pnpm-lock.yaml package.json pnpm-workspace.yaml ./
+            COPY apps/admin ./apps/admin
+
+            # ------------------------------------
+            # 🏗️ Build Layer (install + build)
+            # ------------------------------------
+            FROM base AS build
+
+            WORKDIR /build
+
+            RUN pnpm install --filter=admin... --frozen-lockfile
+            RUN pnpm --filter=admin build
+
+            # ------------------------------------
+            # 🧪 Development Layer (Nuxt Dev Server)
+            # ------------------------------------
+            FROM base AS dev
+
+            COPY --from=build /build /app
+            WORKDIR /app/apps/admin
+            EXPOSE 3010
+
+            CMD ["pnpm", "dev"]
+
+            # ------------------------------------
+            # 🚀 Production Layer (start Nuxt server)
+            # ------------------------------------
+            FROM node:22 AS production
+
+            WORKDIR /app
+
+            COPY --from=build /build/apps/admin/.output ./.output
+            COPY --from=build /build/apps/admin/package.json ./
+            COPY --from=build /build/node_modules ./node_modules
+
+            ENV NODE_ENV=production
+            EXPOSE 3010
+
+            CMD ["node", ".output/server/index.mjs"]
+        shop:
+          path: ./apps/shop/Dockerfile
+          description: "TT Panel Shop arayüzü için Dockerfile. Node.js tabanlı uygulama için gerekli bağımlılıkları yükler ve uygulamayı başlatır."
+          content: |
+            # ------------------------------------
+            # 🧱 Base Layer (Nuxt + pnpm)
+            # ------------------------------------
+            FROM node:22 AS base
+
+            ENV PNPM_HOME="/pnpm"
+            ENV PATH="$PNPM_HOME:$PATH"
+
+            RUN corepack enable && corepack prepare pnpm@10.14.0 --activate
+            RUN pnpm config set injectWorkspacePackages true
+
+            WORKDIR /build
+
+            COPY pnpm-lock.yaml package.json pnpm-workspace.yaml ./
+            COPY apps/shop ./apps/shop
+
+            # ------------------------------------
+            # 🏗️ Build Layer (install + build)
+            # ------------------------------------
+            FROM base AS build
+
+            WORKDIR /build
+
+            RUN pnpm install --filter=shop... --frozen-lockfile
+            RUN pnpm --filter=shop build
+
+            # ------------------------------------
+            # 🧪 Development Layer (Nuxt Dev Server)
+            # ------------------------------------
+            FROM base AS dev
+
+            COPY --from=build /build /app
+            WORKDIR /app/apps/shop
+            EXPOSE 3010
+
+            CMD ["pnpm", "dev"]
+
+            # ------------------------------------
+            # 🚀 Production Layer (start Nuxt server)
+            # ------------------------------------
+            FROM node:22 AS production
+
+            WORKDIR /app
+
+            COPY --from=build /build/apps/shop/.output ./.output
+            COPY --from=build /build/apps/shop/package.json ./
+            COPY --from=build /build/node_modules ./node_modules
+
+            ENV NODE_ENV=production
+            EXPOSE 3010
+
+            CMD ["node", ".output/server/index.mjs"]
+    makefile:
+      path: "./makefile"
+      description: "TT Panel uygulaması için Makefile komutları. Docker Compose ile servisleri başlatma, durdurma, logları izleme ve veritabanı işlemleri gibi görevleri içerir."
+      content: |
+        .PHONY: help up infra-up apps-up down clean restart logs rebuild docker-clean psql test generate migrate reset seed env-check env-copy mc ms mt mr curl curl-all
+        .DEFAULT_GOAL := help
+
+        # Proje adı
+        PROJECT_NAME=ttpanel
+        SERVICES = api admin shop mailpit pgweb minio traefik
+
+        # Ortam ve env dosyaları
+        ENV_PATH=config/env
+        ENV_TARGET ?= api
+        ENV_FILE=$(ENV_PATH)/.env.$(ENV_TARGET)
+
+        # Compose komutu
+        DC = docker compose
+
+        up: ## ⬆️ Projeyi başlat
+          @$(DC) up -d
+          @echo "🚀 Proje başlatıldı. Logları izlemek için 'make logs' komutunu kullanabilirsiniz."
+
+        infra-up: ## 🏗️ Sadece infra profilli servisleri başlat
+          @$(DC) up -d traefik postgres pgweb redis minio mailpit
+
+        apps-up: ## 🖥️ Sadece apps profilli servisleri başlat
+          @$(DC) up -d api admin shop
+
+        down: ## 🔻 Uygulamayı durdur #core
+          @$(DC) down
+          @echo "⏹️ Proje durduruldu."
+
+        clean: ## 🧼 Volume + ağ temizliği #core
+          @$(DC) down -v --remove-orphans
+          @docker volume prune -f
+          @docker network prune -f
+          @echo "🧼 Temizlik tamamlandı."
+
+        clean-%: ## 🧼 Belirli servisi temizle (örn: make clean-api) #core
+          @$(DC) down $* -v --remove-orphans
+          @echo "🧼 $* servisi temizlendi."
+
+        restart: ## 🔁 Temizleyip yeniden başlat
+          @$(MAKE) clean
+          @$(MAKE) up
+          @echo "🔁 Proje yeniden başlatıldı."
+
+        logs: ## 🔍 Tüm servisin logunu izle (örn: make logs) #core
+          @$(DC) logs -f --tail=100
+
+        logs-%: ## 🔍 Belirli servisin logunu izle (örn: make logs-api) #core
+          @$(DC) logs -f --tail=100 $*
+
+        rebuild: ## 🔁 Temizle → Build --no-cache → Başlat #core
+          @$(MAKE) clean
+          @echo "⚙️ Ana proje build ediliyor..."
+          @$(DC) build --no-cache
+          @$(DC) up -d
+          @echo "✅ Tüm servisler yeniden başlatıldı."
+
+        rebuild-%: ## 🔁 Belirli servisi temizle → Build --no-cache → Başlat (örn: make rebuild-api) #core
+          @$(MAKE) clean-$*
+          @echo "⚙️ $* servisi build ediliyor..."
+          @$(DC) build $*
+          @$(DC) up -d $*
+          @echo "✅ $* servisi yeniden başlatıldı."
+
+        docker-clean: ## 🧨 Docker sistemini tamamen sıfırla (tüm container, image, volume vs.) #core
+          @echo "🧨 Docker sistemi tamamen temizleniyor..."
+          @docker stop $$(docker ps -aq) || true
+          @docker rm -f $$(docker ps -aq) || true
+          @docker rmi -f $$(docker images -aq) || true
+          @docker volume rm -f $$(docker volume ls -q) || true
+          @docker network rm $$(docker network ls | grep -v 'bridge\|host\|none' | awk '{print $$1}') || true
+          @docker system prune -a --volumes -f
+
+        psql: ## 🐘 PostgreSQL'e bağlan #db
+          @$(DC) exec postgres psql -U postgres -d ttpanel
+
+        test: ## 🧪 API test çalıştır #test
+          pnpm --filter api run test
+
+        generate: ## 🧬 Prisma generate (sadece api)
+          pnpm --filter api exec prisma generate
+
+        migrate:
+          @name=$(word 2, $(MAKECMDGOALS)); \
+          if [ -z "$$name" ]; then \
+            echo "⛔ Lütfen bir migrate ismi verin: make migrate create_users"; \
+            exit 1; \
+          fi; \
+          echo "🔄 Migrate başlatılıyor: $$name"; \
+          pnpm --filter api exec prisma migrate dev --name $$name
+
+        reset: ## 🧨 Prisma reset (sadece api)
+          pnpm --filter api exec prisma migrate reset --force
+
+        seed: ## 🌱 Prisma seed (sadece api)
+          pnpm --filter api exec prisma db seed
+
+        env-check: ## 🔍 .env dosyasını göster (örn: make env-check admin) #env
+          @target=$(word 2, $(MAKECMDGOALS)); \
+          echo "🔎 Aktif .env dosyası: config/env/.env.$$target"; \
+          cat config/env/.env.$$target
+
+        env-copy: ## 🟢 .env dosyasını apps klasörüne kopyala (örn: make env-copy admin) #env
+          @target=$(word 2, $(MAKECMDGOALS)); \
+          echo "→ $$target için .env dosyası kopyalanıyor..."; \
+          cp config/env/.env.$$target apps/$$target/.env
+
+        mc: ## 🧱 Modül oluştur (örn: make mc system/access/role) #scripts
+          @mod=$(word 2, $(MAKECMDGOALS)); \
+          echo "🧱 Modül oluşturuluyor: $$mod"; \
+          pnpm tsx scripts/module-create.ts $$mod
+
+        ms: ## 🌱 Modül seed (örn: make ms system/access/role) #scripts
+          @mod=$(word 2, $(MAKECMDGOALS)); \
+          echo "🌱 Modül seed ediliyor: $$mod"; \
+          pnpm tsx scripts/module-seed.ts $$mod
+
+        mt: ## 🧪 Modül testlerini Jest ile çalıştır (örn: make mt system/access/role) #scripts
+          @mod=$(word 2, $(MAKECMDGOALS)); \
+          echo "🧪 Jest ile test ediliyor: $$mod"; \
+          pnpm --filter api exec jest src/modules/$$mod/test --passWithNoTests
+
+        mr: ## 🔗 AppModule'a modül ekle (örn: make mr system/access/role) #scripts
+          @mod=$(word 2, $(MAKECMDGOALS)); \
+          echo "🔗 Modül ekleniyor: $$mod"; \
+          pnpm tsx scripts/module-register.ts $$mod
+
+
+        curl: ## 🔍 Belirli servise HTTP curl kontrolü (örn: make curl api) #control
+          @SERVICE=$(word 2, $(MAKECMDGOALS)); \
+          URL=http://$$SERVICE.ttpanel.test; \
+          echo "🌐 Kontrol ediliyor: $$URL"; \
+          curl -s -o /dev/null -w "↪️  HTTP Status: %{http_code}\n" $$URL
+
+        curl-all: ## 🌐 Tüm servislerin HTTP durumlarını kontrol et #control
+          @echo "🕐 Zaman: $$(date '+%T')"
+          @echo "📦 Container Durumları:"
+          @echo "────────────────────────────────────────";
+          @docker ps --format "table {{.Names}}\t{{.Status}}"
+          @echo ""
+          @echo "🌐 HTTP Servis Kontrolleri:"
+          @echo "────────────────────────────────────────";
+          @for s in $(SERVICES); do \
+            printf "• %-7s → http://$$s.ttpanel.test\n" "$$s"; \
+            curl -s -o /dev/null -w "↪️  HTTP Status: %{http_code}\n\n" http://$$s.ttpanel.test; \
+          done
+
+        # Varsayılan hedefin dışında argümanları engelleme
+        %:
+          @:
+
+        help: ## 👋 Yardım menüsü
+          @echo ""
+          @echo "TT Panel Makefile Komutları:"
+          @echo "───────────────────────────────────────────────────"
+          @awk -F':.*## ' '/^[a-zA-Z0-9_-]+:.*##/ { \
+            printf "  \033[1;36m%-20s\033[0m →  %s\n", $$1, $$2 \
+          }' $(MAKEFILE_LIST) | sort
+    scripts:
+      description: "Modül oluşturma, seed, test ve kayıt gibi üretim otomasyon komutlarını içerir."
+      files:
+        module-create.ts:
+          path: scripts/module-create.ts
+          type: typescript
+          description: "Verilen yolda NestJS modülü için klasör yapısı ve örnek dosyalar üretir. `make mc ...` komutu ile tetiklenir."
+          content: |
+            // 🧱 TT Panel - Modül Oluşturucu (Minimal & Full)
+            // Kullanım:
+            //   make mc system/access/role           → minimal mod
+            //   make mc system/access/role full      → full mod
+
+            import { mkdirSync, writeFileSync } from 'fs';
+            import { basename } from 'path';
+            import pluralize from 'pluralize';
+
+            // 🎯 Parametreleri al
+            const path = process.argv[2];
+            const mode = process.argv[3] ?? 'minimal';
+
+            if (!path) {
+              console.error('❌ Hata: path parametresi zorunludur (örn: system/access/role)');
+              process.exit(1);
+            }
+
+            const name = basename(path); // örn: "role"
+            const plural = pluralize(name); // "role" → "roles", "category" → "categories"
+            const target = `apps/api/src/modules/${path}`;
+
+            const parts = path.split('/');
+            parts[parts.length - 1] = plural; // son parçayı çoğul yap
+            const routePath = parts.join('/'); // örn: system/access/roles
+
+            console.log(`📁 Modül oluşturuluyor: ${target}`);
+
+            // 📁 Klasörleri oluştur
+            const basicDirs = ['controller', 'service', 'dto', 'entity', 'test', 'seed'];
+            const extraDirs = [
+              'config',
+              'guard',
+              'policy',
+              'pipe',
+              'middleware',
+              'helper',
+              'factory',
+              'validator',
+              'interceptor',
+            ];
+
+            for (const dir of basicDirs) mkdirSync(`${target}/${dir}`, { recursive: true });
+            if (mode === 'full') {
+              for (const dir of extraDirs) {
+                mkdirSync(`${target}/${dir}`, { recursive: true });
+                writeFileSync(`${target}/${dir}/.gitkeep`, '');
+              }
+            }
+
+            // 📄 Dosya içerikleri
+            const upper = name[0].toUpperCase() + name.slice(1);
+
+            writeFileSync(
+              `${target}/${name}.module.ts`,
+              `
+            import { Module } from '@nestjs/common';
+            import { ${upper}Service } from './service/${name}.service';
+            import { ${upper}Controller } from './controller/${name}.controller';
+
+            @Module({
+              controllers: [${upper}Controller],
+              providers: [${upper}Service],
+            })
+            export class ${upper}Module {}
+            `.trimStart(),
+            );
+
+            writeFileSync(
+              `${target}/service/${name}.service.ts`,
+              `
+            import { Injectable } from '@nestjs/common';
+
+            @Injectable()
+            export class ${upper}Service {
+              findAll() {
+                return [];
+              }
+            }
+            `.trimStart(),
+            );
+
+            writeFileSync(
+              `${target}/controller/${name}.controller.ts`,
+              `
+            import { Controller, Get } from '@nestjs/common';
+            import { ${upper}Service } from '../service/${name}.service';
+
+            @Controller('${routePath}')
+            export class ${upper}Controller {
+              constructor(private readonly ${name}Service: ${upper}Service) {}
+
+              @Get()
+              findAll() {
+                return this.${name}Service.findAll();
+              }
+            }
+            `.trimStart(),
+            );
+
+            writeFileSync(
+              `${target}/dto/create-${name}.dto.ts`,
+              `
+            export class Create${upper}Dto {
+              // name: string;
+            }
+            `.trimStart(),
+            );
+
+            writeFileSync(
+              `${target}/dto/update-${name}.dto.ts`,
+              `
+            export class Update${upper}Dto {
+              // id: number;
+              // name?: string;
+            }
+            `.trimStart(),
+            );
+
+            writeFileSync(
+              `${target}/test/${name}.service.spec.ts`,
+              `
+            import { Test, TestingModule } from '@nestjs/testing';
+            import { ${upper}Service } from '../service/${name}.service';
+
+            describe('${upper}Service', () => {
+              let service: ${upper}Service;
+
+              beforeEach(async () => {
+                const module: TestingModule = await Test.createTestingModule({
+                  providers: [${upper}Service],
+                }).compile();
+
+                service = module.get<${upper}Service>(${upper}Service);
+              });
+
+              it('should be defined', () => {
+                expect(service).toBeDefined();
+              });
+
+              it('findAll should return empty array', () => {
+                expect(service.findAll()).toEqual([]);
+              });
+            });
+            `.trimStart(),
+            );
+
+            writeFileSync(
+              `${target}/seed/${name}.seed.ts`,
+              `
+            import { PrismaClient } from '@prisma/client';
+
+            const prisma = new PrismaClient();
+
+            export async function seed${upper}() {
+              await prisma.${name}.createMany({
+                data: [
+                  // { name: 'Örnek Veri' },
+                ],
+                skipDuplicates: true,
+              });
+
+              console.log('🌱 ${upper} seed completed.');
+            }
+
+            if (require.main === module) {
+              seed${upper}()
+                .catch((e) => {
+                  console.error('❌ Seed error:', e);
+                  process.exit(1);
+                })
+                .finally(async () => {
+                  await prisma.$disconnect();
+                });
+            }
+            `.trimStart(),
+            );
+
+            writeFileSync(
+              `${target}/entity/${name}.entity.ts`,
+              `
+            export class ${upper}Entity {
+              // ...
+            }
+            `.trimStart(),
+            );
+
+            console.log(`✅ ${mode} modunda modül yapısı ve içerikler oluşturuldu: ${target}`);
+        module-seed.ts:
+          path: scripts/module-seed.ts
+          type: typescript
+          description: "Belirtilen modülün seed dosyasını (`modules/.../seed/*.ts`) çalıştırır. `make ms ...` komutu ile tetiklenir."
+          content: |
+            // 🌱 TT Panel - Modül Seed Çalıştırıcı
+            // Kullanım:
+            //   make ms system/access/role
+
+            import { basename } from 'path';
+            import { execSync } from 'child_process';
+
+            const path = process.argv[2];
+
+            if (!path) {
+              console.error('❌ Hata: path parametresi zorunludur (örn: system/access/role)');
+              process.exit(1);
+            }
+
+            const name = basename(path);
+            const target = `src/modules/${path}/seed/${name}.seed.ts`;
+
+            console.log(`🌱 Seed çalıştırılıyor → ${target}`);
+
+            try {
+              execSync(`docker compose exec api npx ts-node -P tsconfig.json ${target}`, {
+                stdio: 'inherit',
+              });
+              console.log('✅ Seed işlemi tamamlandı.');
+            } catch (err) {
+              console.error('❌ Seed işlemi başarısız oldu.');
+              process.exit(1);
+            }
+        module-register.ts:
+          path: scripts/module-register.ts
+          type: typescript
+          description: "Oluşturulan modülü `apps/api/src/app.module.ts` içinde `import` edip `imports[]` dizisine ekler. `make mr ...` ile çağrılır. Dosya yapısını analiz ettiği için Node tabanlı yazılmıştır."
+          content: |
+            // 🔗 TT Panel - AppModule Otomatik Modül Kaydedici
+            // Kullanım:
+            //   make mr system/access/role
+
+            import fs from 'fs';
+            import path from 'path';
+
+            const args = process.argv.slice(2);
+            const rawPath = args[0]; // örn: system/access/role
+
+            if (!rawPath) {
+              console.error('❌ path parametresi zorunludur. Örn: system/access/role');
+              process.exit(1);
+            }
+
+            const moduleName = path.basename(rawPath); // role
+            const className = `${moduleName.charAt(0).toUpperCase()}${moduleName.slice(1)}Module`; // RoleModule
+            const importPath = `./modules/${rawPath}/${moduleName}.module`;
+
+            const appModulePath = 'apps/api/src/app.module.ts';
+            let content = fs.readFileSync(appModulePath, 'utf8');
+
+            // ✅ 1. Import satırını ekle
+            const importStatement = `import { ${className} } from '${importPath}';`;
+            if (!content.includes(importStatement)) {
+              const lastImportIndex = [...content.matchAll(/^import .+;$/gm)].pop()?.index ?? 0;
+              const insertAt = content.indexOf('\n', lastImportIndex) + 1;
+              content = content.slice(0, insertAt) + importStatement + '\n' + content.slice(insertAt);
+              console.log(`✅ Import eklendi: ${className}`);
+            } else {
+              console.log(`ℹ️ Import zaten var: ${className}`);
+            }
+
+            // ✅ 2. imports: [ ... ] bloğuna ekle
+            const moduleIndex = content.indexOf('@Module({');
+            const importsIndex = content.indexOf('imports:', moduleIndex);
+            if (importsIndex === -1) {
+              console.error('❌ imports: bloğu bulunamadı.');
+              process.exit(1);
+            }
+
+            const bracketStart = content.indexOf('[', importsIndex);
+            const bracketEnd = content.indexOf(']', bracketStart);
+            const importsBlock = content.slice(bracketStart + 1, bracketEnd);
+
+            if (!importsBlock.includes(className)) {
+              const trimmed = importsBlock.trim();
+              const needsComma = trimmed.length > 0 && !trimmed.endsWith(',');
+              const insertValue = `${needsComma ? ',' : ''} ${className}`;
+
+              const before = content.slice(0, bracketEnd);
+              const after = content.slice(bracketEnd);
+              content = before + insertValue + after;
+
+              console.log(`✅ imports[] içine eklendi: ${className}`);
+            } else {
+              console.log(`ℹ️ imports[] içinde zaten var: ${className}`);
+            }
+
+            fs.writeFileSync(appModulePath, content, 'utf8');
+            console.log('✅ AppModule güncellendi.');
+    package:
+      description: "TT Panel uygulamasının package.json dosyası. Projenin bağımlılıklarını, scriptlerini ve temel bilgilerini içerir."
+      files:
+        root:
+          path: ./package.json
+          description: "TT Panel uygulamasının temel package.json dosyası. Projenin bağımlılıklarını, scriptlerini ve temel bilgilerini içerir."
+          content: |
+            {
+              "name": "ttpanel",
+              "version": "1.0.0",
+              "description": "Modüler, API-first ve geliştirici dostu bir dijital yönetim paneli. TT Panel; e-ticaret, içerik, üretim, finans ve entegrasyon süreçlerini tek noktadan yönetmek için tasarlanmış açık mimarili bir sistemdir.",
+              "type": "commonjs",
+              "main": "index.js",
+              "scripts": {
+                "format": "prettier --write .",
+                "lint": "eslint . --ext .ts --fix"
+              },
+              "devDependencies": {
+                "@eslint/eslintrc": "^3.3.1",
+                "@eslint/js": "^9.32.0",
+                "@swc/cli": "^0.6.0",
+                "@swc/core": "^1.13.3",
+                "@types/node": "^22.17.0",
+                "@types/pluralize": "^0.0.33",
+                "@typescript-eslint/eslint-plugin": "^8.38.0",
+                "@typescript-eslint/parser": "^8.38.0",
+                "dotenv-cli": "^10.0.0",
+                "eslint": "^9.32.0",
+                "eslint-config-prettier": "^10.1.8",
+                "eslint-plugin-prettier": "^5.5.3",
+                "pluralize": "^8.0.0",
+                "prettier": "^3.6.2",
+                "prettier-plugin-prisma": "^5.0.0",
+                "tailwindcss": "^4.1.12",
+                "ts-loader": "^9.5.2",
+                "ts-node": "^10.9.2",
+                "tsconfig-paths": "^4.2.0",
+                "tsx": "^4.20.3",
+                "typescript": "^5.8.3"
+              },
+              "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748"
+            }
+        api:
+          path: ./apps/api/package.json
+          description: "TT Panel API servisi için package.json. NestJS tabanlı uygulama bağımlılıklarını ve scriptlerini içerir."
+          content: |
+            {
+              "name": "api",
+              "version": "0.0.1",
+              "description": "",
+              "author": "",
+              "private": true,
+              "license": "UNLICENSED",
+              "scripts": {
+                "build": "nest build",
+                "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+                "start": "nest start",
+                "start:dev": "nest start --watch",
+                "start:debug": "nest start --debug --watch",
+                "start:prod": "node dist/main",
+                "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+                "test": "jest",
+                "test:watch": "jest --watch",
+                "test:cov": "jest --coverage",
+                "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+                "test:e2e": "jest --config ./test/jest-e2e.json",
+                "prisma:generate": "prisma generate",
+                "prisma:migrate": "prisma migrate dev",
+                "prisma:studio": "prisma studio",
+                "prisma:seed": "ts-node prisma/seed.ts"
+              },
+              "dependencies": {
+                "@nestjs/common": "^11.0.1",
+                "@nestjs/config": "^4.0.2",
+                "@nestjs/core": "^11.0.1",
+                "@nestjs/platform-express": "^11.0.1",
+                "@nestjs/swagger": "^11.2.0",
+                "class-transformer": "^0.5.1",
+                "class-validator": "^0.14.2",
+                "reflect-metadata": "^0.2.2",
+                "rxjs": "^7.8.1",
+                "@prisma/client": "^6.13.0",
+                "swagger-ui-express": "^5.0.1"
+              },
+              "devDependencies": {
+                "@nestjs/cli": "^11.0.0",
+                "@nestjs/schematics": "^11.0.0",
+                "@nestjs/testing": "^11.0.1",
+                "@types/express": "^5.0.0",
+                "@types/jest": "^29.5.14",
+                "@types/node": "^22.10.7",
+                "@types/supertest": "^6.0.2",
+                "globals": "^16.0.0",
+                "jest": "^29.7.0",
+                "prisma": "^6.13.0",
+                "source-map-support": "^0.5.21",
+                "supertest": "^7.0.0",
+                "ts-jest": "^29.2.5"
+              },
+              "jest": {
+                "moduleFileExtensions": [
+                  "js",
+                  "json",
+                  "ts"
+                ],
+                "rootDir": "src",
+                "testRegex": ".*\\.spec\\.ts$",
+                "transform": {
+                  "^.+\\.(t|j)s$": "ts-jest"
+                },
+                "collectCoverageFrom": [
+                  "**/*.(t|j)s"
+                ],
+                "coverageDirectory": "../coverage",
+                "testEnvironment": "node",
+                "moduleNameMapper": {
+                  "^@/(.*)$": "<rootDir>/$1"
+                }
+              }
+            }
+        admin:
+          path: ./apps/admin/package.json
+          description: "TT Panel Admin arayüzü için package.json. Nuxt.js tabanlı uygulama bağımlılıklarını ve scriptlerini içerir."
+          content: |
+            {
+              "name": "admin",
+              "type": "module",
+              "private": true,
+              "scripts": {
+                "build": "nuxt build",
+                "dev": "nuxt dev",
+                "generate": "nuxt generate",
+                "preview": "nuxt preview",
+                "postinstall": "nuxt prepare"
+              },
+              "dependencies": {
+                "@nuxt/eslint": "1.8.0",
+                "@nuxt/image": "1.11.0",
+                "@nuxt/scripts": "0.11.10",
+                "@nuxt/test-utils": "3.19.2",
+                "@nuxt/ui": "3.3.2",
+                "@unhead/vue": "^2.0.14",
+                "eslint": "^9.33.0",
+                "nuxt": "^4.0.3",
+                "typescript": "^5.9.2",
+                "vue": "^3.5.18",
+                "vue-router": "^4.5.1"
+              }
+            }
+        shop:
+          path: ./apps/shop/package.json
+          description: "TT Panel Shop arayüzü için package.json. Nuxt.js tabanlı uygulama bağımlılıklarını ve scriptlerini içerir."
+          content: |
+            {
+              "name": "shop",
+              "type": "module",
+              "private": true,
+              "scripts": {
+                "build": "nuxt build",
+                "dev": "nuxt dev",
+                "generate": "nuxt generate",
+                "preview": "nuxt preview",
+                "postinstall": "nuxt prepare"
+              },
+              "dependencies": {
+                "@nuxt/eslint": "1.8.0",
+                "@nuxt/image": "1.11.0",
+                "@nuxt/scripts": "0.11.10",
+                "@nuxt/test-utils": "3.19.2",
+                "@nuxt/ui": "3.3.2",
+                "@unhead/vue": "^2.0.14",
+                "eslint": "^9.33.0",
+                "nuxt": "^4.0.3",
+                "typescript": "^5.9.2",
+                "vue": "^3.5.18",
+                "vue-router": "^4.5.1"
+              }
+            }
+    tsconfig:
+      description: "TT Panel uygulaması için TypeScript yapılandırma dosyaları. Projenin TypeScript derleme ayarlarını içerir."
+      files:
+        base:
+          path: ./tsconfig.base.json
+          description: "TT Panel uygulamasının temel TypeScript yapılandırma dosyası. Projenin genel TypeScript ayarlarını içerir."
+          content: |
+            {
+              "compilerOptions": {
+                "target": "ES2023",
+                "module": "commonjs",
+                "moduleResolution": "node",
+                "strict": true,
+                "esModuleInterop": true,
+                "skipLibCheck": true,
+                "forceConsistentCasingInFileNames": true,
+                "resolveJsonModule": true,
+                "experimentalDecorators": true,
+                "emitDecoratorMetadata": true,
+                "baseUrl": ".",
+                "paths": {
+                  "@scripts/*": ["scripts/*"]
+                }
+              },
+              "include": [
+                "scripts/**/*.ts"
+              ]
+            }
+        api:
+          path: ./apps/api/tsconfig.json
+          description: "TT Panel API servisi için TypeScript yapılandırma dosyası. NestJS tabanlı uygulamanın TypeScript ayarlarını içerir."
+          content: |
+            {
+              "compilerOptions": {
+                "module": "commonjs",
+                "declaration": true,
+                "removeComments": true,
+                "emitDecoratorMetadata": true,
+                "experimentalDecorators": true,
+                "allowSyntheticDefaultImports": true,
+                "esModuleInterop": true,
+                "resolveJsonModule": true,
+                "target": "ES2023",
+                "sourceMap": true,
+                "outDir": "./dist",
+                "baseUrl": "./src",
+                "paths": {
+                  "@/*": ["*"]
+                },
+                "incremental": true,
+                "skipLibCheck": true,
+                "strictNullChecks": true,
+                "forceConsistentCasingInFileNames": true,
+                "noImplicitAny": false,
+                "strictBindCallApply": false,
+                "noFallthroughCasesInSwitch": false
+              }
+            }
+        admin_and_shop:
+          path: ./apps/{admin, shop}/tsconfig.json
+          description: "TT Panel Admin ve Shop arayüzü için TypeScript yapılandırma dosyası. Nuxt.js tabanlı uygulamanın TypeScript ayarlarını içerir."
+          content: |
+            {
+              // https://nuxt.com/docs/guide/concepts/typescript
+              "files": [],
+              "references": [
+                {
+                  "path": "./.nuxt/tsconfig.app.json"
+                },
+                {
+                  "path": "./.nuxt/tsconfig.server.json"
+                },
+                {
+                  "path": "./.nuxt/tsconfig.shared.json"
+                },
+                {
+                  "path": "./.nuxt/tsconfig.node.json"
+                }
+              ]
+            }
+        scripts:
+          path: ./scripts/tsconfig.json
+          description: "TT Panel uygulaması için scriptlerin TypeScript yapılandırma dosyası. Modül oluşturma, seed ve test scriptlerinin TypeScript ayarlarını içerir."
+          content: |
+            {
+              "extends": "../tsconfig.base.json",
+              "compilerOptions": {
+                "outDir": "dist",
+                "composite": true
+              },
+              "include": ["**/*.ts"]
+            }
+    nuxt.config.ts:
+      description: "TT Panel uygulaması için Nuxt.js yapılandırma dosyası. admin ve shop arayüzlerinin nuxt.js ayarlarını içerir."
+      files:
+        admin:
+          path: ./apps/admin/nuxt.config.ts
+          description: "TT Panel Admin arayüzü için Nuxt.js yapılandırma dosyası. Nuxt.js tabanlı uygulamanın ayarlarını içerir."
+          content: |
+            // https://nuxt.com/docs/api/configuration/nuxt-config
+            export default defineNuxtConfig({
+              compatibilityDate: '2025-07-15',
+              devtools: { enabled: true },
+
+              devServer: {
+                port: 3010,
+                host: '0.0.0.0', // dış erişim için
+              },
+
+              modules: ['@nuxt/eslint', '@nuxt/image', '@nuxt/scripts', '@nuxt/test-utils', '@nuxt/ui'],
+              css: ['~/assets/css/main.css'],
+            });
+        shop:
+          path: ./apps/shop/nuxt.config.ts
+          description: "TT Panel Shop arayüzü için Nuxt.js yapılandırma dosyası. Nuxt.js tabanlı uygulamanın ayarlarını içerir."
+          content: |
+            // https://nuxt.com/docs/api/configuration/nuxt-config
+            export default defineNuxtConfig({
+              compatibilityDate: '2025-07-15',
+              devtools: { enabled: true },
+
+              devServer: {
+                port: 3020,
+                host: '0.0.0.0', // dış erişim için
+              },
+
+              modules: ['@nuxt/eslint', '@nuxt/image', '@nuxt/scripts', '@nuxt/test-utils', '@nuxt/ui'],
+
+              css: ['~/assets/css/main.css'],
+            });
+
+roadmap:
+  title: "Üretim Yol Haritası"
+  description: "TT Panel projesinin faz bazlı üretim sürecini, sprint yapılarını ve modül geliştirme dizilimini tanımlar. AI destekli teknik üretim bu plana bağlı yürütülür."
+  stage:
+    phase: "faz0"
+    sprint: "sprint4"
+    updated_at: "2025-08-16"
+  planning_model:
+    phases: >
+      Benzer hedefe hizmet eden modüllerin bir araya getirildiği üretim bloklarıdır.
+      Her faz belirli bir iş değeri sağlar ve bağımsız olarak yayına alınabilir.
+      MVP'den SaaS'a kadar aşamalı ilerleyiş prensibiyle, her faz bir öncekinin üzerine inşa edilir.
+    sprints: >
+      Her biri 7 gün süren, modül bazlı ve test edilebilirlik esasına dayalı haftalık üretim döngüleridir.
+      Sprint bitiminde geliştirilen modüller API, admin ve shop olarak bütün hâlde test edilir.
+    modules: >
+      Her modül, API + admin + shop parçalarıyla izole ve test edilebilir şekilde birlikte geliştirilir.
+      Sprint içinde tamamlanamayan modüller bir sonraki faza devredilir.
+    tasks: >
+      Modül dışı görevler için kullanılır: dokümantasyon, ortam kurulumu, migration, test, deploy gibi teknik ve operasyonel adımlar.
+  principles:
+    - "Her işlevsel alan kendi modülü içinde geliştirilir. Modüller gruplar altında yönetilir."
+    - "Her modül, API, admin ve shop arayüzü ile birlikte, izole klasör yapısıyla geliştirilir."
+    - "Her modülün test kapsamı sprint içerisinde tanımlanır (Jest, Supertest, Cypress)."
+    - "Makefile, scripts ve Docker Compose ile terminal-first yaklaşım uygulanır."
+    - "AI yalnızca içerik değil, dosya, klasör, kod ve test üretimi yapar. Yol haritası tek bağlayıcı referanstır."
+    - "Sprintlerde yalnızca modül dışı görevler `tasks` alanında belirtilir. Eğer `tasks` yoksa sprint yalnızca modül üretimiyle yürütülür."
+    - "Sprint süresince yalnızca planlanan modüller geliştirilir; yeni iş eklenmez."
+    - "Sprint sonunda eksik kalan modül bir sonraki sprintte değil, yeni fazda ele alınır."
+    - "Yarım modüller yayınlanmaz; bütünlük esastır."
+    - "Tamamlanan her modül AI sistemine bildirilir ve roadmap güncellenir."
+    - "İlk sürüm kuruma özeldir; yapı SaaS'a evrilebilir (tenant, lisans, tema destekli)."
+  phases:
+    - id: 0
+      title: "Faz 0 - Proje Hazırlığı ve Sistem Kurulumu"
+      period: "2025-07-14 → 2025-08-24"
+      goal: >
+        TT Panel projesinin temel altyapısını kurmak ve geliştirme ortamını hazırlamak.
+        Dokümantasyon sistemini, teknoloji yığınını, Docker altyapısını, NestJS API'sini,
+        Nuxt 4 frontend uygulamalarını ve CI/CD süreçlerini eksiksiz şekilde tamamlayarak
+        Faz 1'deki modül geliştirme sürecine sağlam bir zemin hazırlamak.
+      tasks:
+        - "AI eşlik sistemi ve dokümantasyon altyapısını kurmak"
+        - "Docker servis altyapısını kurmak (PostgreSQL, Redis, MinIO, Mailpit, Traefik)"
+        - "NestJS API projesi ve modül üretim scriptlerini hazırlamak"
+        - "Nuxt 4 tabanlı Admin ve Shop arayüzlerini kurmak"
+        - "CI/CD pipeline'ı ve production deployment hazırlıklarını tamamlamak"
+      done_criteria:
+        - "Tüm servislerin Docker Compose ile çalışır durumda olması"
+        - "Modül üretim scriptlerinin (mc, mr, ms, mt) başarıyla çalışması"
+        - "Admin ve Shop arayüzlerinin temel layout ve bileşenlerle hazır olması"
+        - "API'nin Swagger dokümantasyonu ile erişilebilir olması"
+        - "GitHub Actions ile otomatik test ve build süreçlerinin aktif olması"
+      test_plan:
+        - "Docker servislerinin health check testleri"
+        - "API endpoint'lerinin Jest ile unit testleri"
+        - "Frontend bileşenlerinin Vitest ile testleri"
+        - "Modül üretim scriptlerinin çalışabilirlik testleri"
+        - "CI/CD pipeline'ının build ve deployment testleri"
+      sprints:
+        - id: 1
+          title: "Faz 0 - Sprint 1 - Proje Hazırlığı"
+          period: "2025-07-14 → 2025-07-20"
+          started_at: "2025-07-14"
+          completed_at: null
+          goal: "TT Panel projesinin temel dokümantasyonunu, AI eşlik sistemini ve modül yapısını tanımlamak. Kod üretimi öncesi tüm planlama süreçlerini tamamlamak ve teknoloji yığınını kesinleştirmek."
+          tasks:
+            - "ai-meta.yaml dosyasını hazırlamak (AI davranış kuralları, scope, conventions, üretim kuralları ve çıktı formatları)"
+            - "sessions.yaml üretim günlüğü sistemini hazırlamak"
+            - "context.yaml güncellemek"
+            - "Modül yapısı ve organizasyon yapısını belirlemek"
+            - "Projede kullanılacak teknolojileri belirlemek"
+            - "Workspace dizin yapısını planlamak (apps/, packages/, services/, config/)"
+          done_criteria:
+            - "Tüm YAML dosyaları güncel ve tutarlı"
+            - "AI eşlik sistemi tanımlanmış"
+            - "Teknoloji yığını kesinleşmiş"
+            - "Modül yapısı netleşmiş"
+            - "Workspace organizasyonu planlanmış"
+        - id: 2
+          title: "Faz 0 - Sprint 2 - Docker & Ortam Kurulumu (PostgreSQL, Redis, MinIO, Mailpit, Traefik)"
+          period: "2025-07-21 → 2025-07-27"
+          started_at: "2025-07-21"
+          completed_at: null
+          goal: "TT Panel projesinin Docker altyapısını kurmak ve tüm servisleri çalışır hale getirmek. Geliştirme ortamının temel servislerini hazırlamak."
+          tasks:
+            - "docker-compose.yaml dosyasını oluşturmak (traefik, postgres, pgweb, redis, minio, mailpit servisleri)"
+            - "config/env/ dizininde ortam dosyalarını oluşturmak (.env.postgres, .env.redis, .env.minio, .env.mailpit)"
+            - "Traefik domain yönlendirmelerini yapılandırmak (*.ttpanel.test)"
+            - "Volume yapılarını kurgulamak (./services/*/data klasörleri)"
+            - "Makefile temel komutları: up, down, clean, restart, logs, logs-%, rebuild, rebuild-%, psql, help komutlarını Makefile'a eklemek"
+            - "make up ile tüm servislerin çalıştığını test etmek"
+          done_criteria:
+            - "docker-compose.yaml dosyası hazır ve çalışır durumda"
+            - "Tüm ortam dosyaları config/env/ dizininde mevcut"
+            - "*.ttpanel.test domainleri erişilebilir"
+            - "PostgreSQL, Redis, MinIO, Mailpit servisleri aktif"
+            - "pgweb ve traefik dashboard'ları çalışıyor"
+        - id: 3
+          title: "Faz 0 - Sprint 3 - NestJS API Bootstrap ve Modül Üretim Altyapısı"
+          period: "2025-07-28 → 2025-08-10"
+          started_at: "2025-07-28"
+          completed_at: null
+          goal: "NestJS API altyapısını kurmak, Prisma ORM entegrasyonu, Docker yapılandırması ve modül üretim scripti sistemini hazırlamak. Faz 1'e geçiş için tüm teknik altyapıyı tamamlamak."
+          tasks:
+            - "NestJS API projesi kurulumu: apps/api klasöründe NestJS projesi oluşturmak"
+            - "API klasör yapısı: src/modules/, src/infra/, src/infra/prisma dizinlerini oluşturmak"
+            - "API yapılandırma dosyaları: package.json ve tsconfig.json dosyalarını hazırlamak"
+            - "Monorepo workspace: pnpm-workspace.yaml dosyasını oluşturmak"
+            - "Root yapılandırma: Root package.json ve tsconfig.base.json dosyalarını hazırlamak"
+            - "Ortam değişkenleri: .env.api dosyasını yapılandırmak"
+            - "Docker Compose entegrasyonu: docker-compose.yaml'a API servisi eklemek"
+            - "API Dockerfile: apps/api/Dockerfile dosyasını oluşturmak"
+            - "Prisma kurulumu: Prisma paketlerini yüklemek ve api/prisma/schema.prisma dosyasını oluşturmak"
+            - "Veritabanı bağlantısı: PostgreSQL bağlantı yapılandırmasını tamamlamak"
+            - "İlk migration: Prisma migration'ını oluşturmak ve çalıştırmak"
+            - "PrismaService: src/infra/prisma klasöründe PrismaService'i hazırlamak"
+            - "Scripts klasörü: scripts/ klasörü ve scripts/tsconfig.json dosyasını oluşturmak"
+            - "Modül üretim scriptleri: module-create.ts, module-register.ts, module-seed.ts dosyalarını hazırlamak"
+            - "Makefile komutları: mc, mr, ms, mt, reset, generate, migrate komutlarını Makefile'a eklemek"
+            - "Main.ts yapılandırması: Swagger, global validation, enableCors ayarlarını yapmak"
+            - "Health check endpoint: API durum kontrolü için endpoint oluşturmak"
+            - "Docker test: API'nin Docker container'da çalışmasını sağlamak"
+            - "API testleri: Temel API testlerinin çalışmasını doğrulamak"
+          done_criteria:
+            - "NestJS API projesi ayakta ve erişilebilir"
+            - "Prisma ORM entegre edilmiş ve migration çalışıyor"
+            - "Docker container'da API başlatılabiliyor"
+            - "Modül üretim scriptleri (mc, mr, ms, mt) çalışıyor"
+            - "Prisma komutları (reset, generate, migrate) çalışıyor"
+            - "Swagger dokümantasyonu /api adresinde erişilebilir"
+            - "Health check endpoint'i 200 HTTP status döndürüyor"
+            - "pnpm workspace yapısı kurulmuş ve çalışıyor"
+            - "make mc system/access/test komutu başarıyla çalışıyor"
+            - "İlk git deposu oluştur. Versiyon etiketi (örn: v0.1.0) oluşturuldu ve repoya push edildi."
+        - id: 4
+          title: "Faz 0 - Sprint 4 - TT Panel Admin & Shop Temel İskelet ve Tema Kurulumu"
+          period: "2025-08-11 → 2025-08-24"
+          started_at: "2025-08-11"
+          completed_at: null
+          goal: "Backend entegrasyonu olmayan, kaliteli ve eksiksiz admin + shop temalarını hazırlamak. @nuxt/ui 3.3 ve TailwindCSS 4 ile profesyonel arayüzler geliştirmek."
+          tasks:
+            - name: "Nuxt 4 & Nuxt UI Öğrenimi ve Pratik"
+              items:
+                - "https://vuejs.org/guide/introduction.html altındaki sayfaların teknik çeviri kurallarına uygun olarak Türkçeye çevrilmesi ve markdown formatında hazırlanması"
+                - "https://nuxt.com/docs/4.x/ altındaki sayfaların teknik çeviri kurallarına uygun olarak Türkçeye çevrilmesi ve markdown formatında hazırlanması"
+                - "https://ui.nuxt.com/components altındaki sayfaların teknik çeviri kurallarına uygun olarak Türkçeye çevrilmesi ve markdown formatında hazırlanması"
+                - "Vue 3, Nuxt 4 ve Nuxt UI dokümantasyonunu ve guide’larını inceleyerek öğrenim çıktısı hazırlamak"
+            - name: "Genel Ayarlar"
+              items:
+                - "Root dizininde TailwindCSS kurulumunu yapmak"
+                - "VSCode workspace ayarlarını yapmak (.vscode/settings.json - Nuxt UI & Tailwind IntelliSense)"
+            - name: "Admin Uygulaması Kurulumu (apps/admin)"
+              items:
+                - "apps/admin dizinine Nuxt 4 projesini `@nuxt/eslint`, @nuxt/fonts, @nuxt/icon, `@nuxt/image`, `@nuxt/scripts`, `@nuxt/test-utils`, '@nuxt/ui` modülleri ile birlikte kurmak"
+                - "package.json ve tsconfig.json dosyalarını yapılandırmak"
+                - "Nuxt konfigürasyon (./nuxt.config.ts) yapılandırması (port, modules, css, tailwindcss, postcss)"
+                - "Global stil dosyasına (./app/assets/css/main.css) tailwindcss, NuxtUI eklemek"
+                - "Ortam dosyası (./.env, config/env/.env.admin) yapılandırması"
+                - "Uygulama servisini docker-compose.yaml dosyalarına eklemek (traefik routing, health check enpoint yapılandırmalarını da eklemek)"
+                - "Dockerfile dosyasını hazırlamak"
+            - name: "Shop Uygulaması Kurulumu (apps/shop)"
+              items:
+                - "apps/shop dizinine Nuxt 4 projesini `@nuxt/eslint`, @nuxt/fonts, @nuxt/icon, `@nuxt/image`, `@nuxt/scripts`, `@nuxt/test-utils`, '@nuxt/ui` modülleri ile birlikte kurmak"
+                - "package.json ve tsconfig.json dosyalarını yapılandırmak"
+                - "Nuxt konfigürasyon (./nuxt.config.ts) yapılandırması (port, modules, css, tailwindcss, postcss)"
+                - "Global stil dosyasına (./app/assets/css/main.css) tailwindcss, NuxtUI eklemek"
+                - "Ortam dosyası (./.env, config/env/.env.shop) yapılandırması"
+                - "Uygulama servisini docker-compose.yaml dosyalarına eklemek (traefik routing, health check enpoint yapılandırmalarını da eklemek)"
+                - "Dockerfile dosyasını hazırlamak"
+            - name: "Admin Layout Component'leri (apps/admin/app/components/layouts/)"
+              items:
+                - "Sidebar.vue: Ana navigation menüsü, responsive ve collapsible olmalı"
+                - "Header.vue: Uygulama başlığı, arama kutusu ve kısa link alanı"
+                - "UserMenu.vue: Kullanıcı menüsü, avatar, profil bilgileri ve çıkış butonu içermeli"
+                - "Breadcrumb.vue: Sayfa hiyerarşisini gösteren bileşen"
+                - "Notification.vue: Kullanıcı bildirimleri için toast veya alert bileşeni"
+                - "MobileNav.vue: Mobil cihazlar için özel navigation menüsü"
+                - "Footer.vue: Alt bilgi, telif hakkı ve uygulama bilgileri"
+                - "PageLoader.vue: Sayfa veya veri yüklenirken gösterilecen loading spinner/progress"
+                - "AppLogo.vue: Uygulama logosu (header/sidebar'da kullanılır)"
+                - "GlobalAlert.vue: Uygulama genelinde kullanılacak alert bileşeni"
+                - "PageHeader.vue: Sayfa başlığı, açıklama, aksiyon butonları ve gerekirse breadcrumb'ı barındıran bileşen"
+            - name: "Shop Layout Component'leri (apps/shop/app/components/layout/)"
+              items:
+                - "Header.vue: Üst navigation bar, logo, ana menü, kullanıcı/sepet ikonları"
+                - "Footer.vue: Alt bilgi, iletişim, telif hakkı, sosyal medya linkleri"
+                - "Navigation.vue: Ana kategori veya menü yapısı (Header içinde veya ayrı çağrılabilir)"
+                - "Breadcrumb.vue: Sayfa yolu, kategori hiyerarşisi"
+                - "MobileNav.vue: Mobilde açılır/kapanır navigation"
+                - "AppLogo.vue: Mağaza logosu (header veya footer’da kullanılabilir)"
+                - "Notification.vue: Toast veya snackbar bildirimleri"
+                - "PageLoader.vue: Sayfa veya veri yüklenirken animasyon/spinner"
+                - "GlobalAlert.vue: Site genelinde kritik alert/uyarı"
+                - "PageHeader.vue: Sayfa başlığı, açıklama, aksiyonlar (ürün listesi/detay/kategori vs.)"
+                # ——— İleri fazlarda veya modül ihtiyaçlarında eklenebilecekler ———
+                # - "SearchBar.vue: Ürün/kategori arama"
+                # - "MiniCart.vue: Sepet özeti (Header içinde veya ayrı)"
+                # - "UserMenu.vue: Profil, siparişler, çıkış (Header’da veya ayrı)"
+                # - "PromoBanner.vue: Kampanya/bilgi bannerı"
+                # - "CookieConsent.vue: Çerez onay bannerı"
+            - name: "Admin Layout Dosyalarının Yapılandırılması (apps/admin/app/layouts/)"
+              items:
+                - "default.vue dosyasında: Sidebar, Header, Footer, Notification, GlobalAlert, PageLoader ve ana içerik alanını düzenli şekilde birleştirmek"
+                - "blank.vue dosyasında: Sadece PageLoader, GlobalAlert ve ana içerik alanı ile sade bir iskelet oluşturmak (login, hata sayfaları için)"
+            - name: "Shop Layout Dosyalarının Yapılandırılması (apps/shop/app/layouts/)"
+              items:
+                - "default.vue dosyasında: Header, Footer, Navigation, Breadcrumb, Notification, GlobalAlert, PageLoader ve ana içerik alanını düzenli şekilde birleştirmek"
+                - "blank.vue dosyasında: Sadece PageLoader, GlobalAlert ve ana içerik alanı ile sade bir iskelet oluşturmak (login, hata, landing gibi sayfalar için)"
+            - name: "Admin Sayfa ve Modül Organizasyonunun Kurulması (apps/admin/app/pages/)"
+              items:
+                - "pages/index.vue dosyasında örnek bir dashboard veya hoş geldin sayfası oluşturmak (default.vue ile çalışmalı)"
+                - "pages/login.vue dosyasında login ekranı oluşturmak (blank.vue ile çalışmalı)"
+                - "pages/system/access/role/index.vue dosyasında örnek bir rol listeleme sayfası oluşturmak"
+                - "pages/system/access/role/create.vue dosyasında yeni rol oluşturma ekranı oluşturmak"
+                - "pages/system/access/role/[id].vue dosyasında rol detay/düzenleme ekranı oluşturmak"
+                - "Her sayfa, ilgili layout component’lerini doğru kullanmalı (örn. PageHeader, Breadcrumb, Notification vs.)"
+                - "Sayfaların route’ları ve layout’larla entegrasyonu manuel ve otomatik test edilmeli"
+            - name: "Shop Sayfa ve Modül Organizasyonunun Kurulması (apps/shop/app/pages/)"
+              items:
+                - "pages/index.vue dosyasında örnek bir ana sayfa oluşturmak (default.vue ile çalışmalı)"
+                - "pages/login.vue dosyasında login ekranı oluşturmak (blank.vue ile çalışmalı)"
+                - "pages/commerce/catalog/product/index.vue dosyasında ürün listeleme sayfası oluşturmak"
+                - "pages/commerce/catalog/product/create.vue dosyasında yeni ürün ekleme ekranı oluşturmak"
+                - "pages/commerce/catalog/product/[id].vue dosyasında ürün detay/düzenleme ekranı oluşturmak"
+                - "Her sayfa, ilgili layout component’lerini doğru kullanmalı (örn. PageHeader, Breadcrumb, Notification vs.)"
+                - "Sayfaların route’ları ve layout’larla entegrasyonu manuel ve otomatik test edilmeli"
+            - name: "Admin Pinia Store ve Mock Data ile CRUD Akışı (apps/admin/app/stores/)"
+              items:
+                - "useAuthStore.ts ile basit bir authentication state/store oluşturmak (login/logout, user info)"
+                - "useRoleStore.ts ile mock veri üzerinden rol CRUD state/store'u kurmak"
+                - "Mock veri dosyaları oluşturmak (örn. apps/admin/app/data/roles.json)"
+                - "Rol CRUD işlemlerini (liste, ekle, düzenle, sil) mock store ve veriyle uygulamak"
+                - "Her işlem sonunda Notification.vue ve/veya GlobalAlert.vue ile kullanıcıya mesaj göstermek"
+                - "PageLoader.vue ile async/mocking süreçlerinde loading durumunu göstermek"
+                - "CRUD işlemleri sırasında PageHeader.vue ve Breadcrumb.vue'nun dinamik güncellendiğinden emin olmak"
+            - name: "Shop Pinia Store ve Mock Data ile CRUD Akışı (apps/shop/app/stores/)"
+              items:
+                - "useAuthStore.ts ile basit bir authentication state/store oluşturmak (login/logout, user info)"
+                - "useProductStore.ts ile mock veri üzerinden ürün CRUD state/store'u kurmak"
+                - "Mock veri dosyaları oluşturmak (örn. apps/shop/app/data/products.json)"
+                - "Ürün CRUD işlemlerini (liste, ekle, düzenle, sil) mock store ve veriyle uygulamak"
+                - "Her işlem sonunda Notification.vue ve/veya GlobalAlert.vue ile kullanıcıya mesaj göstermek"
+                - "PageLoader.vue ile async/mocking süreçlerinde loading durumunu göstermek"
+                - "CRUD işlemleri sırasında PageHeader.vue ve Breadcrumb.vue'nun dinamik güncellendiğinden emin olmak"
+            - name: "Admin UI/UX İyileştirme ve Geliştirici Deneyimi"
+              items:
+                - "Notification.vue ve GlobalAlert.vue için hata/başarı/uyarı senaryoları eklemek"
+                - "PageLoader.vue’nun async işlemlerde doğru çalıştığını test etmek"
+                - "Responsive ve erişilebilirlik kontrolleri yapmak (a11y, keyboard navigation, ARIA)"
+                - "Admin panelde dark/light theme switcher eklemek ve Nuxt UI ile uyumluluğunu test etmek"
+                - "Component-level usage notları ve açıklamalar bırakmak"
+                - "README ve dökümantasyonu güncellemek"
+                - "Kod standartları (ESLint/Prettier) ve VSCode workspace ayarlarını tekrar kontrol etmek"
+
+            - name: "Shop UI/UX İyileştirme ve Geliştirici Deneyimi"
+              items:
+                - "Notification.vue ve GlobalAlert.vue için hata/başarı/uyarı senaryoları eklemek"
+                - "PageLoader.vue’nun async işlemlerde doğru çalıştığını test etmek"
+                - "Responsive ve erişilebilirlik kontrolleri yapmak (a11y, keyboard navigation, ARIA)"
+                - "Shop tarafında dark/light theme switcher eklemek ve Nuxt UI ile uyumluluğunu test etmek"
+                - "Component-level usage notları ve açıklamalar bırakmak"
+                - "README ve dökümantasyonu güncellemek"
+                - "Kod standartları (ESLint/Prettier) ve VSCode workspace ayarlarını tekrar kontrol etmek"
+
+            - name: "Test Ortamı Kurulumu ve Örnek Testler"
+              items:
+                - "'@nuxt/test-utils' ve 'vitest' paketlerinin projeye kurulması"
+                - "Temel test yapılandırmasının hazırlanması (test komutları, config, coverage vs.)"
+                - "apps/admin/app/components/layout/Sidebar.vue ve apps/shop/app/components/layout/Header.vue gibi örnek componentler için basit unit testler yazmak"
+                - "Testlerin çalıştığı, coverage’ın ölçüldüğü ve dökümantasyonun (README) güncellendiğinden emin olmak"
+          done_criteria:
+            - "Tüm kurulumlar (admin & shop) tamamlandı, başlatıldığında hatasız çalışıyor"
+            - "TailwindCSS ve Nuxt UI temaları her iki tarafta uygulanıyor"
+            - "Admin & shop için layout component’leri ve layout dosyaları eksiksiz şekilde scaffold edildi"
+            - "Admin & shop için temel sayfa ve modül iskeletleri (index.vue, login.vue, CRUD page’leri) oluşturuldu"
+            - "Admin & shop tarafında mock veri ve Pinia store ile temel CRUD döngüsü çalışıyor"
+            - "Notification, GlobalAlert, PageLoader, PageHeader gibi ana component’ler işlevsel ve örneklerle test edildi"
+            - "Her iki uygulama için responsive ve erişilebilirlik (a11y) kontrolleri yapıldı"
+            - "Dark/light theme switcher uygulanıp test edildi"
+            - "Kod standartları (ESLint/Prettier) ve workspace ayarları ekipte çalışıyor"
+            - "README.md ve teknik dokümantasyon sprintte yapılanlara göre güncellendi"
+            - "Test ortamı (vitest/@nuxt/test-utils) kuruldu, örnek testler başarıyla çalışıyor"
+            - "Tüm route’lar ve layout’lar manuel/otomatik test edildi, hatasız ve entegre çalışıyor"
+            - "Versiyon etiketi (örn: v0.3.0) oluşturuldu ve repoya push edildi."
+    - id: 1
+      title: "Faz 1 – Temel E-Ticaret Altyapısı (MVP)"
+      period: "... → ..."
+      goal: >
+        Sipariş alabilen, ödeme yapabilen, içerik gösterebilen ve sistem ayarlarını yönetebilen,
+        mevcut Opencart altyapısını karşılayan yayınlanabilir ilk sürüm.
+      modules:
+        system/access: [auth, user, role, permission, token]
+        system/config: [settings, language]
+        system/log: [log, activity-log]
+        system/services: [smtp]
+        commerce/catalog:
+          [product, category, brand, variant, stock, attribute, price, file, barcode]
+        commerce/order: [cart, order, payment, transaction, shipment, invoice, status, history]
+        commerce/customer: [customer, address, group, contact]
+        commerce/content: [page, form, slider]
+        commerce/marketing: [campaign, coupon, analytics, event, utm, conversion, merchant, seo]
+      test-plan:
+        - unit: "system/access modüllerinde servis ve validator fonksiyonları Jest ile test edilir"
+        - integration: "auth + user + token modülleri ilişkili olarak Supertest ile doğrulanır"
+        - e2e: "kullanıcı girişi, rol atanması ve erişim yetkisi süreçleri Cypress ile test edilir"
+      done_criteria:
+        - "API tarafında tüm erişim modülleri testleriyle birlikte çalışıyor olmalı"
+        - "Admin arayüzünde giriş, kullanıcı ve rol yönetimi sorunsuz işlemeli"
+        - "Shop tarafında guest kullanıcı süreci bozulmamalı (henüz login yoksa bile)"
+        - ".env ve docker-compose ile tüm sistem `make up` ile ayağa kalkmalı"
+        - "GitHub repoda temel sürüm etiketi tanımlanmalı (örn: v1.0.0)"
+      sprints:
+        - id: 1
+          title: "Faz 1 – Sprint 1 – Erişim Temeli"
+          period: "... → ..."
+          started_at: "..."
+          completed_at: null
+          goal: "Temel e-ticaret altyapısının ilk modüllerini geliştirmek."
+          modules:
+            - system/access/auth
+            - system/access/user
+            - system/access/role
+            - system/access/permission
+            - system/access/token
+          done_criteria:
+            - "Tüm system/access modülleri (auth, user, role, permission, token) API-first olarak eksiksiz geliştirildi."
+            - "Her modülün veri modeli Prisma ile tanımlandı ve migrate işlemleri başarıyla uygulandı."
+            - "CRUD API endpointleri tamamlandı, Swagger ile belgeleri doğrulandı."
+            - "Tüm modüller için seed dosyaları oluşturuldu ve örnek veriler eklendi."
+            - "Unit testler Jest ile yazıldı, test coverage en az %80 sağlandı."
+            - "Modüller arası ilişkiler (role-permission-user) veritabanında kuruldu ve uçtan uca test edildi."
+            - "Admin panelde ilgili route’lar açıldı ve temel CRUD işlemleri eksiksiz çalışıyor."
+            - "API erişim yetkileri ve kimlik doğrulama (JWT + session) başarıyla test edildi."
+            - "Makefile ve scripts üzerinden mc, ms, mt, mr komutları ile otomasyon çalışıyor."
+            - "CHANGELOG.md ve sessions.yaml güncellendi, roadmap’e sprint tamamlandı olarak işaretlendi."
+            - "Versiyon etiketi (örn: v0.3.0) oluşturuldu ve repoya push edildi."
+        - id: 2
+          title: "Faz 1 – Sprint 2 – Ürün Çekirdeği"
+          period: "... → ..."
+          started_at: null
+          completed_at: null
+          goal: "Ürün, kategori ve fiyat yönetimi altyapısını kurmak."
+          modules:
+            - commerce/catalog/product
+            - commerce/catalog/category
+            - commerce/catalog/brand
+            - commerce/catalog/attribute
+            - commerce/catalog/price
+          done_criteria:
+            - "Sprint kapsamındaki tüm modüller (product, category, brand, attribute, price) için veri modeli Prisma ile tanımlandı ve migrate işlemleri uygulandı."
+            - "CRUD API endpointleri NestJS ile tamamlandı, Swagger ile belgeleri doğrulandı."
+            - "Modüller arası ilişkiler (product → category, product → brand, product → attribute, price → product) veri tabanında kuruldu ve uçtan uca test edildi."
+            - "Seed dosyaları ve örnek veriler eklendi; make ms ile seed işlemleri başarıyla çalıştırıldı."
+            - "Unit testler Jest ile yazıldı, test coverage en az %80 sağlandı; make mt ile testler doğrulandı."
+            - "Admin panelde ilgili route’lar açıldı; Nuxt UI (@nuxt/ui) ile temel CRUD işlemleri eksiksiz çalışıyor."
+            - "Shop arayüzünde ilgili modül bileşenleri ve sayfa rotaları açıldı; temel ürün ve kategori listeleme, detay, filtreleme işlevleri eksiksiz çalışır durumda."
+            - "API erişim yetkileri ve kimlik doğrulama başarıyla test edildi."
+            - "Makefile ve scripts üzerinden mc, ms, mt, mr komutları ile otomasyon sorunsuz çalışıyor."
+            - "Swagger UI üzerinden endpoint testleri ve görsel kontrol sağlandı."
+            - "Her modül için teknik açıklama ve API kullanım rehberi hazırlandı."
+            - "CHANGELOG.md ve sessions.yaml güncellendi, roadmap’e sprint tamamlandı olarak işaretlendi."
+            - "Versiyon etiketi (örn: v0.4.0) oluşturuldu ve repoya push edildi."
+        - id: 3
+          title: "Faz 1 – Sprint 3 – Varyant & Stok"
+          period: "... → ..."
+          started_at: null
+          completed_at: null
+          goal: "Varyant, stok ve dosya yönetim altyapısını oluşturmak."
+          modules:
+            - commerce/catalog/variant
+            - commerce/catalog/stock
+            - commerce/catalog/file
+            - commerce/catalog/barcode
+          done_criteria:
+            - "Sprint kapsamındaki tüm modüller (variant, stock, file, barcode) için veri modeli Prisma ile tanımlandı ve migrate işlemleri uygulandı."
+            - "CRUD API endpointleri NestJS ile eksiksiz geliştirildi, Swagger ile belgeleri doğrulandı."
+            - "Modüller arası ilişkiler (örn: variant → product, stock → variant/product, file → product, barcode → product) kuruldu ve uçtan uca test edildi."
+            - "Seed dosyaları ve örnek veriler eklendi; make ms ile seed işlemleri başarıyla çalıştırıldı."
+            - "Unit testler Jest ile yazıldı, test coverage en az %80 sağlandı; make mt ile testler doğrulandı."
+            - "Admin panelde ilgili route’lar açıldı; Nuxt UI (@nuxt/ui) ile temel CRUD işlemleri eksiksiz çalışıyor."
+            - "Shop arayüzünde ürün varyantı, stok durumu, dosya ve barkod bileşenleri eksiksiz şekilde listeleniyor ve test edildi."
+            - "API erişim yetkileri ve kimlik doğrulama başarıyla test edildi."
+            - "Makefile ve scripts üzerinden mc, ms, mt, mr komutları ile otomasyon sorunsuz çalışıyor."
+            - "Swagger UI üzerinden endpoint testleri ve görsel kontrol sağlandı."
+            - "Her modül için teknik açıklama ve API kullanım rehberi hazırlandı."
+            - "CHANGELOG.md ve sessions.yaml güncellendi, roadmap’e sprint tamamlandı olarak işaretlendi."
+            - "Versiyon etiketi (örn: v0.5.0) oluşturuldu ve repoya push edildi."
+        - id: 4
+          title: "Faz 1 – Sprint 4 – Müşteri Sistemi"
+          period: "... → ..."
+          started_at: null
+          completed_at: null
+          goal: "Müşteri kaydı, adres ve iletişim altyapısını kurmak."
+          modules:
+            - commerce/customer/customer
+            - commerce/customer/address
+            - commerce/customer/group
+            - commerce/customer/contact
+          done_criteria:
+            - "Sprint kapsamındaki tüm modüller (customer, address, group, contact) için veri modeli Prisma ile tanımlandı ve migrate işlemleri uygulandı."
+            - "CRUD API endpointleri NestJS ile eksiksiz geliştirildi, Swagger ile belgeleri doğrulandı."
+            - "Modüller arası ilişkiler kuruldu ve uçtan uca test edildi (örn: customer → address, customer → group, contact → customer)."
+            - "Seed dosyaları ve örnek veriler eklendi; make ms ile seed işlemleri başarıyla çalıştırıldı."
+            - "Unit testler Jest ile yazıldı, test coverage en az %80 sağlandı; make mt ile testler doğrulandı."
+            - "Admin panelde müşteri, adres, grup ve iletişim modülleri için ilgili route’lar açıldı; Nuxt UI (@nuxt/ui) ile temel CRUD işlemleri eksiksiz çalışıyor."
+            - "Shop arayüzünde müşteri kayıt, adres ekleme ve iletişim formu bileşenleri eksiksiz şekilde test edildi."
+            - "API erişim yetkileri ve kimlik doğrulama başarıyla test edildi."
+            - "Makefile ve scripts üzerinden mc, ms, mt, mr komutları ile otomasyon sorunsuz çalışıyor."
+            - "Swagger UI üzerinden endpoint testleri ve görsel kontrol sağlandı."
+            - "Her modül için teknik açıklama ve API kullanım rehberi hazırlandı."
+            - "CHANGELOG.md ve sessions.yaml güncellendi, roadmap’e sprint tamamlandı olarak işaretlendi."
+            - "Versiyon etiketi (örn: v0.6.0) oluşturuldu ve repoya push edildi."
+        - id: 5
+          title: "Faz 1 – Sprint 5 – Sipariş – A"
+          period: "... → ..."
+          started_at: null
+          completed_at: null
+          goal: "Sepet ve ödeme süreçlerini geliştirmek."
+          modules:
+            - commerce/order/cart
+            - commerce/order/order
+            - commerce/order/payment
+          done_criteria:
+            - "Sprint kapsamındaki tüm modüller (cart, order, payment) için veri modeli Prisma ile tanımlandı ve migrate işlemleri uygulandı."
+            - "CRUD API endpointleri NestJS ile eksiksiz geliştirildi, Swagger ile belgeleri doğrulandı."
+            - "Modüller arası ilişkiler (örn: cart → customer/product, order → cart/customer, payment → order/customer) kuruldu ve uçtan uca test edildi."
+            - "Seed dosyaları ve örnek veriler eklendi; make ms ile seed işlemleri başarıyla çalıştırıldı."
+            - "Unit testler Jest ile yazıldı, test coverage en az %80 sağlandı; make mt ile testler doğrulandı."
+            - "Admin panelde sepet, sipariş ve ödeme modülleri için ilgili route’lar açıldı; Nuxt UI (@nuxt/ui) ile temel CRUD işlemleri eksiksiz çalışıyor."
+            - "Shop arayüzünde sepet yönetimi, sipariş oluşturma ve ödeme işlemleri eksiksiz şekilde test edildi."
+            - "API erişim yetkileri ve kimlik doğrulama başarıyla test edildi."
+            - "Makefile ve scripts üzerinden mc, ms, mt, mr komutları ile otomasyon sorunsuz çalışıyor."
+            - "Swagger UI üzerinden endpoint testleri ve görsel kontrol sağlandı."
+            - "Her modül için teknik açıklama ve API kullanım rehberi hazırlandı."
+            - "CHANGELOG.md ve sessions.yaml güncellendi, roadmap’e sprint tamamlandı olarak işaretlendi."
+            - "Versiyon etiketi (örn: v0.7.0) oluşturuldu ve repoya push edildi."
+        - id: 6
+          title: "Faz 1 – Sprint 6 – Sipariş – B"
+          period: "... → ..."
+          started_at: null
+          completed_at: null
+          goal: "Sipariş sonrası süreçleri entegre etmek."
+          modules:
+            - commerce/order/transaction
+            - commerce/order/shipment
+            - commerce/order/invoice
+            - commerce/order/status
+            - commerce/order/history
+          done_criteria:
+            - "Sprint kapsamındaki tüm modüller (transaction, shipment, invoice, status, history) için veri modeli Prisma ile tanımlandı ve migrate işlemleri uygulandı."
+            - "CRUD API endpointleri NestJS ile eksiksiz geliştirildi, Swagger ile belgeleri doğrulandı."
+            - "Modüller arası ilişkiler (örn: transaction → payment/order, shipment → order, invoice → order, status/history → order) kuruldu ve uçtan uca test edildi."
+            - "Seed dosyaları ve örnek veriler eklendi; make ms ile seed işlemleri başarıyla çalıştırıldı."
+            - "Unit testler Jest ile yazıldı, test coverage en az %80 sağlandı; make mt ile testler doğrulandı."
+            - "Admin panelde transaction, shipment, invoice, status ve history modülleri için ilgili route’lar açıldı; Nuxt UI (@nuxt/ui) ile temel CRUD işlemleri eksiksiz çalışıyor."
+            - "Shop arayüzünde sipariş sonrası süreçler (kargo durumu, fatura görüntüleme, işlem geçmişi) eksiksiz şekilde test edildi."
+            - "API erişim yetkileri ve kimlik doğrulama başarıyla test edildi."
+            - "Makefile ve scripts üzerinden mc, ms, mt, mr komutları ile otomasyon sorunsuz çalışıyor."
+            - "Swagger UI üzerinden endpoint testleri ve görsel kontrol sağlandı."
+            - "Her modül için teknik açıklama ve API kullanım rehberi hazırlandı."
+            - "CHANGELOG.md ve sessions.yaml güncellendi, roadmap’e sprint tamamlandı olarak işaretlendi."
+            - "Versiyon etiketi (örn: v0.8.0) oluşturuldu ve repoya push edildi."
+        - id: 7
+          title: "Faz 1 – Sprint 7 – Analitik & Entegrasyon"
+          period: "... → ..."
+          started_at: null
+          completed_at: null
+          goal: "Pazarlama takibi ve dönüşüm modüllerini eklemek."
+          modules:
+            - commerce/marketing/analytics
+            - commerce/marketing/event
+            - commerce/marketing/conversion
+            - commerce/marketing/merchant
+          done_criteria:
+            - "Sprint kapsamındaki tüm modüller (analytics, event, conversion, merchant) için veri modeli Prisma ile tanımlandı ve migrate işlemleri uygulandı."
+            - "CRUD API endpointleri NestJS ile eksiksiz geliştirildi, Swagger ile belgeleri doğrulandı."
+            - "Modüller arası ilişkiler (örn: analytics → event, conversion → order, merchant → product) kuruldu ve uçtan uca test edildi."
+            - "Seed dosyaları ve örnek veriler eklendi; make ms ile seed işlemleri başarıyla çalıştırıldı."
+            - "Unit testler Jest ile yazıldı, test coverage en az %80 sağlandı; make mt ile testler doğrulandı."
+            - "Admin panelde ilgili route’lar açıldı; Nuxt UI (@nuxt/ui) ile temel CRUD işlemleri eksiksiz çalışıyor."
+            - "Shop arayüzünde pazarlama ve dönüşüm bileşenleri (analitik tetikleyici, event oluşturucu, conversion handler) eksiksiz şekilde çalışıyor ve test edildi."
+            - "API erişim yetkileri ve kimlik doğrulama başarıyla test edildi."
+            - "Makefile ve scripts üzerinden mc, ms, mt, mr komutları ile otomasyon sorunsuz çalışıyor."
+            - "Swagger UI üzerinden endpoint testleri ve görsel kontrol sağlandı."
+            - "Her modül için teknik açıklama ve API kullanım rehberi hazırlandı."
+            - "CHANGELOG.md ve sessions.yaml güncellendi, roadmap’e sprint tamamlandı olarak işaretlendi."
+            - "Versiyon etiketi (örn: v0.9.0) oluşturuldu ve repoya push edildi."
+        - id: 8
+          title: "Faz 1 – Sprint 8 – Kampanya & İçerik"
+          period: "... → ..."
+          started_at: null
+          completed_at: null
+          goal: "Kampanya ve temel içerik modüllerini devreye almak."
+          modules:
+            - commerce/marketing/campaign
+            - commerce/marketing/coupon
+            - commerce/marketing/seo
+            - commerce/marketing/utm
+            - commerce/content/page
+            - commerce/content/form
+            - commerce/content/slider
+          done_criteria:
+            - "Sprint kapsamındaki tüm modüller (campaign, coupon, seo, utm, page, form, slider) için veri modeli Prisma ile tanımlandı ve migrate işlemleri uygulandı."
+            - "CRUD API endpointleri NestJS ile eksiksiz geliştirildi, Swagger ile belgeleri doğrulandı."
+            - "Modüller arası ilişkiler (örn: campaign → coupon, seo → page, utm → event) kuruldu ve uçtan uca test edildi."
+            - "Seed dosyaları ve örnek veriler eklendi; make ms ile seed işlemleri başarıyla çalıştırıldı."
+            - "Unit testler Jest ile yazıldı, test coverage en az %80 sağlandı; make mt ile testler doğrulandı."
+            - "Admin panelde kampanya, kupon, SEO, UTM, sayfa, form ve slider modülleri için ilgili route’lar açıldı; Nuxt UI (@nuxt/ui) ile temel CRUD işlemleri eksiksiz çalışıyor."
+            - "Shop arayüzünde kampanya gösterimi, kupon kullanımı, SEO meta tag’ları, UTM parametre takibi, sayfa ve slider bileşenleri eksiksiz şekilde test edildi."
+            - "API erişim yetkileri ve kimlik doğrulama başarıyla test edildi."
+            - "Makefile ve scripts üzerinden mc, ms, mt, mr komutları ile otomasyon sorunsuz çalışıyor."
+            - "Swagger UI üzerinden endpoint testleri ve görsel kontrol sağlandı."
+            - "Her modül için teknik açıklama ve API kullanım rehberi hazırlandı."
+            - "CHANGELOG.md ve sessions.yaml güncellendi, roadmap’e sprint tamamlandı olarak işaretlendi."
+            - "Versiyon etiketi (örn: v0.10.0) oluşturuldu ve repoya push edildi."
+        - id: 9
+          title: "Faz 1 – Sprint 9 – Sistem Tamamlama"
+          period: "... → ..."
+          started_at: null
+          completed_at: null
+          goal: "Genel sistem yapılandırmalarını tamamlamak."
+          modules:
+            - system/config/settings
+            - system/config/language
+            - system/log/log
+            - system/log/activity-log
+            - system/services/smtp
+          done_criteria:
+            - "Sprint kapsamındaki tüm modüller (settings, language, log, activity-log, smtp) için veri modeli Prisma ile tanımlandı ve migrate işlemleri uygulandı."
+            - "CRUD API endpointleri NestJS ile eksiksiz geliştirildi, Swagger ile belgeleri doğrulandı."
+            - "Modüller arası ilişkiler (örn: settings → language, activity-log → user, smtp → system) kuruldu ve uçtan uca test edildi."
+            - "Seed dosyaları ve örnek veriler eklendi; make ms ile seed işlemleri başarıyla çalıştırıldı."
+            - "Unit testler Jest ile yazıldı, test coverage en az %80 sağlandı; make mt ile testler doğrulandı."
+            - "Admin panelde ayarlar, dil, log, activity-log ve smtp modülleri için ilgili route’lar açıldı; Nuxt UI (@nuxt/ui) ile temel CRUD işlemleri eksiksiz çalışıyor."
+            - "Shop arayüzünde dil ve sistem ayarlarının görüntülenmesi, logların ve bildirimlerin uygun şekilde gösterilmesi test edildi."
+            - "API erişim yetkileri ve kimlik doğrulama başarıyla test edildi."
+            - "Makefile ve scripts üzerinden mc, ms, mt, mr komutları ile otomasyon sorunsuz çalışıyor."
+            - "Swagger UI üzerinden endpoint testleri ve görsel kontrol sağlandı."
+            - "Her modül için teknik açıklama ve API kullanım rehberi hazırlandı."
+            - "CHANGELOG.md ve sessions.yaml güncellendi, roadmap’e sprint tamamlandı olarak işaretlendi."
+            - "Versiyon etiketi (örn: v0.11.0) oluşturuldu ve repoya push edildi."
+        - id: 10
+          title: "Faz 1 – Sprint 10 – Yayınlama & Geçiş"
+          period: "... → ..."
+          started_at: null
+          completed_at: null
+          goal: "Canlı geçiş, veri taşıma ve yayın süreçlerini tamamlamak."
+          modules:
+            - "Bu sprintte yeni modül geliştirilmesi beklenmemektedir. Mevcut modüllerin test edilmesi ve yayınlanması hedeflenmektedir."
+          tasks:
+            - "Sunucu kurulumu yapılacak (Linux tabanlı)"
+            - "Ortam `.env` dosyaları production ortamına göre düzenlenecek"
+            - "PostgreSQL veri taşıma senaryosu hazırlanacak (OpenCart -> Prisma yapısı)"
+            - "OpenCart sisteminden müşteri, ürün, sipariş verisi çıkarılacak"
+            - "Canlı alan adı yönlendirmesi yapılacak (`admin.domain.com`, `shop.domain.com`, vs.)"
+            - "Uygulamalar production modunda docker ile ayağa kaldırılacak"
+            - "Canlı test senaryoları (giriş, ürün ekleme, sipariş oluşturma, mail gönderimi) manuel uygulanacak"
+            - "Açılış sonrası hata logları izlenecek (log/activity-log modülleri üzerinden)"
+            - "Git deposunda `v1.0.0` etiketi oluşturulacak ve push edilecek (`git tag v1.0.0 && git push --tags`)"
+          done_criteria:
+            - "Production sunucu kurulumu tamamlandı ve güvenlik ayarları doğrulandı."
+            - "Tüm ortam (.env) dosyaları production ortamına göre düzenlendi ve servisler doğru yapılandırıldı."
+            - "OpenCart sisteminden müşteri, ürün ve sipariş verileri eksiksiz çıkarıldı ve Prisma veri tabanına aktarıldı."
+            - "Alan adı ve subdomain yönlendirmeleri (admin, shop, api) başarıyla yapıldı."
+            - "Uygulamalar production modunda docker ile sorunsuz olarak ayağa kaldırıldı."
+            - "Canlı test senaryoları (giriş, ürün ekleme, sipariş oluşturma, mail gönderimi) manuel olarak başarıyla uygulandı."
+            - "Sistem açılışı sonrası hata logları ve activity-log modülleri üzerinden izleme gerçekleştirildi."
+            - "Git reposunda v1.0.0 etiketi oluşturuldu ve push edildi."
+            - "CHANGELOG.md ve sessions.yaml sprint 10 seviyesine güncellendi, roadmap’e sprint tamamlandı olarak işaretlendi."
+    - id: 2
+      title: "Faz 2 – Gelişmiş Sistem Davranışı ve Pazarlama Katmanı"
+      goal: >
+        Sadakat, içerik zenginliği, davranış takibi ve kampanya desteği sağlayan;
+        tüm sistem ayarlarını ve bildirim altyapısını içeren gelişmiş yapı.
+      modules:
+        system/access: [session]
+        system/config: [theme, maintenance, timezone, currency, locale, config]
+        system/notify: [notification, announcement, changelog]
+        system/services: [ai-engine, api-client, api-provider, webhook]
+        commerce/catalog: [media, supplier, unit, tag, collection]
+        commerce/order: [return, note]
+        commerce/customer:
+          [
+            review,
+            point,
+            wishlist,
+            customer-notification,
+            login-history,
+            activity,
+            consent,
+            return-request,
+          ]
+        commerce/content: [blog, video, section, faq, testimonial, banner, reference]
+        commerce/marketing: [referral, popup, promotion]
+    - id: 3
+      title: "Faz 3 – Üretim ve Operasyon Dijitalleşmesi"
+      goal: >
+        Üretim planlama, görev yönetimi, zamanlama, kargo takibi ve
+        Etsy entegrasyonuyla operasyon süreçlerinin dijitalleştirilmesi.
+      modules:
+        automation/operations: [production, task, checklist, workflow, schedule, calendar, reminder]
+        automation/shipping: [yurtici]
+        automation/marketplace: [etsy]
+    - id: 4
+      title: "Faz 4 – Müşteri Etkileşimi ve İletişim Katmanı"
+      goal: >
+        Satış sonrası süreçlerin takibi, çok kanallı mesajlaşma entegrasyonları
+        ve müşteri etkileşim raporlarıyla CRM altyapısının kurulması.
+      modules:
+        automation/engagement:
+          [crm, ticket, follow-up, insight, message, whatsapp, messenger, instagram, sms]
+    - id: 5
+      title: "Faz 5 – Finansal Süreçler ve Muhasebe Entegrasyonu"
+      goal: >
+        Fatura, gider, kasa, banka yönetimi ve Mikro, Logo, Parasut gibi sistemlerle muhasebe entegrasyonlarının sağlanması.
+      modules:
+        automation/finance:
+          [billing, expense, cash, bank, accounting, e-invoice, mikro, logo, parasut]
+    - id: 6
+      title: "Faz 6 – Pazaryeri ve Kargo Entegrasyonları"
+      goal: >
+        Amazon gibi yeni pazaryerlerine açılım ve çoklu taşıyıcı destekli gelişmiş kargo altyapısının kurulumu.
+      modules:
+        automation/marketplace: [amazon]
+        automation/shipping: [aras, ship-integrator]
+    - id: 7
+      title: "Faz 7 – SaaS Dönüşümü ve Çoklu Müşteri Altyapısı"
+      goal: >
+        TT Panel’in çok şirketli, özelleştirilebilir ve kiralanabilir
+        bir SaaS ürününe dönüşmesini sağlayacak altyapının kurulması.
+      modules:
+        system/saas:
+          [tenant, domain-mapping, plan-management, subscription, invitation, billing-usage]

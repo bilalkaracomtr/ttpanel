@@ -1,0 +1,56 @@
+sessions:
+  title: "Üretim Günlüğüm"
+  description: >
+    Bu dosya, TT Panel görevlerine dair haftalık üretimlerini içerir.
+    Her hafta; gün gün yazılan üretim notları ve alan bazlı haftalık özetlerle yapılandırılır.
+  structure:
+    weeks:
+      description: >
+        Her hafta, o haftaya ait üretimlerin gün gün özetlendiği bir yapı içerir.
+        Her gün için tarih, durum ve üretim özeti bulunur.
+        Ayrıca, haftalık özetler ve görev havuzu da yer alır.
+    task_pool:
+      description: >
+        Görev havuzu, tamamlanması gereken görevlerin ve projelerin listelendiği bir alandır.
+        Her görev için başlık, açıklama, durum ve öncelik bilgileri yer alır.
+  weeks:
+    - week: "2025-08-11 → 2025-08-17"
+      days:
+        - date: "2025-08-11"
+          summary:
+            - "`ai-meta.yaml > goals` bloğu `project` bloğuna eklendi ve `project` bloğu tamamen güncellendi."
+            - "`ai-meta.yaml > modules` bloğu güncellendi"
+            - "`system/sass` modül grubu ana grup yapısına alındı"
+        - date: "2025-08-12"
+          summary:
+            - "`ai-meta.yaml > tech` bloğu sıfırdan hazırlandı."
+        - date: "2025-08-13"
+          summary:
+            - "`ai-meta.yaml > workspace` bloğu güncellendi"
+        - date: "2025-08-14"
+          summary:
+            - "`ai-meta.yaml > ai` ana bloğunun `identity`, `scope`, `behavior` alt bloklarının kapsamı sıfırdan belirlendi."
+        - date: "2025-08-15"
+          summary:
+            - "`ai-meta.yaml > roadmap` bloğu faz 0 ve faz 1 sprintleri güncellendi."
+        - date: "2025-08-16"
+          summary:
+            - "https://nuxt.com/docs/4.x/getting-started/ altındaki introduction, installation, configuration, views, assets, styling, routing, seo-and-meta, transitions, data-fetching, state-management, error-handling, server, layers, prerendering, deployment, testing sayfaları teknik çeviri kurallarına uygun olarak Türkçeye çevrildi ve markdown formatında hazırlandı."
+            - "https://nuxt.com/docs/4.x/guide/concepts/ altındaki auto-imports, lifescyle, vue.js development, rendering modes, server engine, modules, ES modules, typescipt, code style sayfaları teknik çeviri kurallarına uygun olarak Türkçeye çevrildi ve markdown formatında hazırlandı."
+            - "https://nuxt.com/docs/4.x/guide/directory-structure/ altındaki .nuxt, .output, app (assets, components, composables, layouts, middleware, pages, plugins, utils, app.vue, app.config.ts, erro.vue), content, modules, node_modules, public, server, shared, .env, . gitignore, .nuxtignore, .nuxtrc, nuxt.config.ts, package.json, tsconfig.js sayfaları teknik çeviri kurallarına uygun olarak Türkçeye çevrildi ve markdown formatında hazırlandı."
+            - "https://nuxt.com/docs/4.x/guide/going-further/ altındaki events, experimental features, features, internals, runtime config, nightly relase channel, hooks, modules, kit, nuxt-app, layers, debugging sayfaları teknik çeviri kurallarına uygun olarak Türkçeye çevrildi ve markdown formatında hazırlandı."
+            - "https://nuxt.com/docs/4.x/guide/recipes/custom-routing altındaki custom routing, vite plugin, custom usefetch, sessions and authentication sayfaları teknik çeviri kurallarına uygun olarak Türkçeye çevrildi ve markdown formatında hazırlandı."
+            - "https://nuxt.com/docs/4.x/guide/best-practices/ altındaki hydration, performance, plugins sayfaları teknik çeviri kurallarına uygun olarak Türkçeye çevrildi ve markdown formatında hazırlandı."
+        - date: "2025-08-17"
+          summary:
+            - "https://ui.nuxt.com/getting-started altındaki introduction, installation, migration, theme, icons, fonts, color mode, i18n sayfaları teknik çeviri kurallarına uygun olarak Türkçeye çevrildi ve markdown formatında hazırlandı."
+            - "https://ui.nuxt.com/composables altındaki define-shorcuts, use-overlay, use-toast sayfaları teknik çeviri kurallarına uygun olarak Türkçeye çevrildi ve markdown formatında hazırlandı."
+            - "https://ui.nuxt.com/components altındaki 54 sayfa teknik çeviri kurallarına uygun olarak Türkçeye çevrildi ve markdown formatında hazırlandı."
+    - week: "2025-08-18 → 2025-08-24"
+      days:
+        - date: "2025-08-18"
+          summary:
+            - "`ai-meta.yaml > ai.scope.frontend` bloğu dökümanlara göre güncellendi."
+        - date: "2025-08-19"
+          summary:
+            - "`ai-meta.yaml > roadmap > faz 0 sprint 4 görevleri sıfırdan belirlendi."

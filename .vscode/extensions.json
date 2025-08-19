@@ -1,0 +1,18 @@
+{
+  "recommendations": [
+    "prisma.prisma",
+    "bradlc.vscode-tailwindcss",
+    "vue.volar",
+    "Nuxtr.nuxtr-vscode",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "mikestead.dotenv",
+    "eamodio.gitlens",
+    "ms-azuretools.vscode-docker",
+    "christian-kohler.path-intellisense",
+    "wix.vscode-import-cost",
+    "shd101wyy.markdown-preview-enhanced",
+    "stylelint.vscode-stylelint"
+  ]
+}
+// .vscode/extensions.json (TT Panel'de mevcut)

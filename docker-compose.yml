@@ -1,0 +1,191 @@
+networks:
+  ttpanel:
+    name: ttpanel
+    driver: bridge
+
+services:
+  traefik:
+    container_name: ttpanel-traefik
+    image: traefik:v3.4.3
+    restart: unless-stopped
+    command:
+      - --entrypoints.web.address=:80
+      - --api.dashboard=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+    ports:
+      - '80:80'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.traefik.rule=Host(`traefik.ttpanel.test`)'
+      - 'traefik.http.routers.traefik.entrypoints=web'
+      - 'traefik.http.routers.traefik.service=api@internal'
+    networks:
+      - ttpanel
+
+  postgres:
+    container_name: ttpanel-postgres
+    image: postgres:16
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    env_file:
+      - ./config/env/.env.postgres
+    volumes:
+      - ./services/postgres/data:/var/lib/postgresql/data
+    networks:
+      - ttpanel
+
+  pgweb:
+    container_name: ttpanel-pgweb
+    image: sosedoff/pgweb:latest
+    restart: on-failure
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/ttpanel?sslmode=disable
+    ports:
+      - '8081:8081'
+    networks:
+      - ttpanel
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.pgweb.rule=Host(`pgweb.ttpanel.test`)
+      - traefik.http.services.pgweb.loadbalancer.server.port=8081
+
+  redis:
+    container_name: ttpanel-redis
+    image: redis:7
+    restart: on-failure
+    command: redis-server --requirepass redis
+    env_file:
+      - ./config/env/.env.redis
+    volumes:
+      - ./services/redis/data:/data
+    networks:
+      - ttpanel
+
+  minio:
+    container_name: ttpanel-minio
+    image: minio/minio:latest
+    restart: on-failure
+    env_file:
+      - ./config/env/.env.minio
+    command: server /data --console-address ":9001"
+    volumes:
+      - ./services/minio/data:/data
+    networks:
+      - ttpanel
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.minio.rule=Host(`minio.ttpanel.test`)
+      - traefik.http.services.minio.loadbalancer.server.port=9001
+
+  mailpit:
+    container_name: ttpanel-mailpit
+    image: axllent/mailpit:latest
+    restart: on-failure
+    env_file:
+      - ./config/env/.env.mailpit
+    ports:
+      - '8025:8025'
+    networks:
+      - ttpanel
+    expose:
+      - '8025'
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.mailpit.rule=Host(`mailpit.ttpanel.test`)
+      - traefik.http.services.mailpit.loadbalancer.server.port=8025
+
+  api:
+    container_name: ttpanel-api
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      args:
+        - NODE_ENV=production
+      target: production
+      cache_from:
+        - type=local,src=./.docker-cache
+      cache_to:
+        - type=local,dest=./.docker-cache
+    restart: on-failure
+    env_file:
+      - ./config/env/.env.api
+    networks:
+      - ttpanel
+    depends_on:
+      - postgres
+      - redis
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.api.rule=Host(`api.ttpanel.test`)
+      - traefik.http.services.api.loadbalancer.server.port=3000
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  admin:
+    container_name: ttpanel-admin
+    build:
+      context: .
+      dockerfile: apps/admin/Dockerfile
+      args:
+        - NODE_ENV=production
+      target: production
+      cache_from:
+        - type=local,src=./.docker-cache
+      cache_to:
+        - type=local,dest=./.docker-cache
+    restart: on-failure
+    env_file:
+      - ./config/env/.env.admin
+    networks:
+      - ttpanel
+    labels:
+      traefik.enable: 'true'
+      traefik.http.routers.admin.rule: Host(`admin.ttpanel.test`)
+      traefik.http.services.admin.loadbalancer.server.port: '3010'
+    depends_on:
+      - api
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3010/']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  shop:
+    container_name: ttpanel-shop
+    build:
+      context: .
+      dockerfile: apps/shop/Dockerfile
+      args:
+        - NODE_ENV=production
+      target: production
+      cache_from:
+        - type=local,src=./.docker-cache
+      cache_to:
+        - type=local,dest=./.docker-cache
+    restart: on-failure
+    env_file:
+      - ./config/env/.env.shop
+    networks:
+      - ttpanel
+    labels:
+      traefik.enable: 'true'
+      traefik.http.routers.shop.rule: Host(`shop.ttpanel.test`)
+      traefik.http.services.shop.loadbalancer.server.port: '3020'
+    depends_on:
+      - api
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3020/']
+      interval: 30s
+      timeout: 10s
+      retries: 3
