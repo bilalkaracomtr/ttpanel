@@ -54,3 +54,6 @@ sessions:
         - date: "2025-08-19"
           summary:
             - "`ai-meta.yaml > roadmap > faz 0 sprint 4 görevleri sıfırdan belirlendi."
+            - "İlk git deposu oluşturuldu; tüm klasör yapısı ve .gitignore ile birlikte yeniden yapılandırıldı. Boş klasörler `.gitkeep` ile takip edildi."
+            - "İlk commit 'feat: proje temel alt yapısı tamamlandı (ai eşlik sistemi, dizin yapısı, docker, netjs api ve pnpm workspace) - v.0.1.0' olarak tanımlandı ve `v0.1.0` etiketi ile yeniden etiketlendi."
+            - "feature/faz0-sprint4-admin-shop branch'i açıldı. Faz 0 Sprint 4 için temel Nuxt 4 iskelet ve tema kurulumu başlatıldı."
