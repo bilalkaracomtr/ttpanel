@@ -16,6 +16,7 @@ ai:
       # structure
       - "Frontend geliştirme yalnızca Nuxt 4 ile kurulu, bağımsız apps/admin ve apps/shop dizinleri altında yürütülür."
       - "Her frontend uygulamasının yapılandırması kendi `nuxt.config.ts` dosyasında tanımlanır"
+      - "Nuxt 4 projelerinde tailwind.config.ts veya postcss.config.js dosyaları artık zorunlu değildir; TailwindCSS ve @nuxt/ui tüm yapılandırmaları doğrudan nuxt.config.ts içinde, 'css' ve 'ui' alanlarıyla yapılır."
       - "Nuxt 4, uygulama yapısını apps/{admin, shop}/app/ klasörü altında toplamayı tercih eder; bu klasör varsayılan proje köküdür. Kök uygulama bileşeni ise app/app.vue dosyasıdır ve Nuxt lifecycle buradan başlatılır."
       - "Tüm frontend modül ve sayfaları yalnızca `app/pages/` altında, Nuxt dosya tabanlı routing sistemine uygun ve backend modüllerinde olduğu gibi izole klasör yapısıyla organize edilir (örn: `app/pages/system/access/role/index.vue`)."
       - "Her modül klasörü; modüle ait bir veya birden fazla sayfa (`index.vue`, `edit.vue` vb.), modüle özel componentler (`components/`), modüle özel composable’lar (`composables/`), yardımcılar (`utils/`), ve gerekiyorsa testler (`tests/`) içerir."
