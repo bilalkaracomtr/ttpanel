@@ -68,7 +68,6 @@ sessions:
             - "docker-compose.yml admin servisi oluşturuldu."
             - "apps/admin/Dockerfile oluşturuldu ve gerekli yapılandırmalar eklendi."
             - "`pnpm --filter admin dev` komutu ile admin uygulaması geliştirme ortamı başlatıldı."
-
             - "`npx nuxi init apps/shop` komutu shop Nuxt 4 projesi `@nuxt/eslint`, @nuxt/fonts, @nuxt/icon, `@nuxt/image`, `@nuxt/scripts`, `@nuxt/test-utils`, '@nuxt/ui` modülleri ile birlikte kuruldu."
             - "Shop uygulaması için `app` dizinine gerekli dizin yapısı oluşturuldu: `pages`, `components`, `layouts`, `composables`, `plugins`, `utils`, `stores`, `middleware`, `assets/css`, `assets/images`"
             - "`config/env/.env.shop` dosyası düzenlendi. Kopyası `apps/shop/.env` olarak oluşturuldu."
@@ -77,3 +76,7 @@ sessions:
             - "docker-compose.yml shop servisi oluşturuldu."
             - "apps/shop/Dockerfile oluşturuldu ve gerekli yapılandırmalar eklendi."
             - "`pnpm --filter shop dev` komutu ile shop uygulaması geliştirme ortamı başlatıldı."
+            - "git commit -m 'feat(admin,shop): Nuxt 4, @nuxt/ui ve temel klasör iskeleti kuruldu ...'"
+        - date: "2025-08-22"
+          summary:
+            - "..."
