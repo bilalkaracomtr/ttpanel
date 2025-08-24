@@ -13,6 +13,8 @@ ai:
       - "Kararları dayatmaz; öneri sunar, birlikte değerlendirerek ilerler."
   scope:
     frontend:
+      # stack
+      - "AI tüm teknik çıktı, kod ve önerilerde sadece tech.frontend bölümünde tanımlanan bağımlılıkların **tam versiyonlarına** sadık kalacak, başka versiyon önerisi, kodu veya örneği üretmeyecek, eski veya alternatif stack kullanımı halinde kullanıcıyı uyaracaktır."
       # structure
       - "Frontend geliştirme yalnızca Nuxt 4 ile kurulu, bağımsız apps/admin ve apps/shop dizinleri altında yürütülür."
       - "Her frontend uygulamasının yapılandırması kendi `nuxt.config.ts` dosyasında tanımlanır"
@@ -38,6 +40,10 @@ ai:
       - "Nuxt 4 üretiminde yalnızca SSR/SSG uyumlu API'ler (`useAsyncData`, `definePageMeta`, `defineNuxtRouteMiddleware` vb.) kullanılır"
       # style
       - "Global ve bileşen bazlı stil dosyaları yalnızca `app/assets/css/` klasöründe tutulur (örn: `app/assets/css/main.scss`)."
+      # migration
+      - "Nuxt 4 migration: migration.nuxt4"
+      - "@nuxt/ui 3 migration: migration.nuxt_ui_3"
+      - "TailwindCSS 4 migration: migration.tailwindcss_4"
     backend:
       - "Tüm Prisma modellerinde ID alanı şu şekilde tanımlanır: `id String @id @default(uuid())`. Bu yapı NestJS + Prisma + PostgreSQL sistemlerinde mikroservis uyumu, dışa aktarım kolaylığı ve UUID güvenliği sağlar."
       - "Modül planlaması `apps/api/src/modules/` dizini altında yapılır; her modül izolasyon ilkesine göre yapılandırılır. Bu dizin yalnızca NestJS tabanlı backend modüllerini içerir."
@@ -47,6 +53,7 @@ ai:
       - "`apps/api/src/infra/` dizini sistem bağımlılıklarını barındırır (örneğin: `prisma.service.ts`, `prisma.module.ts`)."
       - "PrismaService import yolu: '@infra/prisma/prisma.service' sabittir, tüm backend dosyalarında bu alias kullanılır."
       - "Seed dosyaları her modülün `seed/` klasöründe tutulur, test dosyaları `test/` içinde yazılır."
+      - "NestJS 11 migration: migration.nestjs_11"
     cli:
       - "Her modülün gerektirdiği `Makefile` komutları önerilir ve `make help` çıktısına entegre edilmek üzere yapılandırılır."
       - "Makefile komutları üzerinden ortam kurulumu ve servis yönetimi yapılır (`make up`, `make reset`, `make logs`, `make seed`, `make build`, `make test`)."
@@ -562,6 +569,93 @@ modules:
         - name: "billing-usage"
           description: "Kullanım bazlı faturalama ve abonelik yönetimi"
 
+migration:
+  nuxt4:
+    - "Nuxt ana dizini artık app/"
+    - "server/, public/, modules/, layers/ root’ta kalıyor"
+    - "~ aliası artık app/ dizinine işaret ediyor"
+    - "Yeni dizin yapısı: app/ altında assets/, components/, composables/, layouts/, middleware/, pages/, plugins/, utils/, app.vue"
+    - "useAsyncData ve useFetch ile aynı key için farklı opsiyonlar artık uyarı veriyor"
+    - "useAsyncData ve useFetch’te reactive key desteği geldi"
+    - "Data cleanup: useAsyncData ile fetch edilen data, component unmount olunca temizleniyor"
+    - "getCachedData fonksiyonu artık her fetch’te context ile birlikte çağrılıyor"
+    - "Modül ve layer yükleme sırası düzeltildi: önce layer, sonra project modules"
+    - "route.meta.name kaldırıldı, doğrudan route.name kullanılıyor"
+    - "Component isimlendirme ve auto-import davranışı normalize edildi"
+    - "Unhead v2: vmid, hid, children, body props’ları kaldırıldı"
+    - "SPA loading template artık root yanında render ediliyor"
+    - "Global inline styles sadece component bazında inline ediliyor"
+    - "Error handling: error.data artık doğrudan erişilebilir"
+    - "Prerender edilen sayfalarda veri paylaşımı (payload sharing) aktif"
+    - "pending artık sadece status pending olduğunda true"
+    - "TypeScript config’ler context bazında ayrıldı, project references önerildi"
+    - "generate config kaldırıldı, nitro.prerender ile değiştirildi"
+    - "Kaldırılan experimental seçenekler: treeshakeClientOnly, configSchema, polyfillVueUseHead, respectNoSSRHeader, vite.devBundler"
+    - "Middleware/Plugins altındaki alt dizinlerdeki index dosyaları da otomatik taranıyor"
+  nuxt_ui_3:
+    - "Tailwind CSS v4 desteği ve config sistemi değişti (JS → CSS, upgrade aracı mevcut)"
+    - "Headless UI yerine Reka UI kullanılıyor"
+    - "Tailwind Variants API ile yeni styling sistemi"
+    - "main.css üzerinden hem Tailwind hem Nuxt UI import zorunlu"
+    - "Uygulama <UApp> ile sarmalanmalı"
+    - "Nuxt UI Pro artık layer olarak değil, doğrudan module olarak eklenir"
+    - "UButton ve diğer UI bileşenlerinde color prop'larında Tailwind renkleri değil alias (primary, error, success, warning, neutral, info, secondary) kullanılır"
+    - "gray rengi 'neutral' olarak değişti; black ve white kaldırıldı, yerine neutral ve variant kullanılır"
+    - "Design system ve renk alias'ları app.config.ts içindeki colors objesine taşındı"
+    - "Bileşen temaları artık Tailwind Variants ile ve slots yapısı üzerinden override edilir"
+    - "Birçok UI bileşenin ismi değişti (örn: Divider → Separator, Dropdown → DropdownMenu, Range → Slider, Toggle → Switch, Notification → Toast, vb.)"
+    - "Pro bileşenlerde ve bazı v2 bileşenlerde isimler değişti veya tamamen kaldırıldı (örn: DashboardCard kaldırıldı, PageCard önerildi)"
+    - "Birçok component'in props API'si değişti: options/links → items, click → onClick, v-model → v-model:open, slot yapısı değişti"
+    - "Global Modals, Slideovers, Notifications bileşenleri kaldırıldı, UApp ile entegre şekilde yönetiliyor"
+    - "Overlay API tamamen değişti: useModal, useSlideover → useOverlay composable"
+    - "Overlay close event ile ve promise tabanlı yönetim (await instance.result)"
+    - "Form error validation için error objesinde 'path' yerine 'name' kullanılır"
+    - "Bazı slot ve prop isimleri değişti (örn: ui.font → slots.base, defaultVariants, #content, #body, #header, #footer slotları)"
+  tailwindcss_4:
+    - "Node.js 20+ gereksinimi (upgrade aracı için)"
+    - "Tailwind artık CSS tabanlı import ile kullanılıyor (@import 'tailwindcss')"
+    - "@tailwind base/components/utilities direktifleri yerine CSS @import kullanılır"
+    - "Tailwind CLI ve plugin paketleri ayrıldı; @tailwindcss/cli ve @tailwindcss/postcss"
+    - "Vite kullanan projelerde @tailwindcss/vite plugin’i kullanılır"
+    - "postcss-import ve autoprefixer otomatik yönetiliyor; projeden çıkarılabilir"
+    - "Deprecated utility class’lar tamamen kaldırıldı (bg-opacity-*, text-opacity-*, flex-shrink-*, ...)"
+    - "Bazı utility class’lar yeniden adlandırıldı (örn: shadow-sm → shadow-xs, blur-sm → blur-xs, outline-none → outline-hidden, ...)"
+    - "shadow, blur ve radius scale’ları yeniden isimlendirildi, <utility>-sm yerine <utility>-xs kullanılır"
+    - "ring utility’sinin default width’i 3px → 1px oldu, eski için ring-3 kullanılır"
+    - "border ve divide utility’leri artık default olarak currentColor kullanıyor"
+    - "container utility’si config’den kaldırıldı, CSS @utility ile extend edilir"
+    - "Preflight’da placeholder rengi değişti, butonlar artık cursor: default"
+    - "dialog elementlerinde margin sıfırlandı"
+    - "space-x-* ve space-y-* selector’ları değişti (>:not(:last-child) ile margin-bottom)"
+    - "Variant stacking order sağdan sola değil, soldan sağa işliyor"
+    - "Arbitrary value olarak CSS değişkeni kullanımı: bg-[--var] yerine bg-(--var)"
+    - "Hover only gerçek hover destekleyen cihazlarda çalışır"
+    - "Transition utilities outline-color’u da kapsıyor"
+    - "corePlugins ile utility devre dışı bırakma desteği kaldırıldı"
+    - "theme() fonksiyonu yerine var(--color-...) değişkenleri kullanılmalı"
+    - "JS config dosyaları otomatik algılanmıyor, @config ile import edilmeli"
+    - "resolveConfig fonksiyonu kaldırıldı, doğrudan CSS variable kullanılmalı"
+    - "@apply ve custom utility, @reference ile diğer dosyalara taşınmalı"
+    - "Sass/Less/Stylus gibi CSS preprocessor’lar artık desteklenmiyor"
+  nestjs_11:
+    - "Node.js 20+ gereksinimi (Node 16 ve 18 desteği kalktı)"
+    - "Express v5 artık default; wildcard path için named wildcard zorunlu (/* → /*splat veya /{*splat})"
+    - "Express v5'te query parser artık basit, nested object/array desteği için 'query parser: extended' ayarı yapılmalı"
+    - "Express v5'te ?, regexp karakterler, bazı özel karakterler ve eski wildcard desteği kaldırıldı"
+    - "Fastify v5 desteği geldi; wildcard path ve route match aynı şekilde çalışıyor"
+    - "Fastify CORS: PUT, PATCH, DELETE gibi ek methodlar için methods opsiyonu zorunlu"
+    - "Fastify middleware path'te (.*) yerine named wildcard (*splat) kullanılır"
+    - "Middleware registration: global middleware'ler artık her zaman ilk sırada çalışır"
+    - "Lifecycle hooks: OnModuleDestroy, BeforeApplicationShutdown ve OnApplicationShutdown artık ters sırada çalışır"
+    - "Module resolution: Dynamic module deduplikasyonu değişti, module referansını variable olarak paylaşmak önerilir"
+    - "Reflector class: getAllAndMerge ve getAllAndOverride tip dönüşleri ve type inference güncellendi"
+    - "CacheModule: Keyv tabanlı yapı, redis-store config değişti, yeni KeyvRedis kullanılır"
+    - "CacheModule: cache-data objesi artık {value, expires} şeklinde, eskiyle uyumluluk için kontrol gerekli"
+    - "ConfigModule: ConfigService#get artık önce internal config'i okur, env var'lar override edemez"
+    - "ConfigModule: ignoreEnvVars opsiyonu deprecated, yerine validatePredefined ve skipProcessEnv geldi"
+    - "TerminusModule: HealthIndicatorService API geldi, eski HealthIndicator ve HealthCheckError deprecated"
+    - "Mau: Yeni official deployment platformu, tek komutla AWS deployment"
+
 tech:
   title: "Teknoloji ve Standartlar"
   description: "Projenin teknoloji yığını, sürümler, araçlar, kalite ve güvenlik standartları."
@@ -618,37 +712,67 @@ tech:
       service_dir: "service/"
 
   frontend:
-    framework: "Nuxt 4"
-    ui_library: "@nuxt/ui"
-    css:
-      - "tailwindcss"
-    state: "pinia"
+    framework:
+      name: "Nuxt"
+      version: "4.0.3"
+    ui_library:
+      name: "@nuxt/ui"
+      version: "3.3.2"
+    css_framework:
+      - name: "Tailwind CSS"
+        version: "4.1.12"
+    state:
+      name: "pinia"
+      version: "3.0.3"
     routing: "file-based"
     forms:
-      library: "vee-validate"
-      schema: "zod"
+      library:
+        name: "vee-validate"
+        version: "4.15.11"
+      schema:
+        name: "zod"
+        version: "4.0.17"
     i18n: true
     ssr: true
     testing:
-      unit: "vitest"
-      e2e: "playwright"
+      unit:
+        name: "vitest"
+        version: "3.2.4"
+      e2e:
+        name: "playwright"
+        version: "1.55.0"
     build:
       target: "web"
     browserslist: []
     structure:
-      app_dir: "app/"
-      root_layout: "app/layout.vue"
-      root_app: "app/app.vue"
-      pages_dir: "app/pages/"
-      components_dir: "app/components/"
+      app:
+        dir: "app/"
+        root_file: "app.vue"
+      layout:
+        dir: "app/layouts/"
+        default_file: "default.vue"
+        auto_import: true
+      pages:
+        dir: "app/pages/"
+        auto_import: true
+      components:
+        dir: "app/components/"
+        auto_import: true
       composables:
         dir: "app/composables/"
         auto_import: true
       plugins:
         dir: "app/plugins/"
+        auto_import: true
         items: ["axios", "dayjs"]
       middleware:
-        auth_file: "app/middleware/auth.ts"
+        dir: "app/middleware/"
+        auth_file: "auth.ts"
+      utils:
+        dir: "app/utils/"
+        auto_import: true
+      assets:
+        dir: "app/assets/"
 
   data:
     database:
@@ -2601,7 +2725,7 @@ roadmap:
               items:
                 - "`default.vue` layout dosyasını oluşturmak (Header + Sidebar + Footer + main content)"
                 - "`blank.vue` layout dosyasını oluşturmak (login, hata sayfaları için minimal layout)"
-            - name: "Admin Sayfa ve Modül Organizasyonunun Kurulması (apps/admin/app/pages/)"
+            - name: "Admin Sayfa Organizasyonunun Kurulması (apps/admin/app/pages/)"
               items:
                 - "`index.vue` anasayfa/dashboard sayfasını oluşturmak"
                 - "`login.vue` giriş sayfasını oluşturmak"
@@ -2621,7 +2745,7 @@ roadmap:
               items:
                 - "`default.vue` layout dosyasını oluşturmak (Header + Footer + main content)"
                 - "`blank.vue` layout dosyasını oluşturmak (minimal layout, login/error sayfaları için)"
-            - name: "Shop Sayfa ve Modül Organizasyonunun Kurulması (apps/shop/app/pages/)"
+            - name: "Shop Sayfa Organizasyonunun Kurulması (apps/shop/app/pages/)"
               items:
                 - "`index.vue` anasayfa/vitrin sayfasını oluşturmak"
                 - "`login.vue` müşteri giriş sayfasını oluşturmak"
